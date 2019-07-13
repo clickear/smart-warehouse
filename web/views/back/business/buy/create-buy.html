@@ -1,0 +1,112 @@
+<div class="next-return create-bill-in-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;单据管理&nbsp;->入库单&nbsp;->&nbsp;<span class="active">新建入库单</span>
+    </div>
+    <div class="form-horizontal create-bill-in-form"  >
+        <div class="order_operation_btn fr">
+            <button class="primary_btn" @click.stop = "save()">确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>入库信息</h3>
+                    <ol class="detail_list">
+                        <li>
+
+
+
+                        </li>
+                        <li  style="margin-top: 20px;">
+
+                            <p><span>合同号：</span>
+                                <input type="text"   v-model="insert.billMaster.contractNo"    name="contractNo"    maxlength="11">
+                            </p>
+
+                        </li>
+
+
+                        <li style="margin-top: 20px;">
+                            <h4>备注信息</h4>
+                            <textarea v-model="insert.billMaster.memo" name="memo" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                    </ol>
+            </ul>
+        </div>
+    </div>
+
+    <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+        <button type="button" class="btn primary_btn return_btn"     @click="newDetail()"  >添加入库详情</button>
+    </div>
+
+    <div class="custom-table-wrapper"  style="height: 150px"  >
+        <table class="custom-table BillDetail-create-table-hook"   ></table>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加产品信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search">
+                        <form class="form-search-hook">
+                            <div class="row">
+
+
+                                <span class="search-label" style="margin-top: 20px;width: 120px">产品类别</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px" id = "select_type" name="stateint" @change="changeType()" v-model = "info.itemTypeCode">
+                                    <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">产品名称</span>
+                                <select class="form-control w120" style="margin-top: 20px;width: 200px" name="stateint" id = "select_item" @change="changeItem()"  v-model = "info.itemCode">
+                                    <option v-for="item in itemItems" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+                                <br/>
+
+                                <!--<span class="search-label"     style="margin-top: 20px;width: 120px">货区名称</span>-->
+
+                                <!--<select class="form-control w120" style="margin-top: 20px;width: 200px" name="stateint" id = "select_area" @change="changeArea()" v-model = "info.areaCode">-->
+                                    <!--<option v-for="item in areaItems" v-bind:value="item.value">{{item.text}}</option>-->
+
+                                <!--</select>-->
+
+                                <!--<br/>-->
+
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</span>
+                                <input type="text" style="margin-top: 20px;width: 200px" class="search-input lg" placeholder="请输入数量" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="8" @change.stop="changeQuantity()" v-model = "info.quantity">
+
+                                <br/>
+
+
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">批&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次</span>
+                                <input type="text" style="margin-top: 20px;width: 200px" class="search-input lg" placeholder="请输入批次" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="8" @change.stop="changeBatch()" v-model = "info.batch">
+
+
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="commit()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+<script type="text/javascript" src="js/back/bill/in/create-bill-in.js" custom></script>

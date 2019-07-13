@@ -1,0 +1,88 @@
+<div class="main-hook help-document">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="preferential-wrapper help-document-hook">
+            <div class="title">
+                当前位置：&nbsp;运营管理&nbsp;->&nbsp;<span class="active">帮助文档</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+                        <span class="search-label">类型</span>
+                        <select class="form-control w120" name="parentId" v-model="selected">
+                            <option value="">全部</option>
+                            <option v-for="yx in items" :value="yx.categoryId">
+                                {{yx.categoryName}}
+                            </option>
+                            <!--<option value="">全部</option>
+                            <option value="0">新手帮助</option>
+                            <option value="1">产品快速引导</option>-->
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">类型</span>
+                     <select class="form-control w120" name="categoryId">
+                         <option value="">全部</option>
+                            <option v-for="zy in selection" :value="zy.categoryId">
+                                {{zy.categoryName}}
+                            </option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" name="keywords">
+                        <span class="interval-lg"></span>
+                        <button type="submit" class="btn btn-blue">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray resert">清空</button>
+                    </div>
+                </form>
+            </div>
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" @click.stop="newRelease()">新增</button>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table help-document-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/run/help-document/help-document.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.CellInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.CellInfoDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="cell_id" jdbcType="INTEGER" property="cellId" />
+
+    <result column="shelf_code" jdbcType="VARCHAR" property="shelfCode" />
+    <result column="cell_code" jdbcType="VARCHAR" property="cellCode" />
+    <result column="s_column" jdbcType="INTEGER" property="sColumn" />
+    <result column="s_row" jdbcType="INTEGER" property="sRow" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="company_name" jdbcType="INTEGER" property="companyName" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="cell_bar_code" jdbcType="VARCHAR" property="cellBarCode" />
+
+    <result column="order_no" jdbcType="INTEGER" property="orderNo" />
+
+  </resultMap>
+
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.CellInfoCriteria">
+    delete from cell_info
+    where cell_code = #{cellCode}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+
+  </delete>
+  <select id="findList" parameterType="com.deer.wms.base.system.model.CellInfoCriteria" resultMap="BaseResultMap">
+    select
+  *
+    from cell_info_view
+
+    where 1=1
+    <if  test="keyWords != null and keyWords != ''">
+      AND ( shelf_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR cell_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR  area_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR  ware_name  LIKE CONCAT('%', #{keyWords}, '%'))
+    </if>
+    <if test="shelfCode != null and shelfCode != ''">
+      AND shelf_code =#{shelfCode}
+    </if>
+    <if test="areaCode !=null and  areaCode !=''">
+      AND area_code=#{areaCode}
+    </if>
+    <if test="wareCode !=null and  wareCode !=''">
+      AND ware_code=#{wareCode}
+    </if>
+    <if test="companyId != null and companyId != ''">
+      AND company_id =#{companyId}
+    </if>
+    <if test="cellBarCode != null and cellBarCode != ''">
+      AND (cell_bar_code =#{cellBarCode} or cell_code = #{cellBarCode})
+    </if>
+    <if test="cellCode != null and cellCode != ''">
+      AND (cell_code =#{cellCode} or cell_bar_code = #{cellCode})
+    </if>
+
+    order by ware_code , area_code ,shelf_code , s_row, s_column
+
+  </select>
+
+  <select id="findByCellCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    cell_id,
+    shelf_code,
+    cell_code,
+    s_column,
+    s_row,
+    add_time,
+    memo,
+    state,
+    cell_bar_code,
+    order_no
+
+
+     from cell_info
+    where cell_code = #{cellCode}
+  </select>
+</mapper>

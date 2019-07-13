@@ -1,0 +1,85 @@
+<div class="create-account detail-message-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;消息待办&nbsp;->&nbsp;<span class="active">消息详情</span>
+    </div>
+    <div class="order_operation_btn"  id="confirm_btn">
+        <button class="primary_btn fr" @click.stop="cancleBack()">返回</button>
+    </div>
+    <div class="inner-wrapper">
+        <ul class="detail_contain">
+            <li>
+                <h3>待办事项信息</h3>
+                <ol class="detail_list">
+                    <li>
+                        <p><span>业务单号：</span><i v-text="account.businessNo"></i></p>
+                    </li>
+                    <li>
+                        <p><span>业务类型：</span><i v-text="account.businessType"></i></p>
+                    </li>
+                    <li>
+                        <p><span>消息类型：</span><i v-text="account.backState"></i></p>
+                        <p><span>消息规则：</span><i v-text="account.noticeRuleValue"></i></p>
+                    </li>
+                    <li>
+                        <p><span>终端地址：</span><i v-text="account.terminalPosition"></i></p>
+                    </li>
+                </ol>
+            </li>
+        </ul>
+        <div class="detail form-horizontal" style="padding:10px 30px;">
+            <div class="form-group">
+                <div class="col-sm-3 left16">
+                    <span class="custom-menu active">当前位置</span>
+                    <span class="custom-menu"  @click.stop="checkMenu()">历史轨迹</span>
+                </div>
+                <div class="col-sm-6" v-show="show.present">
+                    <span class="search-label" v-text="'当前位置：' + account.location"></span>
+                </div>
+            </div>
+            <div class="map-box">
+                 <div class="common-map" id="commonMap">
+
+                </div>
+                <div class="common-map" id="historyMap">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/message/detail-message.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

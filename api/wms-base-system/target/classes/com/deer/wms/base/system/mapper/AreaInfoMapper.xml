@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.AreaInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.AreaInfoDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="area_id" jdbcType="INTEGER" property="areaId" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="abc_class" jdbcType="VARCHAR" property="abcClass" />
+
+  </resultMap>
+
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.AreaInfoCriteria">
+    delete from area_info
+    where
+    area_code = #{areaCode}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+
+  </delete>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.AreaInfoCriteria"  resultMap="BaseResultMap">
+    select
+    area.area_id,
+    area.ware_code,
+    ware.company_id,
+    area.area_code,
+    area.area_name,
+    area.add_time,
+    area.memo,
+    area.abc_class,
+    ware.ware_name
+    from area_info area
+    left join ware_info ware on area.ware_code = ware.ware_code
+    left join company com on ware.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+      AND ware.ware_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR area.area_name LIKE CONCAT('%', #{keyWords}, '%')
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      AND area.ware_code =#{wareCode}
+    </if>
+    <if test="areaCode != null and areaCode != ''">
+      AND area.areaCode =#{areaCode}
+    </if>
+    <if test="companyId != null and companyId != ''">
+      AND com.company_id =#{companyId}
+    </if>
+  </select>
+
+
+</mapper>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+
+
+    <title>DerrWMS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="expires" content="Wed,26 Feb 1997 08:01:01 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Cache-Control" content="no-cache,must-revalidate"/>
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <base href="<%=project%>/">
+    <link rel="shortcut icon" href="img/logo/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="lib/jquery/ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap3-dialog/bootstrap-dialog.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-table/v2/bootstrap-table.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/fontello/css/fontello.css"/>
+    <link rel="stylesheet" href="lib/unslider/unslider.css"/>
+    <link rel="stylesheet" href="lib/scroll/jquery.scrollbar.css">
+    <link rel="stylesheet" href="lib/ztree/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" href="lib/dateTimePicker/jquery.datetimepicker.css"/>
+    <link rel="stylesheet" href="lib/baiduMap/bmap_autocomplete.css"/>
+    <link rel="stylesheet" href="lib/baiduMap/DrawingManager_min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-table/v2/bootstrap-editable.css"/>
+    <% if (env === "production") { %>
+    <link rel="stylesheet" href="css/back/back.css">
+    <% } %>
+    <script>window.permission = <%-JSON.stringify(user.permission)%>;window.STATIC_SERVER = '<%=staticServer%>';window.baseURL = '<%=project%>';</script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/underscore.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery.1.11.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery-PrintArea.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery-barcode.min.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/additional-methods.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/localization/messages_zh.js"></script>
+    <script type="text/javascript" src="lib/dateTimePicker/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="lib/dateTimePicker/modal.js"></script>
+    <script type="text/javascript" src="lib/lazyloader/xLazyLoader.min.js"></script>
+    <script type="text/javascript" src="lib/scroll/jquery.scrollbar.js"></script>
+    <script type="text/javascript" src="lib/spin/spin.min.js"></script>
+    <script type="text/javascript" src="lib/baiduMap/BMapLib_GeoUtils.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="lib/bootstrap3-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-select/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/v2/bootstrap-table.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/v2/bootstrap-table.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap-editable.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap-table-editable.js"></script>
+    <!--<script type="text/javascript" src="lib/bootstrap-table/v2/bootstrap-table.min.js"></script>-->
+    <!--<script src="lib/bootstrap-table/v2/bootstrap-table-fixed-columns.js"></script>-->
+    <script type="text/javascript" src="lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="lib/layer/layer.js"></script>
+    <script type="text/javascript" src="lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/raphael.js" defer></script>
+    <script type="text/javascript" src="lib/codemirror/codemirror.js" defer></script>
+
+    <script type="text/javascript" src="lib/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="lib/echarts/echarts-liquidfill.min.js"></script>
+    <script type="text/javascript" src="lib/ztree/js/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="lib/ztree/js/jquery.ztree.excheck.min.js"></script>
+    <script type="text/javascript" src="lib/distpicker/distpicker.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/tableExport.js"></script>
+
+
+    <script type="text/javascript"
+    src="http://api.map.baidu.com/api?v=2.0&ak=Zvt09wAOQcdH95F8I9hwQZ6sniTwzGOw"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+
+    <script type="text/javascript" charset="utf-8" src="lib/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="lib/ueditor/lang/zh-cn/zh-cn.js"> </script>
+   <style type="text/css" media=print>
+        .noprint{display : none }
+        @page {
+            size: auto;
+            margin: 0mm;
+            margin-left: -90px;
+            margin-top: 10px;
+        }
+    </style>
+ <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div class="main-container">
+    <header class="header noprint">
+        <div class="back-left">
+            <!--<a href="index" target="_blank"><img src="img/mobileLogo/logo-3.png"></a>-->
+            <h1>智能仓储管理系统</h1>
+        </div>
+        <h2 class="welcome">欢迎你，<%=user.userName%></h2>
+
+        <button type="button" module-menu="/back/homepage/page" id="btnWare" class="btn   return_btn" style="width: 5%;height: 50px;background-color: #00a0e9;color: white;position: absolute;left: 35%;top: 20px" onclick="ware()">
+            仓库作业
+        </button>
+        <button type="button" id="btnBase" module-menu="/back/warehouse/page" class="btn   return_btn" onclick="base()" style="width: 5%;height: 50px;background-color: #c7ddef;color: white; position: absolute;left: 41%;top: 20px">
+            基础信息
+        </button>
+        <button type="button" id="btnReport" module-menu="/back/inventory/page" class="btn    return_btn" onclick="report()" style="width: 5%;height: 50px;background-color: #c7ddef;color: white;position: absolute;left: 47%;top: 20px">
+           报表
+        </button>
+
+        <div id="xuanze" style="position: absolute;left:50%;top: 20px;width: 30%">
+            <!-- <div style="position: absolute;left: 50px;top:10px" >作业仓库：</div> -->
+
+            <select class="form-control w120 ware-hook " style="width: 42%;position: absolute;left: 10%;top:10px" id ="ware"  @change="changeWare()" >
+                <option v-for="item in items" :value="item.value">{{item.text}}</option>
+            </select>
+
+
+            <!-- <div style="position: absolute;left: 270px;top:10px" >作业货主</div> -->
+
+            <select class="form-control w120 ware-hook " style="width: 25%;position: absolute;left: 53%;top:10px"  id ="itemMaster"  @change="changeMaster()" >
+                <option v-for="item in masterItems" :value="item.value">{{item.text}}</option>
+
+            </select>
+
+        </div>
+
+
+
+
+        <ul class="right">
+            <!--<li class="backlog header-menu-hook"
+                module-menu-header="/back/messageBacklog/page"
+                module-target="page">消息待办
+            </li>-->
+
+
+           <!-- <li>仓库-&ndash;&gt;</li>
+            <li   >
+                <select class="form-control w120 ware-hook "   id ="ware"  @change="changeWare()" >
+                    <option v-for="item in items" v-bind:value="item.value">{{item.text}}</option>
+
+                </select>
+
+            </li>
+            <li>货主-&ndash;&gt;</li>
+            <li   >
+                <select class="form-control w120 ware-hook "   id ="itemMaster"  @change="changeMaster()" >
+                    <option v-for="item in masterItems" v-bind:value="item.value">{{item.text}}</option>
+
+                </select>
+
+            </li>-->
+
+            <li class="member-center header-menu-hook" module-menu-header="/back/memberCenter" module-target="page">个人中心</li>
+            <!--<li class="dropdown online-service customer-service-hook">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    在线客服</a>
+                <ul class="dropdown-menu">
+                    <li  class=" header-menu-hook"
+                         module-menu-header="/back/averageUser/page"
+                         module-target="page">普通用户角色
+                    </li>
+                    <li class="header-menu-hook"
+                        module-menu-header="/back/customerService/page"
+                        module-target="page">客服角色
+                    </li>
+                </ul>
+            </li>-->
+            <!--<li class="help header-menu-hook"
+                module-menu-header="/back/help"
+                module-target="page">帮助中心
+            </li>-->
+            <li class="exit logout">安全退出</li>
+        </ul>
+    </header>
+
+    <div class="menu noprint"  id="1"   >
+
+        <%-menuHtml1%>
+
+
+    </div>
+    <div class="menu noprint"  id="2" style="display: none" >
+
+        <%-menuHtml2%>
+
+
+    </div>
+    <div class="menu noprint"  id="3" style="display: none" >
+
+        <%-menuHtml3%>
+
+
+    </div>
+
+
+    <div class="position-tier"></div>
+    <div class="content-right page-container-hook">
+        <div class="right-content">
+
+
+        </div>
+        	
+    </div>
+
+
+
+</div>
+
+<div style="width: 100%;height: 30px;position: absolute; background-color:#2B669A">
+	    <p style="margin-left: 32%; color: white;">  Deer WMS 智能仓储管理系统</p>
+</div>
+
+
+
+
+
+<script src="js/common/manifest.js"></script>
+<script src="js/common/common.js"></script>
+<script src="js/common/constant.js"></script>
+<script src="js/back/back.js"></script>
+<script src="js/back/back_ware.js"></script>
+<% if (env !== "production" && reload) { %>
+<script src="../reload/reload.js"></script>
+<% } %>
+
+<script  >
+    function ware() {
+        $("#1").css("display","");
+        $("#0").css("display","none");
+        $("#2").css("display","none");
+        $("#3").css("display","none");
+
+
+
+
+        $("#btnWare").css(
+            {
+            'background-color': '#00a0e9',
+
+            }
+        );
+
+        $("#btnBase").css(
+            {
+
+                'background-color': ' #c7ddef',
+
+
+            }
+        );
+
+        $("#btnReport").css(
+            {
+
+                'background-color': ' #c7ddef',
+
+
+            }
+        );
+
+
+    }
+
+    function base() {
+
+        $("#btnBase").css(
+            {
+                'background-color': '#00a0e9',
+
+                }
+        );
+
+        $("#btnWare").css(
+            {
+
+                'background-color': ' #c7ddef',
+
+
+            }
+        );
+
+        $("#btnReport").css(
+            {
+
+                'background-color': ' #c7ddef',
+
+
+            }
+        );
+
+        $("#2").css("display","");
+        $("#0").css("display","none");
+        $("#1").css("display","none");
+        $("#3").css("display","none");
+    }
+
+    function report() {
+
+     /*   M.Page.emit(URI.REPORT.INVENTORY.PAGE);*/
+
+        $("#btnReport").css(
+            {
+                'background-color': '#00a0e9',
+
+                }
+        );
+
+        $("#btnWare").css(
+            {
+
+                'background-color': ' #c7ddef',
+
+
+            }
+        );
+
+        $("#btnBase").css(
+            {
+
+                'background-color': ' #c7ddef',
+
+
+            }
+        );
+
+
+        $("#3").css("display","");
+        $("#0").css("display","none");
+        $("#1").css("display","none");
+        $("#2").css("display","none");
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

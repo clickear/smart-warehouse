@@ -1,0 +1,213 @@
+<div class="main-hook main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="return-wrapper return-hook">
+            <div class="title">
+                当前位置：<span>基础设置</span>&nbsp;&nbsp;->&nbsp;</span><span class="active">物料设置</span>
+            </div>
+
+            <form class="search form-search-hook">
+                <div class="row">
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">物料类型</span>
+                    <select class="form-control w120" id="itemTypeCode" name="itemTypeCode" v-model = "itemTypeCode">
+
+                        <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                    </select>
+
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">关键字</span>
+                    <input type="text" class="search-input lg" placeholder="物料名称关键字" name="keyWords">
+                    <span class="interval-lg"></span>
+                    <button type="button" class="btn btn-blue search-hook">查询</button>
+                    <span class="interval-xs"></span>
+                    <button type="reset" class="btn btn-gray resert">清空</button>
+                </div>
+            </form>
+
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" data-toggle="modal" data-target="#newModal">新建物料</button>
+            </div>
+            <div class="custom-table-wrapper" style="padding: 0;height: auto;">
+                <table class="custom-table item-table-hook"></table>
+            </div>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">修改</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>物料信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span style="margin-top: 20px;width: 100px">物料类型</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="goodtypecodevch" name="goodtypecodevch" v-model = "rowData.itemTypeCode">
+                                            <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                                        </select><br/>
+                                        <span    style="margin-top: 20px;width: 100px">物料名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.itemName"></input> <br/>
+                                        <span style="margin-top: 20px;width: 100px">ABC分类</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="type" name="goodtypecodevch" v-model = "rowData.abcClass">
+                                            <option    value="A">A</option>
+                                            <option    value="B">B</option>
+                                            <option    value="C">C</option>
+                                        </select><br/>
+                                        <span    style="margin-top: 20px;width: 100px">规格型号：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.itemClass"></input>
+                                        <span    style="margin-top: 20px;width: 100px">条形码编码：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.itemBarCode"></input>
+                                    <li>
+                                        <span style="margin-top: 20px;width: 100px">计量单位</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="unitCode" name="unitCode" v-model = "rowData.unitCode">
+                                            <option v-for="item in typeItems1" v-bind:value="item.value">{{item.text}}</option>
+                                        </select><br/>
+                                    </li>
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">库存上限</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入库存上限"   v-model = "rowData.upperlimit"><br/>
+
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">库存下限</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入库存下限"   v-model = "rowData.floorlimit">
+
+
+
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "rowData.memo">
+
+
+
+                                    </li>
+
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "updateItem()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel1">新增</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>物料信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span style="margin-top: 20px;width: 100px">物料类型</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="type" name="goodtypecodevch" v-model = "info.itemTypeCode">
+
+                                            <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                                        </select><br/>
+                                        <span    style="margin-top: 20px;width: 100px">物料名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.itemName"></input> <br/>
+                                        <span style="margin-top: 20px;width: 100px">ABC分类</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="type" name="goodtypecodevch" v-model = "info.abcClass">
+
+                                            <option    value="A">A</option>
+                                            <option    value="B">B</option>
+                                            <option    value="C">C</option>
+                                        </select><br/>
+                                        <span    style="margin-top: 20px;width: 100px">规格型号：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.itemClass"></input>
+                                        <span    style="margin-top: 20px;width: 100px">条形码编码：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.itemBarCode"></input>
+                                    </li>
+                                    <li>
+                                        <span style="margin-top: 20px;width: 100px">计量单位</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="unitCode" name="unitCode" v-model = "info.unitCode">
+                                            <option v-for="item in typeItems1" v-bind:value="item.value">{{item.text}}</option>
+                                        </select><br/>
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">库存上限</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入库存上限"   v-model = "info.upperlimit"><br/>
+
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">库存下限</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入库存下限"   v-model = "info.floorlimit">
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "info.memo">
+
+
+
+                                    </li>
+
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "insertItem()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+
+    <div id="itemPrintArea"  style="display: none" >
+        <table border="2" style="width: 300px;height: 100px;border-color: #000000;position: absolute;left: 60px;top: 100px " >
+            <tr><td colspan="2" ><div id="itemBar" style="margin:0px auto; text-align: center;  "></div></td></tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">物料编码</span> </th>
+                <td><span style="display:block;;width: 200px; margin: 0 auto; text-align: center; " id="itemCode"></span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">物料名称</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="itemName"> </span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">规格型号</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="itemClass"> </span></td>
+            </tr>
+            <tr>
+            <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">物料类型</span></th>
+            <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="itemTypeName"> </span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">单位</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="unitName"> </span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">ABC分类</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="abcClass"> </span></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show">2</div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show">3</div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show">4</div>
+</div>
+<script type="text/javascript" src="js/back/base/item/item.js" custom></script>

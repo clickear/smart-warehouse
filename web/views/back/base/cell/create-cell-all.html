@@ -1,0 +1,57 @@
+<div class="next-return create-cell-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;基本信息&nbsp;->货位设置&nbsp;->&nbsp;<span class="active">批量新建货位</span>
+    </div>
+    <form class="form-horizontal next-create-return-form" method="post">
+        <div class="order_operation_btn fr">
+            <button class="primary_btn" @click.stop="commit()" >确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>货位信息</h3>
+                    <ol class="detail_list">
+                        <li>
+                            <p ><span>所属仓库</span>
+                            <select class="select_customer" name="wareidint" id="selectWare" @change="changeWare" v-model="info.wareidint"    >
+                                <option v-for="item in wareItems" v-bind:value="item.value">{{item.text}}</option>
+                            </select>
+
+                        </p>
+                            <p ><span>所属货区</span>
+                                <select class="select_customer" name="areaidint" id="selectArea" @change="changArea" v-model="info.areaidint"    >
+                                    <option v-for="item in areaItems" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+
+                            </p>
+                            <p ><span>所属货架</span>
+                                <select class="select_customer" name="shelfidint" id="selectShelf"   v-model="info.shelfIdInt"    >
+                                    <option v-for="item in shelfItems" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+
+                            </p>
+
+
+
+
+                        </li>
+                        <li  style="margin-top: 20px;">
+
+
+                            <p><span>行 &nbsp &nbsp  &nbsp 数：</span>
+                                <input type="text"   v-model="info.shelfRows"  onkeyup="value=value.replace(/[^\d]/g,'')"   name="row"    maxlength="2">
+                            </p>
+                            <p><span>列  &nbsp &nbsp &nbsp 数：</span>
+                                <input type="text"       v-model="info.shelfColumns"  onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="2">
+                            </p>
+
+                        </li>
+
+                    </ol>
+            </ul>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="js/back/base/cell/create-cell-all.js" custom></script>

@@ -1,0 +1,653 @@
+@import "../back-base";
+.order_operation_btn{
+  padding: 20px 40px;
+  height:65px;
+  padding-bottom: 0;
+}
+.order_operation_btn button{
+  padding:8px 20px;
+}
+.order_operation_btn.fr {
+  .primary_btn {
+    float: right;
+  }
+}
+.order_operation_btn {
+  .primary_btn.cancle_btn{
+    margin:0 10px;
+  }
+  /*.primary_btn.sure_order{
+       display: none;
+    }*/
+  .primary_btn{
+    display: inline-block;
+    border: none;
+    outline: none;
+    float: left;
+    background-color: #0b8dda;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+    margin-right: 12px;
+  }
+  .default_btn{
+    display: inline-block;
+    border: none;
+    outline: none;
+    background-image: url(../../../img/icon/botton-bg1.png);
+    background-size:100% 100%;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .default_btn.fr,
+  .primary_btn.fr{
+    float: right;
+  }
+  .default_btn.fl{
+    float: left;
+    margin:0;
+  }
+}
+
+
+.detail_contain{
+  /* margin-top: 20px;*/
+  padding:0 20px;
+  width:100%;
+  height:100%;
+}
+.detail_contain>li{
+
+  width:100%;
+  list-style: none;
+  padding: 0 30px;
+  background: #fff;
+  font-size: 0;
+  padding-bottom: 5px;
+}
+.detail_contain>li h3{
+
+  padding-top:15px;
+  padding-bottom:10px;
+  font-size: 18px;
+  color:#0b8dda;
+  /*border-bottom:1px solid #d9d9d9;*/
+}
+.detail_list{
+  padding-top:10px;
+  border-top:1px solid #d9d9d9;
+}
+.detail_list>li {
+  list-style: none;
+  line-height: 28px;
+  margin:5px 0;
+}
+.detail_list>li>*{
+  display: inline-block;
+  font-size: 14px;
+  vertical-align: middle;
+}
+.detail_list>li>p{
+  width:28%;
+  margin-right:50px;
+  text-align: left;
+  /* overflow: hidden;*/
+  vertical-align: middle;
+  .form-select{
+     height:28px;
+  }
+  /* text-overflow: ellipsis;*/
+  /*  white-space: nowrap;*/
+}
+.detail_list>li>p.remark{
+  width:80%;
+}
+.detail_list>li h4{
+  font-size: 14px;
+  margin-right: 30px;
+  color:#0b8dda;
+}
+.detail_list>li b{
+  color:#ff6600;
+  margin-left: -100px;
+}
+.detail_list>li>p span{
+  color:#0b8dda;
+  font-size: 14px;
+}
+.detail_list>li>p i{
+  font-style: normal;
+  font-size: 14px;
+  color:#3d3d3d;
+}
+.detail_list{
+  padding: 10px 0;
+  .return_detail{
+    height:80px;
+    >h4{
+      float:left;
+      width:30%;
+      height: 20px;
+    }
+    >div{
+      float: right;
+      width:95%;
+      >p{
+        width:30%;
+        display: inline-block;
+        text-align: left;
+      }
+      p.rent_time{
+        width:35%;
+      }
+    }
+  }
+}
+.illustrate{
+  margin: 10px 0;
+  color:#3d3d3d;
+  margin-left: 30px;
+  font-size:14px;
+  display: none;
+}
+.rent_info{
+  border-top:1px solid #d9d9d9;
+  width:65%;
+  display: inline-block;
+  .detail_list{
+    border-top:1px solid #d9d9d9;
+  }
+  h3{
+    /*border-bottom:1px solid #d9d9d9;*/
+    margin-bottom: 15px;
+  }
+}
+.rent_info.noline{
+  border: none;
+}
+.order_info{
+  width:100%;
+}
+.order_info .detail_list{
+  width:50%;
+  display: inline-block;
+  border-top:1px solid #d9d9d9;
+  margin-left: -4px;
+  vertical-align: top;
+}
+.order_info .detail_list>li h4 {
+  width: 15%;
+  text-align: left;
+}
+.rent_info .detail_list>li>p{
+  width:20%;
+  text-align: left;
+}
+.price_info{
+  width:35%;
+  vertical-align: top;
+  margin-left: -4px;
+  display: inline-block;
+}
+.price_info .detail_list>li h4{
+  width:100px;
+  text-align: left;
+  margin:0;
+}
+.price_info .detail_list>li h4.diy_btn{
+  width:80px;
+  height:28px;
+  background-color:#0b8dda;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 2px;
+  color:#fff;
+  cursor: pointer;
+}
+.price_info .detail_list>li p{
+  width:50%;
+  text-align: left;
+}
+.rent_info.time_info .detail_list>li>p{
+  width:30%;
+  text-align: left;
+}
+.table_contain{
+  padding-bottom:10px;
+  display: none;
+}
+.table_contain.show{
+  display: block;
+}
+/*.table_contain .table{
+
+  width:100%;
+  border-top: 5px solid #0b8dda;
+  border-radius: 5px 5px 0 0;
+
+}*/
+.table table{
+  width:100%;
+  border-collapse:collapse;
+}
+.table table>thead,
+.table table>tbody{
+  border:1px solid #d9d9d9;
+}
+.table table>thead th{
+  font: 14px "微软雅黑";
+  color:#000;
+  padding:8px 10px;
+  text-align: center;
+}
+.table table>tbody td{
+  font: 14px "微软雅黑";
+  color:#313131;
+  padding:12px 10px;
+  text-align: center;
+}
+.table table>tbody tr:nth-child(odd){
+  background-color: #fff;
+}
+.table table>tbody tr:nth-child(even){
+  background-color: #fbfbfc;
+}
+.table table>tbody td a{
+  text-decoration: none;
+  color:#0b8dda;
+  margin: 0 5px;
+}
+
+.detail_contain>li .other_info>*{
+  display: inline-block;
+}
+.detail_contain>li .other_info h3{
+  border: none;
+  font-size: 14px;
+  width:80px;
+  margin:0;
+  padding: 0;
+}
+.detail_contain>li .other_info h3.lg{
+  border: none;
+  font-size: 14px;
+  margin-left: 70px;
+  width:120px;
+}
+.detail_contain>li:first-child{
+  div.rent_info,
+  div.price_info{
+    border: none;
+    .detail_list{
+      border:none;
+    }
+  }
+
+}
+.detail_contain>li.rent_line{
+
+  .rent_info{
+    border: none;
+    width:100%;
+    h3{
+      border-bottom:1px solid #d9d9d9;
+
+    }
+  }
+}
+/*.other_info{
+  padding-bottom: 20px;
+}*/
+.other_info .form_group{
+  /* margin-left: 20px;*/
+}
+.other_info textarea,textarea.form_control{
+  /*  margin-left:30px;*/
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  width:300px;
+  height: 80px;
+  resize: none;
+  vertical-align: top;
+  display: inline-block;
+}
+textarea.form_control.no_border{
+   border: none;
+   outline: none;
+   padding: 5px 0;
+}
+.rent_time h4{
+  color:#0b8dda;
+  width:82px;
+}
+.date_group{
+
+  display: inline-block;
+  position: relative;
+  height: 28px;
+}
+.date_group input{
+  width:100%;
+  border:1px solid #cdd1d4 !important;
+  padding-left:5px;
+  font-size: 14px;
+  height: 100%;
+}
+.date_group .add-on{
+  width:12px;
+  height:12px;
+  position: absolute;
+  right: 5px;
+  top:8px;
+  background-image: url(../../../img/icon/date.png);
+}
+.time_label{
+  margin:0 10px;
+}
+.renew_info{
+  margin-top: 20px;
+  border-top: 5px solid #0b8dda;
+  border-radius: 5px 5px 0 0;
+  .form_group{
+    .date_group{
+      width:200px;
+    }
+    .time_label{
+      display: inline-block;
+      font-size: 14px;
+    }
+  }
+}
+.other_info{
+
+  .form_group{
+    .date_group{
+      width:200px;
+    }
+    .time_label{
+      display: inline-block;
+      font-size: 14px;
+    }
+  }
+}
+.renew_btn{
+  margin-left: 80px;
+}
+.amout_table{
+  padding-bottom: 20px;
+  .pallent_head{
+    th{
+      color:#0b8dda;
+    }
+  }
+  .pallent_body{
+    tr{
+      td{
+        font: 14px "微软雅黑";
+        padding:5px 10px;
+        width: 200px;
+        max-width: 200px;
+        color:#313131;
+      }
+    }
+  }
+}
+.amout_table table{
+  width:100%;
+  border-collapse:collapse;
+}
+.amout_table table>thead th{
+  font: 14px "微软雅黑";
+  color:#313131;
+  padding:13px 10px;
+  text-align: center;
+}
+.amout_table table>tbody td{
+  font: 14px "微软雅黑";
+  color:#313131;
+  padding:0 10px;
+  width:120px;
+  text-align: center;
+}
+.amout_table table>tbody td input{
+  width:100px;
+  height:25px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  border:none;
+  outline: none;
+  border-bottom: 1px solid #cdd1d4;
+}
+.detail_list>li>p span,
+.total_amout span{
+  color:#0b8dda;
+  font-size: 14px;
+}
+.total_amout span{
+  color:#898989;
+  font-size: 14px;
+}
+.total_amout input{
+  width: 100px;
+  height: 28px;
+  font-size: 14px;
+  color:#3d3d3d;
+  margin-left: 10px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  outline: none;
+  border: 1px solid #cdd1d4;
+}
+.rent_info .total_amout{
+  margin: 10px 0;
+}
+.rent_info .total_amout i{
+  font-style: normal;
+  margin-right: 20px;
+  color:#0b8dda;
+  font-size:14px;
+  border: none;
+  display: inline-block;
+}
+.mode_btn {
+  margin-left: 20px;
+}
+.mode_btn label.diybtn{
+  border:none;
+  border:1px solid #0b8dda;
+  outline: none;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  line-height:32px;
+  font-size: 14px;
+  margin-right: 12px;
+  position: relative;
+  width:86px;
+  height:32px;
+  input[type="radio"]{
+    opacity: 0;
+    width:100%;
+    height:100%;
+    margin:0;
+    display: inline-block;
+    position: absolute;
+    left:0;
+    top:0;
+  }
+}
+.mode_btn label.diybtn.active{
+  border:none;
+  outline: none;
+  background-color: #0b8dda;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #fff;
+}
+.address_input{
+  /* margin-left: 20px;*/
+  /*width:200px;*/
+  height:25px;
+  font-size:14px;
+  position: relative;
+  padding-bottom: 20px;
+  >select{
+    margin:0;
+  }
+
+}
+.address_input>input{
+  width: 300px;
+  height:25px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  font-size: 14px;
+  outline: none;
+  border:none;
+  border-bottom: 1px solid #cdd1d4;
+}
+.change_btn{
+  margin-bottom: 10px;
+}
+.change_btn button.primary_btn{
+
+  border:1px solid #0b8dda;
+  outline: none;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  padding:6px 25px;
+  margin-left: 12px;
+  color:#0b8dda;
+}
+.change_btn button.primary_btn.active{
+
+  background-color: #0b8dda;
+  color: #fff;
+}
+.select_company,.select_detail{
+  width:70%;
+}
+.select_company input{
+  width: 300px;
+  height: 28px;
+  font-size: 14px;
+  color:#3d3d3d;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  border:none;
+  outline: none;
+  border-bottom: 1px solid #cdd1d4;
+
+}
+.select_detail input{
+  width: 150px;
+  height: 28px;
+  font-size: 14px;
+  color:#3d3d3d;
+  margin-left: -4px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  border:none;
+  outline: none;
+  border-bottom: 1px solid #cdd1d4;
+
+}
+.sum_amout{
+  width:948px;
+  display: inline-block;
+  /* position: absolute;
+   bottom: 35px;*/
+}
+.sum_amout label{
+  width:175px;
+  margin-left:45px;
+  text-align: center;
+  color: #0b8dda;
+}
+.sum_amout  span{
+  width:172px;
+  text-align: center;
+  display: inline-block;
+}
+.inventory-detail-hook .custom-table-wrapper{
+  padding-top:0;
+  margin-top:-10px;
+  position: relative;
+}
+.upfile_btn{
+  position: relative;
+  input[type="file"]{
+    opacity: 0;
+    position: absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+  }
+
+}
+[v-cloak]{
+  display:none;
+}
+.layui-layer-rim{
+  border:2px solid rgba(0,0,0,.3)
+}
+.ztree{
+  margin-top:10px;
+}
+.ztree li{
+  position: relative;
+  line-height:1.8;
+}
+.ztree li span.button.noline_open{
+  background-image: url(../../../img/icon/a2.png);
+  background-position:center center !important;
+  vertical-align:middle !important;
+}
+.ztree li span.button.noline_close{
+  background-image: url(../../../img/icon/a1.png);
+  background-position:center center !important;
+  vertical-align:middle !important;
+}
+.ztree li span.pallent_span{
+  text-align: left;
+  position: absolute;
+  right:10px;
+  color:#898989;
+}
+.distribution_tree {
+  width: 30%;
+  height: 35rem;
+  margin:30px 2%;
+  padding: 10px;
+  vertical-align: top;
+  border: 1px solid #cdd1d4;
+  display: inline-block;
+}
+.distribution_map{
+  width: 64%;
+  height: 35rem;
+  margin-top:30px;
+  padding: 10px;
+  vertical-align: top;
+  border: 1px solid #cdd1d4;
+  display: inline-block;
+}
+.title_xs{
+  padding-bottom: 10px;
+  font-size:16px;
+  color:#0b8dda;
+}
+/*转租、退板详情页面*/
+.custom-table-wrapper{height: auto;}
+.order_operation_btn button:hover{background-color: #4BB7E4;}
+.order_operation_btn .btn-group .dropdown-toggle{margin-right: 0;width: 120px;border-radius: 0;border-bottom: solid 1px #ccc;}
+.order_operation_btn .btn-group .dropdown-menu{min-width: 120px;border: none;margin: 0;padding: 0;box-shadow: none;}
+.order_operation_btn .btn-group .dropdown-menu li button{margin-right: 0;border-radius: 0;border-bottom: solid 1px #ccc;}
+.other_info p select option{font-size: 14px;}
+.no_border{border: none;outline: none;padding: 5px 0;}
+.table-hover > tbody > tr:hover{background-color:#eaeff5;}

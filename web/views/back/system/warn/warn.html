@@ -1,0 +1,42 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="default-hook">
+            <div class="title">
+                当前位置：&nbsp;&nbsp;->&nbsp;系统参数&nbsp;->&nbsp;<span class="active">告警参数</span>
+            </div>
+            <div class="search">
+                <form class="search-hook">
+                    <div class="row">
+                        <%if(checkAuthority('alarm-param-query')){%>
+                        <span class="search-label">参数状态</span>
+                        <select class="form-control w80" name="state">
+                            <option value="">全部</option>
+                            <option value="normal">启用</option>
+                            <option value="invalid">停用</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" name="keyword" placeholder="参数名称或者创建人">
+                        <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue query-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <%}%>
+                        <%if(checkAuthority('alarm-param-create')){%>
+                        <button type="button" class="btn btn-gray" @click.stop="add()">新增</button>
+                        <%}%>
+                    </div>
+                </form>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table warn-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/system/warn/warn.js" custom></script>

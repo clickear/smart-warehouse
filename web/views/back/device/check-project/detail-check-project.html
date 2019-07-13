@@ -1,0 +1,149 @@
+<div class="client-detail client-detail-hook">
+    <div class="title noprint">
+        当前位置：&nbsp;&nbsp;->&nbsp;设备管理&nbsp;->&nbsp;检查项目&nbsp;->&nbsp;<span class="active">详情</span>
+    </div>
+    <div class="order_operation_btn noprint">
+
+
+
+
+
+
+        <button class="primary_btn fr" @click.stop="prevStep()">返回</button>
+    </div>
+    <div class="inner-wrapper">
+        <input type="hidden" value="<%=staticServer%>" id="staticServer">
+        <ul class="detail_contain">
+            <li>
+                <h3>检查项目详情</h3>
+                <ol class="detail_list">
+                    <li>
+                        <p>
+                            <span>设备名称：</span><i v-text="masterData.deviceName"></i>
+                            <b style="margin-left: 10px;" v-text=" "></b>
+                        </p>
+                        <p><span>检查项目名称：</span><i v-text="masterData.checkProjectName"></i></p>
+
+                    </li>
+                    <li>
+                        <p><span>备注：</span><i v-text="masterData.memo"></i></p>
+
+
+                    </li>
+
+                </ol>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+        <button type="button" class="btn primary_btn return_btn"     @click="newContent()"  >添加检查内容</button>
+    </div>
+    <div class="custom-table-wrapper"  style="height: 150px"  >
+        <table class="custom-table check-content-table-hook"   ></table>
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="addContentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel21"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel21">
+                        检查内容
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search">
+                        <form class="form-search-hook">
+                            <div class="row">
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">检查内容</span>
+                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg"   v-model = "info.checkContentName">
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">步骤</span>
+                                <textarea v-model="info.step" name="step"  style="margin-top: 20px;width: 300px;height: 80px" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+
+                                <br/>
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">合格标准</span>
+                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg"   v-model = "info.standard">
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"  @click.stop="save()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        检查内容
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search">
+                        <form class="form-search-hook">
+                            <div class="row">
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">检查内容</span>
+                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg"   v-model = "rowData.checkContentName">
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">步骤</span>
+                                <textarea v-model="rowData.step" name="step"  style="margin-top: 20px;width: 300px;height: 80px" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+
+                                <br/>
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">合格标准</span>
+                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg"   v-model = "rowData.standard">
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="updateCheckContent()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<script type="text/javascript" src="js/back/device/check-project/detail-check-project.js" custom></script>

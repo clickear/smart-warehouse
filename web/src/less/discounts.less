@@ -1,0 +1,95 @@
+@import "./base";
+
+.main-container {
+  > .body {
+    .inner-wrapper {
+      margin: 0 auto;
+      width: @viewportWidth;
+    }
+
+    .banner {
+      padding-top: 1px;
+      .inner-wrapper {
+        height: 280px;
+      }
+    }
+
+    .news {
+      .inner-wrapper {
+        width: 1055px;
+        .title {
+          position: relative;
+          margin: 45px auto;
+          font-size: 24px;
+          color: #363636;
+          border-bottom: 1px solid #373737;
+          > span, em {
+            display: inline-block;
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            margin-left: -100px;
+            width: 200px;
+            background: white;
+            text-align: center;
+          }
+          > em {
+            top: 18px;
+            color: #929292;
+            font-size: 14px;
+          }
+        }
+        > p {
+          padding: 10px 0 0 0;
+          text-indent: 33px;
+          a {
+            font-size: 16px;
+            color: #363636;
+          }
+        }
+        .news-list {
+          font-size: 0;
+          padding: 45px 0;
+          .left {
+            display: inline-block;
+            vertical-align: top;
+            width: 280px;
+            height: 180px;
+            img {
+              max-width: 280px;
+              max-height: 180px;
+            }
+          }
+          .right {
+            display: inline-block;
+            padding: 0 0 0 15px;
+            width: 755px;
+            .caption {
+              font-size: 16px;
+              color: #0b8dda;
+            }
+            ul.list {
+              li {
+                position: relative;
+                padding: 8px 120px 5px 0;
+                font-size: 16px;
+                color: #3B3B3B;
+                border-bottom: 2px dotted #dfdfdf;
+                .ellipsis();
+                > span {
+                  display: inline-block;
+                  position: absolute;
+                  right: 0;
+                  z-index: 99;
+                  font-size: 16px;
+                  color: #adadad;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

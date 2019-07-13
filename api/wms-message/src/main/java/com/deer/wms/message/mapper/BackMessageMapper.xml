@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.message.dao.BackMessageMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.message.model.BackMessage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="business_no" jdbcType="VARCHAR" property="businessNo" />
+    <result column="business_type" jdbcType="VARCHAR" property="businessType" />
+    <result column="back_state" jdbcType="VARCHAR" property="backState" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="UPDATE_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user_id" jdbcType="INTEGER" property="updateUserId" />
+    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  
+    <resultMap id="BaseDtoResultMap" type="com.deer.wms.message.model.BackMessageDto">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="business_no" jdbcType="VARCHAR" property="businessNo" />
+    <result column="business_type" jdbcType="VARCHAR" property="businessType" />
+    <result column="back_state" jdbcType="VARCHAR" property="backState" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="UPDATE_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_user_id" jdbcType="INTEGER" property="updateUserId" />
+    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="customer_name" jdbcType="INTEGER" property="customerName" />
+    <result column="leaseCustomer" jdbcType="INTEGER" property="leaseCustomer" />
+  </resultMap>
+  
+  <select id="selectBackList" resultMap="BaseDtoResultMap">
+      SELECT
+          bm.id
+        , bm.title
+        , bm.business_no
+        , (CASE bm.business_type WHEN 'order' THEN '收货确认' WHEN 'warning' THEN '托盘跟踪告警' END) AS business_type
+        , bm.back_state
+        , bm.create_user_id
+        , bm.UPDATE_time
+        , bm.update_user_id
+        , bm.state 
+        , bm.from_user_id, date_format(bm.create_time, '%Y-%m-%d %H:%i:%s') AS create_time 
+        , o.customer_name
+        , c.company_name leaseCustomer
+      FROM back_message bm
+ 	  LEFT JOIN order_lease o ON o.order_no = bm.business_no
+ 	  left join company_storage s on s.storage_id=o.storage_id 
+  	  left join company c on c.company_id=s.company_id  
+	  WHERE  bm.state='normal' and bm.from_user_id = #{fromUserId}
+	  <if test="businessType != null">
+          AND bm.business_type = #{businessType}
+      </if>
+      <if test="backState != null">
+          AND bm.back_state = #{backState}
+      </if>
+	  order by bm.id desc
+  </select>
+  
+  <select id="selectSupplyBackList" resultMap="BaseDtoResultMap">
+     SELECT
+          bm.id
+        , bm.title
+        , bm.business_no
+        , (CASE bm.business_type WHEN 'order' THEN '收货确认' WHEN 'warning' THEN '托盘跟踪告警' END) AS business_type
+        , bm.back_state
+        , bm.create_user_id
+        , bm.UPDATE_time
+        , bm.update_user_id
+        , bm.state 
+        , bm.from_user_id, date_format(bm.create_time, '%Y-%m-%d %H:%i:%s') AS create_time 
+        , o.customer_name
+        , o.manufacturer  leaseCustomer 
+      FROM back_message bm
+ 	  LEFT JOIN order_supply o ON o.order_no = bm.business_no
+	  WHERE  bm.state='normal' and bm.from_user_id = #{fromUserId} 
+	  <if test="businessType != null">
+          AND bm.business_type = #{businessType}
+      </if>
+      <if test="backState != null">
+          AND bm.back_state = #{backState}
+      </if>
+ 	<if test="orderNoList != null">
+ 		  AND bm.business_no in
+ 		  <foreach item="item" index="index" collection="orderNoList" 
+                         open="(" separator="," close=")">
+                        #{item}
+          </foreach>
+      </if>
+	  order by bm.id desc
+  </select>
+  
+  <select id="selectBackByBusinessNo" resultMap="BaseDtoResultMap">
+	select a.id, a.title, a.business_no, a.business_type, a.back_state, a.create_time,
+  			a.create_user_id, a.UPDATE_time, a.update_user_id, a.from_user_id, a.state, 
+  			b.customer_name,c.company_name leaseCustomer
+  			from back_message a 
+  			left join order_lease b on a.business_no=b.order_no
+  			left join company_storage s on s.storage_id=b.storage_id
+  			left join company c on c.company_id=s.company_id 
+  			where a.state='normal' and a.business_no = #{businessNo}
+  			order by a.create_time desc
+  </select>
+  
+  <!-- 根据业务单号修改消息状态 -->
+  <update id="updateStateByBusinessNo" parameterType="com.deer.wms.message.model.BackMessage">
+  		update back_message set  state=#{state}, UPDATE_time=#{updateTime}, update_user_id=#{updateUserId} where business_no = #{businessNo}
+  </update>
+  
+</mapper>

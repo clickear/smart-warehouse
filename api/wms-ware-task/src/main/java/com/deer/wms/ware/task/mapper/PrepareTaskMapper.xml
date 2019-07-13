@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.ware.task.dao.PrepareTaskMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.ware.task.model.PrepareTask">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="pallet_batch_id" jdbcType="INTEGER" property="palletBatchId" />
+    <result column="bill_no" jdbcType="VARCHAR" property="billNo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="task_user_id" jdbcType="INTEGER" property="taskUserId" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="task_batch" jdbcType="VARCHAR" property="taskBatch" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.ware.task.model.PrepareTaskDto" extends="BaseResultMap">
+
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="task_user_name" jdbcType="VARCHAR" property="taskUserName" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+    <result column="cell_code" jdbcType="VARCHAR" property="cellCode" />
+    <result column="s_column" jdbcType="VARCHAR" property="sColumn" />
+    <result column="s_row" jdbcType="VARCHAR" property="sRow" />
+    <result column="pallet_name" jdbcType="VARCHAR" property="palletName" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="batch_id" jdbcType="INTEGER" property="batchId" />
+
+
+  </resultMap>
+
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.ware.task.model.PrepareTaskCriteria">
+    select
+
+    task.id,
+    task.pallet_batch_id,
+    task.create_user_id,
+    task.create_time,
+    task.bill_no,
+    task.quantity,
+    task.task_time,
+    task.task_user_id,
+    task.task_batch,
+    task.state,
+
+    cuser.user_name as create_user_name,
+    tuser.user_name as task_user_name,
+
+
+
+    com.company_name,
+    ware.ware_name,
+    area.area_name,
+    shelf.shelf_name,
+    cell.cell_Code,
+    cell.s_column,
+    cell.s_row,
+    pallet.pallet_name,
+
+    batch.batch,
+    batch.batch_id,
+    item.item_name,
+    item.item_class,
+    item.item_code
+
+    from prepare_task task
+    left join user_info cuser on task.create_user_id = cuser.user_id
+    left join user_info tuser on task.task_user_id = tuser.user_id
+
+    left join pallet_batch pb on task.pallet_batch_id = pb.pallet_batch_id
+    left join pallet pallet on pb.pallet_id = pallet.pallet_id
+    left join cell_info cell on pallet.cell_code = cell.cell_code
+    left join shelf_info shelf on cell.shelf_code = shelf.shelf_code
+    left join area_info area on shelf.area_code = area.area_code
+    left  join ware_info ware on area.ware_code = ware.ware_code
+    left join company com on ware.company_id = com.company_id
+
+    left join item_batch batch  on pb.batch_id = batch.batch_id
+    left  join item_info item on batch.item_code = item.item_code
+
+    left join bill_master bill on task.bill_no = bill.bill_no
+
+    where 1=1
+    <if test="state != null ">
+      and task.state = #{state}
+    </if>
+    <if test="billNo != null and billNo != ''">
+      and task.bill_no = #{billNo}
+    </if>
+    <if test="taskBatch != null and taskBatch != ''">
+      and task.task_batch = #{taskBatch}
+    </if>
+    <if test="taskBatch != null and taskBatch != ''">
+      and task.task_batch = #{taskBatch}
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      and bill.ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null and itemMasterId != ''">
+      and bill.item_master_id = #{itemMasterId}
+    </if>
+
+    order by task.state , task.create_time desc
+
+
+
+
+
+
+
+
+  </select>
+
+
+
+  <select id="findBatchs" resultMap="BaseResultMap" parameterType="com.deer.wms.ware.task.model.PrepareTaskCriteria">
+    select
+
+
+    task.task_batch
+
+
+    from prepare_task task
+
+    left join user_info cuser on task.create_user_id = cuser.user_id
+    left join user_info tuser on task.task_user_id = tuser.user_id
+
+    left join pallet_batch pb on task.pallet_batch_id = pb.pallet_batch_id
+    left join pallet pallet on pb.pallet_id = pallet.pallet_id
+    left join cell_info cell on pallet.cell_code = cell.cell_code
+    left join shelf_info shelf on cell.shelf_code = shelf.shelf_code
+    left join area_info area on shelf.area_code = area.area_code
+    left  join ware_info ware on area.ware_code = ware.ware_code
+    left join company com on ware.company_id = com.company_id
+
+    left join item_batch batch  on pb.batch_id = batch.batch_id
+    left  join item_info item on batch.item_code = item.item_code
+
+    left join bill_master bill on task.bill_no = bill.bill_no
+
+    where task.state = 0
+    <if test="itemMasterId !=null ">
+      and bill.item_master_id = #{itemMasterId}
+    </if>
+    <if test="wareCode !=null and wareCode != ''">
+      and bill.ware_code = #{wareCode}
+    </if>
+    group by   task.task_batch
+
+    order by task.create_time
+
+
+
+
+
+
+
+
+  </select>
+</mapper>

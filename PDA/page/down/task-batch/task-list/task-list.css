@@ -1,0 +1,63 @@
+.contain{
+	height: 96%;
+	width: 97%;
+	position: absolute;
+	 
+	top: 10%;
+}
+.header{
+	height: 7%;
+	width: 100%;
+	background-color: darkcyan;
+	text-align:center;
+	line-height:30px;
+	font-weight: bold;
+	font-size: 16px;
+	color: #FFFFFF;
+	position: absolute;
+}
+.order{
+	height: 23%;
+	width: 95%;
+	border-left-color: #000066;
+	border-left-style: solid;
+	border-left-width: 7px;
+	
+	border-bottom-style: inset;
+	border-bottom-color: #F4F4F4;
+	
+	border-right-style: none;
+	border-top-style: none;
+	 
+	background-color: #FFFFFF;
+	 
+	margin-top: 5%;
+	margin-left: 5%;
+	position: relative;
+}
+.rowData{
+	height: 20%;
+	width: 100%;
+	 
+	margin-top: 1%;
+	margin-left: 5%;
+	position: relative;
+}
+.name{
+	color: #000000;
+	position: absolute;
+	left: 0%;
+	top: 8%; 
+	font-weight: bold;
+	font-size: 12px;
+}
+.value{
+	color: #000000;
+	position: absolute;
+	left: 32%;
+	top: 8%; 
+	font-weight: bold;
+	font-size: 12px;
+}
+
+ 

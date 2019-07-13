@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.ware.task.dao.CountPalletBatchMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.ware.task.model.CountPalletBatch">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pallet_batch_id" jdbcType="INTEGER" property="palletBatchId" />
+    <result column="count_quantity" jdbcType="INTEGER" property="countQuantity" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="task_user_id" jdbcType="INTEGER" property="taskUserId" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="item_master_id" jdbcType="VARCHAR" property="itemMasterId" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.ware.task.model.CountPalletBatchDto" extends="BaseResultMap">
+
+
+
+  </resultMap>
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.ware.task.model.CountPalletBatchCriteria">
+    select *
+    from count_pallet_batch  cpb
+    where 1=1
+    <if test="companyId != null">
+      cpb.company_id = #{companyId}
+    </if>
+  </select>
+</mapper>

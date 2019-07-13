@@ -1,0 +1,61 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="network-wrapper report-detail-hook">
+            <div class="title">
+                当前位置：&nbsp;统计报表&nbsp;->&nbsp;<span class="active">收发汇总</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+
+
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text"   class="search-input lg" placeholder="请输入关键字" style="width: 180px" name="keyWords">
+                        <span class="interval-lg"></span>
+
+                        <span class="search-label">统计日期:</span>
+                        <div class="date-time-box">
+                            <input placeholder="开始时间" class="search-input datetime" type="text" name="workstarttime" id="">
+                        </div>
+                        <!--<span class="interval-xs"></span>-->
+                        <!--<span>到</span>-->
+                        <!--<span class="interval-xs"></span>-->
+                        <!--<div class="date-time-box">-->
+                            <!--<input placeholder="结束时间" class="search-input datetime" type="text" name="workendtime" id="enddate">-->
+                        <!--</div>-->
+
+                       <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray ">清空</button>
+                    </div>
+                </form>
+                <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                    <button type="button" class="btn primary_btn return_btn"  onclick="javascript:window.print();">打印</button>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="custom-table-wrapper"  style="height: 150px"  >
+                <table class="custom-table report-detail-table-hook"   ></table>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/report/day-list/day-list.js" custom></script>

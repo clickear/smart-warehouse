@@ -1,0 +1,83 @@
+<div class="member-page-hook">
+    <div class="member-info-page-hook">
+        <div class="title">
+            当前位置：&nbsp;&nbsp;->&nbsp;<span class="active">个人信息</span>
+        </div>
+        <div class="member-info-page inner-wrapper">
+            <h2>个人信息</h2>
+            <div class="form member-info">
+                <form class="form-horizontal member-hook">
+                    <div class="hide-opacity">
+                        <input type="file" name="portrait" id="portrait">
+                    </div>
+                    <div class="form-group">
+                        <img class="portrait" src="<%=(iconUrl ? iconUrl.substr(1) : '/web/dist/img/portrait.png')%>" alt="">
+<!--
+                        <img class="portrait" src="<%=staticServer+(iconUrl ? iconUrl : '/web/dist/img/portrait.png')%>" alt="">
+-->
+                        <span><%=(gender === 1 ? '♂' : '♀')%></span>
+                        <span><%=userName%></span>
+                        <span class="member-phone"><%=mobile ||'15340371995'%></span>
+                    </div>
+                    <div class="form-group">
+                        <span>账户角色：</span>
+                        <span class="left50"><%=roleName%></span>
+                    </div>
+                    <div class="form-group">
+                        <span>电子邮箱：</span>
+                        <span class="left50 span-hide-hook"><%=email%></span>
+                        <input type="text" class="form-control input300 hide-show input-show-hook" name="email"
+                               value="<%=email%>">
+                    </div>
+                    <div class="form-group">
+                        <span>公司名称：</span>
+                        <span class="left50"><%=companyName%></span>
+                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<span>公司类型：</span>-->
+                        <!--<span class="left50"><%=companyType%></span>-->
+                    <!--</div>-->
+                    <div class="form-group">
+                        <span>公司地址：</span>
+                        <span class="left50 span-hide-hook"><%=linkmanAddress%></span>
+                        <input type="text" class="form-control input300 hide-show input-show-hook" name="linkmanAddress"
+                               value="<%=linkmanAddress%>">
+                    </div>
+                    <div class="form-group">
+                        <span>公司电话：</span>
+                        <span class="left50 span-hide-hook"><%=linkmanPhone%></span>
+                        <input type="text" class="form-control input300 hide-show input-show-hook" name="linkmanPhone"
+                               value="<%=linkmanPhone%>">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default  modify-member-hook" data-tag="true">修改个人信息
+                        </button>
+                        <button type="button" class="btn btn-default left50 modifiy-pwd-hook span-hide-hook">修改密码
+                        </button>
+                        <button type="submit" class="btn btn-default left50 hide-show input-show-hook">保 存</button>
+                    </div>
+                </form>
+                <form class="form-horizontal update-pwd-form hide-show update-pwd-form-hook">
+                    <div class="form-group">
+                        <span>原始密码:</span>
+                        <input type="password" class="form-control input301" name="oldPassword" value="">
+                    </div>
+                    <div class="form-group">
+                        <span>新&nbsp; 密&nbsp;码:</span>
+                        <input type="password" class="form-control input301" name="password" id="newpwd" value="">
+                    </div>
+                    <div class="form-group">
+                        <span>确认密码:</span>
+                        <input type="password" class="form-control input301" name="confirmPassword" value="">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default return-hook">返回</button>
+                        <button type="submit" class="btn btn-default left50 update-pwd-btn-hook">修改</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/member/member-info.js" custom></script>

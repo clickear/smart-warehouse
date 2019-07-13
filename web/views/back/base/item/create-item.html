@@ -1,0 +1,62 @@
+<div class="next-return create-item-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;基本信息&nbsp;->物料设置&nbsp;->&nbsp;<span class="active">新建物料</span>
+    </div>
+    <div class="form-horizontal create-item-form"  >
+        <div class="order_operation_btn fr">
+            <button class="primary_btn" @click ="commit()">确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>物料信息</h3>
+                    <ol class="detail_list">
+
+                        <li  style="margin-top: 20px;">
+
+                            <p><span>物料名称：</span>
+                                <input type="text"    v-model="info.itemnamevch"     name="itemnamevch"    maxlength="11">
+                            </p>
+                            <p ><span>物料类型</span>
+                                <select class="select_customer" name="type"   v-model="info.goodstypecodevch"    >
+                                    <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+
+                            </p>
+                            <p ><span>ABC分类</span>
+                                <select class="select_customer" name="type"   v-model="info.goodstypecodevch"    >
+                                    <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+
+                            </p>
+                            <p><span>型号：</span>
+                                <input type="text"      v-model="info.abctypevch"   name="abctypevch"    maxlength="11">
+                            </p>
+
+
+
+                        </li>
+                        <li  style="margin-top: 20px;">
+
+                            <p><span>库存上限：</span>
+                                <input type="text"    v-model="info.upperlimitint"  onkeyup="value=value.replace(/[^\d]/g,'')"  name="upperlimitint"    maxlength="4">
+                            </p>
+                            <p><span>库存下限：</span>
+                                <input type="text"     v-model="info.floorlimitint" onkeyup="value=value.replace(/[^\d]/g,'')"  name="floorlimitint"    maxlength="4">
+                            </p>
+
+
+                        </li>
+
+                        <li style="margin-top: 20px;">
+                            <h4>备注信息</h4>
+                            <textarea v-model="info.memovch" name="remark" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                    </ol>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/base/item/create-item.js" custom></script>

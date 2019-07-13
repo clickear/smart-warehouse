@@ -1,0 +1,70 @@
+<div class="platform-branch-detail-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;机构管理&nbsp;->&nbsp;平台网点管理&nbsp;->&nbsp;<span class="active">平台网点详情</span>
+    </div>
+    <div class="order_operation_btn fr">
+        <a class="primary_btn" @click.stop="goBack()">返回</a>
+    </div>
+    <div class="inner-wrapper" style="padding: 20px 70px;">
+        <h2 style="font-size: 18px;">平台网点详情</h2>
+        <div class="detail form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">仓储点名称</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.storageName"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">仓储点地址</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.address"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">仓储点电话</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.phone"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">仓储点联系人</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.linkmanName"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">基站ID</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.baseStationId"></p>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label class="col-sm-2 control-label">经纬度坐标</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">
+                        <span v-text="info.lng"></span>,
+                        <span v-text="info.lat"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">省份</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.province"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">市区</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.city"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-gray-sm" @click.stop="goBack()">返回</button>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/organization/platform-branch/platform-branch-detail.js" custom></script>

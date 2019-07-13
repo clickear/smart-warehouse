@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>组盘</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="group-pallet.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">组盘</h1>
+		</header>
+		<div class="contain">
+			<br/>
+			<div class="mui-input-row mui-search" style="width: 74%;height:12%;top: 2%; left: 13%;">
+				<input type="search" id="palletBarCode" style="width: 74%;margin-left: 13%;" v-model="palletBarCode" placeholder="扫描托盘条码">
+			</div>
+
+			<div class="order" style="height: auto;top: 0%;">
+
+				<div class="rowData">
+					<span class="name">当前托盘</span>
+					<span class="value">{{pallet.palletCode}}</span>
+
+				</div>
+
+			</div>
+
+			<div class="mui-input-row mui-search" style="width: 74%;height:12%;top: 2%; left: 13%;">
+				<input type="search" id="itemBarCode" placeholder="扫描物料条码" v-model="itemBatchBarCode">
+			</div>
+			<div class="order" style="height: auto;top: 0%;">
+
+				<div class="rowData">
+					<span class="name">当前物料</span>
+					<span class="value" style="left: 50%;">规格</span>
+
+				</div>
+				<div class="rowData">
+					<span class="name" style="color: #CF2D28;">{{item.itemName}}</span>
+					<span class="value" style="color: #CF2D28;left:50%">{{item.itemClass}}</span>
+
+				</div>
+
+			</div>
+
+			<div class="mui-input-row mui-search" style="width: 74%;height:10%;top: 2%; left: 13%;">
+				<input type="search" placeholder="请输入当前物料数量" v-model="quantity">
+			</div>
+
+			<div class="mui-content-padded">
+				<button type="button" @click="change()" class="mui-btn mui-btn-primary ">修改数量</button>
+			</div>
+
+			<div class="order" style="height: auto;top: 0%;">
+				<div class="rowData">
+					<span class="name">物料名称</span>
+					<span class="value">批次</span>
+					<span class="value" style="left: 60%;">数量</span>
+				</div>
+
+				<div class="rowData" v-for="item in list">
+					<span class="name" style="color: #CF2D28;">{{item.itemName}}</span>
+					<span class="value" style="color: #CF2D28;">{{item.batch}}</span>
+					<span class="value" style="left: 60%;color: #CF2D28;">{{item.quantity}}</span>
+				</div>
+			</div>
+
+			<br/>
+			<div class="mui-content-padded">
+				<button type="button" @click="commit()" class="mui-btn mui-btn-primary   ">确定</button>
+				<br/>
+				<br/>
+
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../../config/dev.js"></script>
+		<script type="text/javascript" src="../../../js/mui.js"></script>
+		<script type="text/javascript" src="../../../libs/vue.js"></script>
+		<script type="text/javascript" src="../../../libs/jquery.1.11.min.js"></script>
+		<script type="text/javascript" src="group-pallet.js"></script>
+
+	</body>
+
+</html>

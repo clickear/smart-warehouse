@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.message.dao.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.message.model.NoticeDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="notice_id" jdbcType="BIGINT" property="noticeId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="business_no" jdbcType="VARCHAR" property="businessNo" />
+    <result column="business_type" jdbcType="INTEGER" property="businessType" />
+    <result column="notice_type" jdbcType="INTEGER" property="noticeType" />
+    <result column="notice_rule" jdbcType="INTEGER" property="noticeRule" />
+    <result column="terminal_position" jdbcType="VARCHAR" property="terminalPosition" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="param_name" jdbcType="VARCHAR" property="noticeRuleValue" />
+    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="b_lng" jdbcType="VARCHAR" property="bLng" />
+    <result column="b_lat" jdbcType="VARCHAR" property="bLat" />
+  </resultMap>
+  
+  
+  <select  id="findByBusinessNo"  resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select  a.*, b.param_name
+  	from notice a
+  	left join system_param b on a.notice_rule=b.param_id
+  	where a.business_no =#{businessNo}
+  </select>
+
+  <select  id="findByBusinessNoForTransportBillNo"  resultMap="BaseResultMap">
+    select a.*, b.param_name
+    from notice a
+    left join system_param b on a.notice_rule=b.param_id
+    where 1=1
+    <if test="keyword != null and keyword != '' "> and a.device_id like CONCAT('%',#{keyword},'%')</if>
+    <if test="transportBillNo != null and transportBillNo != '' "> and a.business_no = #{transportBillNo} </if>
+  </select>
+  
+  <select id="getAlarmList" parameterType="com.deer.wms.message.model.NoticeCriteria" resultMap="BaseResultMap">
+    	select a.*,b.param_name 
+    	from notice a
+    	left join system_param b on a.notice_rule=b.param_id
+    	where 1=1 and a.device_id in 
+    	(
+    	<foreach collection="deviceIdList" item="item" index="index" separator=",">
+    		#{item}
+    	</foreach>
+    	)
+    	<if test="startDate != null and startDate != ''">AND a.create_time &gt;= #{startDate}</if>
+    	<if test="endDate != null and endDate != ''">AND a.create_time &lt;= #{endDate}</if>
+  </select>
+
+</mapper>

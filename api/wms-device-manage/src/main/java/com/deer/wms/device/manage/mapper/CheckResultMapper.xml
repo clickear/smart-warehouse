@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.device.manage.dao.CheckResultMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.device.manage.model.CheckResult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="check_result_id" jdbcType="INTEGER" property="checkResultId" />
+    <result column="device_check_detail_id" jdbcType="INTEGER" property="deviceCheckDetailId" />
+    <result column="check_content_id" jdbcType="INTEGER" property="checkContentId" />
+    <result column="result" jdbcType="INTEGER" property="result" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="check_user_id" jdbcType="INTEGER" property="checkUserId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+
+
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.device.manage.model.CheckResultDto"  extends="BaseResultMap">
+      <result column="device_code" jdbcType="VARCHAR" property="deviceCode" />
+      <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+      <result column="check_project_name" jdbcType="VARCHAR" property="checkProjectName" />
+      <result column="check_project_id" jdbcType="INTEGER" property="checkProjectId" />
+      <result column="check_content_id" jdbcType="INTEGER" property="checkContentName" />
+      <result column="check_content_name" jdbcType="VARCHAR" property="checkContentName" />
+      <result column="step" jdbcType="VARCHAR" property="step" />
+      <result column="standard" jdbcType="VARCHAR" property="standard" />
+  </resultMap>
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.device.manage.model.CheckResultCriteria">
+      select
+      result.check_result_id,
+      result.device_check_detail_id,
+      result.check_content_id,
+      result.result,
+      result.check_time,
+
+      result.memo,
+
+
+      single.device_code,
+      info.device_name,
+      project.check_project_name,
+      content.check_project_id,
+      content.check_content_id,
+      content.check_content_name,
+      content.step,
+      content.standard
+
+      from check_result result
+      left join device_check_detail detail  on result.device_check_detail_id = detail.device_check_detail_id
+
+      left join device_single single  on single.device_single_id = detail.device_single_id
+      left join device_info info on single.device_id = info.device_id
+      left join check_content content on content.check_content_id = result.check_content_id
+      left join check_project project  on project.check_project_id = content.check_project_id
+      where 1=1
+      <if test="deviceSingleId != null">
+        and single.device_single_id = #{deviceSingleId}
+      </if>
+      <if test="deviceCheckDetailId != null">
+          and result.device_check_detail_id = #{deviceCheckDetailId}
+      </if>
+      <if test="checkContentId != null">
+          and result.check_content_id = #{checkContentId}
+      </if>
+      <if test="checkResultId != null">
+          and result.check_result_id = #{checkResultId}
+      </if>
+  </select>
+</mapper>

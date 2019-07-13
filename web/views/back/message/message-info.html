@@ -1,0 +1,43 @@
+<div class="settlement-main-hook main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+        <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+            <div class="settlement-wrapper settlement-hook">
+                <div class="title">
+                当前位置：&nbsp;&nbsp;->&nbsp;<span class="active">消息待办</span>
+                </div>
+                <ul id="myTab" class="nav nav-tabs" style="margin-left: 1rem">
+                <li class="active"><a href="#notcheck" data-toggle="tab">
+                未查看</a></li>
+                <li><a href="#checked" data-toggle="tab">已查看</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="notcheck">
+                        <div class="custom-table-wrapper">
+                            <table class="custom-table unread-table-hook"></table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="checked">
+                        <div class="custom-table-wrapper">
+                            <table class="custom-table already-read-table-hook"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show">2</div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show">3</div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show">4</div>
+</div>
+<script>
+    $(function(){
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var activeTab = $(e.target).text();
+            var previousTab = $(e.relatedTarget).text();
+            $(".active-tab span").html(activeTab);
+            $(".previous-tab span").html(previousTab);
+        });
+    });
+</script>
+<script type="text/javascript" src="js/back/message/message-info.js" custom></script>

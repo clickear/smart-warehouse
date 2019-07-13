@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.report.dao.InventoryMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.report.model.Inventory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="batch_id" jdbcType="INTEGER" property="batchId" />
+
+
+
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.report.model.InventoryDto" extends="BaseResultMap">
+
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+    <result column="item_master_id" jdbcType="INTEGER" property="itemMasterId" />
+    <result column="floor_limit" jdbcType="INTEGER" property="floorLimit" />
+    <result column="upper_limit" jdbcType="INTEGER" property="upperLimit" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.deer.wms.report.model.InventoryCriteria" resultMap="Dto">
+      select
+
+
+
+    inventory.id,
+
+    inventory.ware_code,
+    sum(inventory.quantity) as quantity,
+
+
+    batch.item_master_id,
+
+    item.item_code,
+    item.item_name,
+    item.item_class,
+    item.floor_limit,
+    item.upper_limit,
+    u.unit_name,
+    ware.ware_name,
+    im.item_master_name,
+    com.company_name
+
+
+
+
+
+
+    from inventory inventory
+
+    left join ware_info ware on inventory.ware_code = ware.ware_code
+    left join item_batch batch on inventory.batch_id = batch.batch_id
+    left join item_master im on im.item_master_id = batch.item_master_id
+    left join item_info item on batch.item_code = item.item_code
+    left  join item_type it on item.item_type_code = it.item_type_code
+    left join company com on ware.company_id = com.company_id
+    left join unit u on item.unit_code = u.unit_code
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+      AND (ware.ware_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR item.item_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR com.company_name LIKE CONCAT('%', #{keyWords}, '%'))
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      AND ware.ware_code =#{wareCode}
+    </if>
+    <if test="itemMasterId != null and itemMasterId != ''">
+      AND im.item_master_id =#{itemMasterId}
+    </if>
+    <if test="itemCode != null and itemCode != ''">
+      AND batch.item_code =#{itemCode}
+    </if>
+    <if test="itemTypeCode != null and itemTypeCode != ''">
+      AND it.item_type_code =#{itemTypeCode}
+    </if>
+    <if test="companyId != null and companyId != ''">
+      AND com.company_id =#{companyId}
+    </if>
+    group by batch.item_code , batch.item_master_id,inventory.ware_code
+    order by batch.item_code , batch.item_master_id,inventory.ware_code
+  </select>
+
+  <select id="findBatchList" parameterType="com.deer.wms.report.model.InventoryCriteria" resultMap="Dto">
+    select
+
+
+
+    inventory.id,
+
+    inventory.ware_code,
+    inventory.quantity,
+
+
+
+    item.item_code,
+    item.item_name,
+    item.item_class,
+    u.unit_name,
+
+    ware.ware_name,
+    im.item_master_name,
+    com.company_name,
+    batch.batch,
+    inventory.batch_id
+
+
+
+
+
+    from inventory inventory
+    left join ware_info ware on inventory.ware_code = ware.ware_code
+    left join item_batch batch on inventory.batch_id = batch.batch_id
+    left join item_master im on im.item_master_id = batch.item_master_id
+    left join item_info item on batch.item_code = item.item_code
+    left join unit u on item.unit_code = u.unit_code
+    left join company com on ware.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+      AND ware.ware_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR item.item_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR com.company_name LIKE CONCAT('%', #{keyWords}, '%')
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      AND ware.ware_code =#{wareCode}
+    </if>
+    <if test="itemCode != null and itemCode != ''">
+      AND batch.item_code =#{itemCode}
+    </if>
+    <if test="companyId != null and companyId != ''">
+      AND com.company_id =#{companyId}
+    </if>
+    <if test="itemMasterId != null and itemMasterId != ''">
+      AND im.item_master_id =#{itemMasterId}
+    </if>
+    <if test="batchId != null and batchId != ''">
+      AND inventory.batch_id =#{batchId}
+    </if>
+
+  </select>
+
+
+
+</mapper>

@@ -1,0 +1,174 @@
+<div class="investor-detail-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;机构管理&nbsp;->&nbsp;投资商管理&nbsp;->&nbsp;<span
+            class="active">投资商-详情</span>
+    </div>
+    <div class="inner-wrapper">
+        <h2>投资商-详情</h2>
+        <div class="detail form-horizontal">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">企业名称</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.companyName"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">法人名称</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.artificialPersonName"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">法人身份证号</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.artificialPersonIdCard"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">统一社会信用代码</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.creditCode"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">企业注册地址</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.registeredAddress"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">企业成立时间</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.establishDate"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">联系地址</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.linkmanAddress"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">联系电话</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static" v-text="info.linkmanPhone"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row">-->
+                <!--<div class="col-sm-6">-->
+                    <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">位置坐标，经度</label>-->
+                        <!--<div class="col-sm-g">-->
+                            <!--<p class="form-control-static">-->
+                                <!--<span v-text="info.lng"></span>,-->
+                                <!--<span v-text="info.lat"></span>-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">营业执照</label>
+                        <div class="col-sm-9">
+                            <div class="form-control-static">
+                                <div class="img">
+                                    <img :src="license" alt="" width="116" height="115"
+                                         @click="previewImg($event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">法人身份证</label>
+                        <div class="col-sm-9">
+                            <div class="form-control-static">
+                                <div class="img">
+                                    <img :src="cardFront" alt="" width="116" height="115"
+                                         @click="previewImg($event)">
+                                    <span>正面</span>
+                                </div>
+                                <div class="img">
+                                    <img :src="cardContrary" width="116" height="115"
+                                         @click="previewImg($event)">
+                                    <span>反面</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-offset-5">
+                        <button type="button" class="btn btn-gray-sm" @click.stop="goBack()">返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/organization/investor/investor-detail.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

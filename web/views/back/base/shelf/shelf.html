@@ -1,0 +1,234 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="return-wrapper shelf-hook">
+            <div class="title">
+                当前位置：<span>基础设置</span>&nbsp;&nbsp;->&nbsp;</span><span class="active">货架设置</span>
+            </div>
+
+            <form class="search form-search-hook">
+                <div class="row">
+
+
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">关键字</span>
+                    <input type="text" class="search-input lg" placeholder="关键字" name="keywords">
+                    <span class="interval-lg"></span>
+                    <span class="search-label">所属货区</span>
+                    <select class="form-control w120" name="areaCode">
+                        <option value="">全部</option>
+                        <option v-for="item in areaItems" v-bind:value="item.value">{{item.text}}</option>
+                    </select>
+                    <span class="interval-xs"></span>
+                    <button type="button" class="btn btn-blue search-hook">查询</button>
+                    <span class="interval-xs"></span>
+                    <button type="reset" class="btn btn-gray resert">清空</button>
+                </div>
+            </form>
+
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" data-toggle="modal" data-target="#newModal">新建货架</button>
+            </div>
+            <div class="custom-table-wrapper" style="padding: 0;height: auto;">
+                <table class="custom-table shelf-table-hook"></table>
+            </div>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel1">新增</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>货架信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span    style="margin-top: 20px;width: 100px">货架名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.shelfName"> <br/>
+                                        <span style="margin-top: 20px;width: 100px">所属货区</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="area" name="goodtypecodevch" v-model = "info.areaCode">
+
+                                            <option v-for="item in areaItems" v-bind:value="item.value">{{item.text}}</option>
+                                        </select><br/>
+
+
+                                    </li>
+                                    <li>
+                                    <span   style="margin-top: 20px;width: 100px;color: #7B68EE">此货区中行</span>
+                                    <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入行" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="3"  v-model = "info.aRow"><br/>
+
+                                    <span   style="margin-top: 20px;width: 100px;color: #7B68EE">此货区中列</span>
+                                    <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入列" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="3"   v-model = "info.aColumn">
+                                    <span   style="margin-top: 20px;width: 100px;color: #7B68EE">货架优先级</span>
+                                    <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入货架优先级"  onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="3" v-model = "info.orderNo">
+
+
+
+                                </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">货架规格行</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入行" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="3"  v-model = "info.shelfRow"><br/>
+
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">货架规格列</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入列" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="3"  v-model = "info.shelfColumn">
+
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">货位优先级</span>
+                                        <select  style="margin-top: 20px;width: 80px"  id="cR" name="goodtypecodevch"  v-model = "info.rCOrder">
+
+                                            <option    value="1">行优先</option>
+                                            <option    value="2">列优先</option>
+                                        </select><br/>
+                                        <select  style="margin-top: -57px;margin-left:200px;width: 80px;display: inline"  id="area" name="info.rOrder"   v-model = "info.rOrder">
+
+                                            <option    value="1">左优先</option>
+                                            <option    value="2">右优先</option>
+                                        </select><br/>
+                                        <select  style="margin-top: -113px;margin-left:300px;width: 80px;display: inline"  id="area" name="goodtypecodevch"  v-model = "info.cOrder" >
+
+                                            <option    value="1">上优先</option>
+                                            <option    value="2">下优先</option>
+                                        </select><br/>
+
+
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: -100px;width: 100px;color: #7B68EE">备注</span>
+                                        <input type="text" style="margin-top: -100px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "info.memo">
+
+
+
+                                    </li>
+
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "insertShelf()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">修改</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>货架信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span    style="margin-top: 20px;width: 100px">货架名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.shelfName"> <br/>
+                                        <span style="margin-top: 20px;width: 100px">所属货区</span>
+                                        <select  style="margin-top: 20px;width: 300px"  id="ar  ea" name="goodtypecodevch" v-model = "rowData.areaCode">
+
+                                            <option v-for="item in areaItems" v-bind:value="item.value">{{item.text}}</option>
+                                        </select><br/>
+
+
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">此货区中行</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入行"   v-model = "rowData.aRow"><br/>
+
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">此货区中列</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入列"   v-model = "rowData.aColumn">
+
+
+
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">货架规格行</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入行"   v-model = "rowData.shelfRow"><br/>
+
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">货架规格列</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入列"   v-model = "rowData.shelfColumn">
+
+
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">货位优先级</span>
+                                        <select  style="margin-top: 20px;width: 80px"    name="goodtypecodevch"  v-model = "rowData.rCOrder">
+
+                                            <option    value="1">行优先</option>
+                                            <option    value="2">列优先</option>
+                                        </select><br/>
+                                        <select  style="margin-top: -57px;margin-left:200px;width: 80px;display: inline"    name="info.rOrder"   v-model = "rowData.rOrder">
+
+                                            <option    value="1">左优先</option>
+                                            <option    value="2">右优先</option>
+                                        </select><br/>
+                                        <select  style="margin-top: -113px;margin-left:300px;width: 80px;display: inline"    name="goodtypecodevch"  v-model = "rowData.cOrder" >
+
+                                            <option    value="1">下优先</option>
+                                            <option    value="2">上优先</option>
+                                        </select><br/>
+
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "rowData.memo">
+
+
+
+                                    </li>
+
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "updateShelf()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+
+    <div id="shelfPrintArea"  style="display: none" >
+        <table border="2" style="width: 400px;height: 100px;border-color: #000000;position: absolute;left: 60px;top: 100px " >
+            <tr><td colspan="2" ><div id="shelfBar" style="margin:0px auto; text-align: center;  "></div></td></tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">所属仓库</span> </th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="wareName"></span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">所属货区</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="areaName"> </span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">货架名称</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="shelfName"> </span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">货架编码</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="shelfCode"> </span></td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show">2</div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show">3</div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show">4</div>
+</div>
+<script type="text/javascript" src="js/back/base/shelf/shelf.js" custom></script>

@@ -1,0 +1,82 @@
+ <!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link href="login.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		 
+		 
+		
+		
+		<header class="mui-bar mui-bar-nav" style="height: 15%;">
+			 <br/>
+			 <br/>
+			<h1 class="mui-title">Deer WMS</h1>
+		</header>
+	
+	<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<div class="mui-content "   >
+				<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+			<div class="mui-content-padded" style="margin: 4px;">
+				<form class="mui-input-group   " style="top: 40%;">
+					<div class="mui-input-row">
+						<label>用户名：</label>
+						<input type="text" id = "user" v-model="user" >
+					</div>
+					 
+		            
+					<div class="mui-input-row">
+						<label>密&nbsp;&nbsp;&nbsp;码：</label>
+						<input type="password" class="mui-input-password" v-model="pwd" >
+					</div>
+					
+					<div class="mui-input-row">
+						<label>address：</label>
+						<select type="text"   v-model="address"  @change="changeAdd()">
+							<option value="http://122.112.219.208:8002/wms">华为云</option>
+							<option value="http://localhost:8000/wms">110</option>
+							 
+						</select>
+					</div>
+
+					 
+					 
+				</form>
+				
+				<br/>
+				<div class="mui-content-padded">
+		         	<button type="button" @click="commit()"  class="mui-btn mui-btn-primary mui-btn-block">登&nbsp;&nbsp;&nbsp;陆</button>
+		        </div>
+				 
+			</div>
+		</div>
+		
+		<script src="../../../config/dev.js"></script>
+		<script src="../../../libs/jquery.1.11.min.js"></script>
+		<script src="../../../js/mui.min.js"></script>
+	 	
+		<script src="../../../libs/vue.js"></script>
+		<script src="../../../libs/vue-resource.js"></script>
+		
+		
+		<script src="login.js"></script>
+	</body>
+
+</html>

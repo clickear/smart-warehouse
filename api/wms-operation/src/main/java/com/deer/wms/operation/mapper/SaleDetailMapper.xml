@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.operation.dao.SaleDetailMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.operation.model.SaleDetailDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="unit_code" jdbcType="VARCHAR" property="unitCode" />
+    <result column="sale_no" jdbcType="VARCHAR" property="saleNo" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="request_supply_time" jdbcType="TIMESTAMP" property="requestSupplyTime" />
+    <result column="real_supply_time" jdbcType="TIMESTAMP" property="realSupplyTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.deer.wms.operation.model.SaleDetailCriteria"  resultMap="BaseResultMap" >
+
+
+    select
+    sald.id,
+    sald.item_code,
+    sald.item_class,
+    sald.price,
+    sald.quantity,
+    sald.unit_code,
+    sald.sale_no,
+    sald.company_id,
+    sald.memo,
+    DATE_FORMAT(sald.add_time, '%Y-%m-%d %H:%i:%s') AS add_time,
+    DATE_FORMAT(sald.request_supply_time, '%Y-%m-%d') AS request_supply_time,
+    DATE_FORMAT(sald.real_supply_time, '%Y-%m-%d %H:%i:%s') AS real_supply_time,
+    sald.status,
+    unit.unit_name,
+    item.item_name
+    from  sale_detail  sald
+    left join item_info   item  on  sald.item_code       = item.item_code
+    left join unit         unit on  sald.unit_code        = unit.unit_code
+    where 1=1
+
+    <if test="keyWords != null  and keyWords != ''">
+      AND sale_no LIKE CONCAT('%', #{keyWords}, '%')
+    </if>
+
+    <if test="saleNo != null  and saleNo != ''">
+      AND sale_no = #{saleNo}
+    </if>
+
+    <if test="status != null  and status != ''">
+      AND status = #{status}
+    </if>
+
+
+  </select>
+
+
+
+  <select id="findBySaleNoAndStatus" parameterType="com.deer.wms.operation.model.SaleDetailCriteria"  resultMap="BaseResultMap" >
+
+
+    select
+    id,
+    price,
+    sale_no,
+    item_code,
+    item.item_name,
+    item_class,
+    quantity,
+    DATE_FORMAT(sald.add_time, '%Y-%m-%d %H:%i:%s') AS add_time,
+    DATE_FORMAT(sald.request_supply_time, '%Y-%m-%d') AS request_supply_time,
+    DATE_FORMAT(sald.real_supply_time, '%Y-%m-%d %H:%i:%s') AS real_supply_time,
+    memo,
+    status
+    from  sale_detail  sald
+
+    left join item_info   item on sald.item_code       = item.item_code
+    left join unit unit on  sald.unit_code = unit.unit_code
+    where 1=1
+
+    <if test="status != null   ">
+      AND status = #{status}
+    </if>
+    <if test="saleNo != null  and saleNo != ''">
+      and  sale_no = #{saleNo}
+    </if>
+
+
+
+
+  </select>
+
+
+
+</mapper>

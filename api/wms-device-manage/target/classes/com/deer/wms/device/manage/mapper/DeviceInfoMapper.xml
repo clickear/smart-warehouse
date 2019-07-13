@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.device.manage.dao.DeviceInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.device.manage.model.DeviceInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="device_class_id" jdbcType="INTEGER" property="deviceClassId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.device.manage.model.DeviceInfoDto" extends="BaseResultMap">
+
+  </resultMap>
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.device.manage.model.DeviceInfoCriteria">
+      select
+      *
+      from device_info info
+      where 1=1
+
+  </select>
+</mapper>

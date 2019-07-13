@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.ware.task.dao.CountTaskMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.ware.task.model.CountTask">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="count_task_id" jdbcType="INTEGER" property="countTaskId" />
+    <result column="count_detail_id" jdbcType="INTEGER" property="countDetailId" />
+    <result column="sys_quantity" jdbcType="INTEGER" property="sysQuantity" />
+    <result column="pallet_batch_id" jdbcType="INTEGER" property="palletBatchId" />
+    <result column="count_quantity" jdbcType="INTEGER" property="countQuantity" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.ware.task.model.CountTaskDto" extends="BaseResultMap">
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+
+    <result column="cell_code" jdbcType="VARCHAR" property="cellCode" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="item_type_name" jdbcType="VARCHAR" property="itemTypeName" />
+    <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+
+  </resultMap>
+
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.ware.task.model.CountTaskCriteria">
+    select
+
+    task.pallet_batch_id,
+    task.state,
+    task.count_detail_id,
+    task.count_quantity,
+    task.count_task_id,
+    task.sys_quantity,
+    pb.batch_id,
+    pb.pallet_id,
+    pb.quantity,
+
+
+    area.area_name,
+    shelf.shelf_name,
+    cell.cell_code,
+
+    pallet.pallet_name,
+
+    batch.batch,
+
+    item.item_name,
+    item.item_class,
+
+    it.item_type_name,
+
+    imaster.item_master_name
+
+        from count_task task
+        left join count_detail detail  on task.count_detail_id = detail.count_detail_id
+        left join pallet_batch pb on task.pallet_batch_id = pb.pallet_batch_id
+        left join pallet pallet  on pallet.pallet_id = pb.pallet_id
+        left  join cell_info cell on cell.cell_code  = pallet.cell_code
+        left join shelf_info shelf on shelf.shelf_code = cell.shelf_code
+        left  join area_info area on area.area_code = shelf.area_code
+        left  join ware_info ware on ware.ware_code = area.ware_code
+        left join company com on com.company_id = ware.company_id
+        left  join item_batch batch on batch.batch_id = pb.batch_id
+        left join item_info item on batch.item_code = item.item_code
+        left  join item_type it on it.item_type_code = item.item_type_code
+        left join item_master imaster on batch.item_master_id = imaster.item_master_id
+
+    where 1=1
+    <if test="countId != null">
+      and detail.count_id = #{countId}
+    </if>
+
+
+  </select>
+</mapper>

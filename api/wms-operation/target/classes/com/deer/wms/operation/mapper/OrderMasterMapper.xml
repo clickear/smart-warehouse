@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.operation.dao.OrderMasterMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.operation.model.OrderMaster">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_total" jdbcType="INTEGER" property="orderTotal" />
+    <result column="supplier_site" jdbcType="VARCHAR" property="supplierSite" />
+    <result column="supplier_code" jdbcType="VARCHAR" property="supplierCode" />
+    <result column="adder" jdbcType="VARCHAR" property="adder" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="supplier_contacts" jdbcType="VARCHAR" property="supplierContacts" />
+    <result column="supplier_phone" jdbcType="INTEGER" property="supplierPhone" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="checker" jdbcType="VARCHAR" property="checker" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+
+
+  <resultMap id="DtoMap" type="com.deer.wms.operation.model.OrderMasterDto" extends="BaseResultMap">
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
+  </resultMap>
+
+  <select id="findList" resultMap="DtoMap" parameterType="com.deer.wms.operation.model.OrderMasterCriteria">
+    select
+    master.id,
+    master.order_no,
+    master.order_total,
+    master.add_time,
+    master.adder,
+    master.check_time,
+    master.checker,
+    master.state,
+    master.supplier_site,
+    master.company_id,
+    master.memo,
+    master.supplier_code,
+    master.supplier_contacts,
+    master.supplier_phone,
+    com.company_name,
+    sup.supplier_name
+
+
+    from order_master  master
+    left join supplier_manage sup on  master.supplier_code = sup.supplier_code
+    left join company com on master.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords !=  ''">
+      and master.order_no like concat('%','keyWords','%'>
+    </if>
+    <if test="companyId != null and companyId != ''">
+      and com.company_id = #{companyId}
+    </if>
+    <if test="checkTime != null and checkTime != ''">
+      and master.add_time &gt; = #{checkTime}
+    </if>
+    <if test="supplierCode != null and supplierCode != ''">
+      and master.supplier_code  = #{supplierCode}
+    </if>
+
+  </select>
+
+
+</mapper>

@@ -1,0 +1,629 @@
+@import "./back-base";
+
+.demo-table-body {
+  max-height: 685px;
+}
+
+// 个人中心页面 =====================================================================================================
+.member-info-page {
+  .member-info {
+    padding-left: 50px;
+  }
+  .member-phone {
+    position: relative;
+    left: -90px;
+    top: 34px;
+  }
+  .portrait {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    display: inline-block;
+    border: 1px solid aliceblue;
+    //background: url('../../img/icon/portrait.png') no-repeat;
+    background-size: cover;
+  }
+  .hide-show {
+    display: none;
+  }
+}
+
+// 消息待办页面=====================================================================================================
+.message-info-page {
+  .menu-md {
+    border: 1px solid red;
+  }
+}
+
+// 表单通用 === start ==================================================================================================
+.panel() {
+  border-top: 5px solid @blueBorderColor;
+  border-left: 1px solid @wireframeColor;
+  border-right: 1px solid @wireframeColor;
+  border-bottom: 1px solid @wireframeColor;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: white;
+}
+
+.inner-wrapper {
+  margin: 20px 30px;
+  padding: 10px 20px;
+  .panel();
+  > h2 {
+    padding: 2px 0 9px 0;
+    font-size: 16px;
+    color: @blueFontColor;
+    border-bottom: 1px solid @borderLinkColor;
+    .btn-gray-sm {
+      position: relative;
+      left: 80%;
+    }
+  }
+  .col-sm-6 {
+    input.datetime {
+      width: 175px;
+      background: url("../../img/icon/datetime-icon.png") no-repeat;
+      background-position: 150px 5px;
+      color: #555555;
+      background-color: white;
+    }
+    &.pad-top3 {
+      line-height: 27px;
+    }
+  }
+  .col-sm-2 {
+    &.left15 {
+      padding-left: 15px;
+    }
+    img {
+      height: 70px;
+      float: left;
+    }
+    &.wid14 {
+      width: 14%;
+    }
+  }
+  .date-time-box {
+    display: inline-block;
+    height: 25px;
+    line-height: 35px;
+  }
+  .default-a {
+    color: @blueFontColor;
+  }
+  .location-img{
+    width: 25px;
+    position: relative;
+    left: 1px;
+    top: 20px;
+  }
+  .custom-menu {
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: #E8E9ED;
+    &.active {
+      background-color: @blueFontColor;
+      color: #fff;
+    }
+    &:hover {
+      background-color: @blueFontColor;
+      color: #fff;
+    }
+  }
+  .position-info {
+    cursor: pointer;
+    color: @blueFontColor;
+    display: inline-block;
+  }
+  // 通用地图容器====================================================================================================
+  .map-box {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 18px;
+    .common-map {
+      height: 690px;
+    }
+  }
+  .form-horizontal {
+    padding: 20px 0;
+    label.control-label {
+      font-weight: normal;
+      color: #0B8DDA;/*组织机构——yangxu*/
+      &:after {
+        content: ':';
+        padding: 0 0 0 5px;
+        font-weight: bold;
+      }
+    }
+    .form-group {
+        .font-bold{
+          font-weight: bold;
+        }
+        .left90{
+          margin-left: 91px;
+        }
+      .left16 {
+        margin-left: 15px;
+      }
+    }
+    .form-control {
+      display: inline-block;
+      width: 300px;
+      &.w500 {
+        width: 500px;
+      }
+      &.error {
+        border: 1px solid @activeBorderColor;
+      }
+      &.hide-show {
+        display: none;
+      }
+      &.text-area {
+        width: 452px;
+        height: 200px;
+        margin-top: 20px;
+        resize: none;
+        overflow-y: auto;
+        word-wrap: break-word;
+        .stress{
+          color: @blueFontColor;
+          font-weight: bold;
+        }
+      }
+    }
+    label.error {
+      padding: 3px 0 0 10px;
+      color: @dangerFontColor;
+      font-weight: normal;
+    }
+    .form-group {
+      .radio {
+        label {
+
+        }
+        span {
+          padding: 0 20px 0 0;
+        }
+      }
+      span.interval-xs {
+        display: inline-block;
+        padding: 0 0 0 8px;
+      }
+      span.interval-lg {
+        display: inline-block;
+        padding: 0 0 0 35px;
+      }
+    }
+    .edit-content {
+      min-height: 500px;
+    }
+  }
+}
+
+// 表单通用 === end ====================================================================================================
+
+// 首页 === start ======================================================================================================
+div.homepage-wrapper {
+  .statistics {
+    padding: 25px 18px;
+    font-size: 0;
+    > li {
+      padding: 0 12px;
+      display: inline-block;
+      width: 24%;
+
+      > div {
+        color: white;
+        position: relative;
+        padding: 10px 20px 20px 100px;
+        height: 120px;
+        border-radius: 5px;
+        > .number {
+          display: block;
+          //padding: 15px 0 0 100px;
+          font-size:32px;
+        }
+        > .text {
+          font-size: 20px;
+          color: rgba(255, 255, 255, .7);
+        }
+        &.count {
+          background: #FF6B5C;
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            background: url("../../img/icon/home-icon1.png") no-repeat;
+          }
+        }
+        &.rent-out {
+          background: #019FEE;
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            width: 37px;
+            height: 41px;
+            background: url("../../img/icon/home-icon2.png") no-repeat;
+          }
+        }
+        &.sublet {
+          background: #F6B100;
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            width: 39px;
+            height: 38px;
+            background: url("../../img/icon/home-icon3.png") no-repeat;
+          }
+        }
+        &.on-passage {
+          background: #31CDBA;
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 28px;
+            left: 30px;
+            width: 47px;
+            height: 34px;
+            background: url("../../img/icon/home-icon4.png") no-repeat;
+          }
+        }
+      }
+
+    }
+  }
+  .detail {
+    position: relative;
+    margin: 0 30px;
+    .panel();
+    > div.map-wrapper {
+      position: relative;
+      margin-right: 400px;
+      height: 500px;
+      > div.all {
+        position: absolute;
+        top: 58px;
+        right: 10px;
+        color: @blueFontColor;
+        cursor: pointer;
+        z-index: 999;
+      }
+      .map {
+        height: 100%;
+      }
+    }
+    > .branch {
+      position: absolute;
+      padding: 20px 15px;
+      width: 400px;
+      height: 500px;
+      top: 0;
+      right: 0;
+      background: white;
+      > h3 {
+        color: @blueFontColor;
+        font-weight: bold;
+        font-size: 16px;
+      }
+      > h4 {
+        padding: 20px 0;
+        font-size: 18px;
+        color: #111111;
+      }
+      ul.items {
+        li {
+          position: relative;
+          height: 78px;
+          background: #F8F8FA;
+          border-radius: 5px;
+          margin-top: 8px;
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 11px;
+            left: 25px;
+            width: 55px;
+            height: 55px;
+          }
+          &.direct:before {
+            background: url("../../img/icon/home-icon5.png") no-repeat;
+          }
+          &.agency:before {
+            background: url("../../img/icon/home-icon6.png") no-repeat;
+          }
+          &.client:before {
+            background: url("../../img/icon/home-icon7.png") no-repeat;
+          }
+          &.tray:before {
+            width: 55px;
+            height: 55px;
+            background: url("../../img/icon/home-icon8.png") no-repeat;
+          }
+          > span.number {
+            display: inline-block;
+            width: 160px;
+            height: 100%;
+            line-height: 78px;
+            margin-left: 100px;
+            color: @blueFontColor;
+            font-size: 30px;
+          }
+          div.text {
+            position: absolute;
+            top: 28px;
+            right: 25px;
+            text-align: right;
+            color: rgba(07, 072, 072, .5);
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+  .schedule {
+    padding: 30px 10px;
+    .schedule-title {
+      padding: 0 20px;
+      font-size: 18px;
+      color: @blueFontColor;
+    }
+    .homepage-table-body {
+      max-height: 200px;
+    }
+  }
+}
+
+// 首页 === end ========================================================================================================
+
+// 组织机构 -> 账户管理 === start =======================================================================================
+div.account-wrapper {
+  .account-table-body {
+    max-height: 500px;
+  }
+}
+
+// 组织机构 -> 账户管理 === end =========================================================================================
+
+// 组织机构 -> 角色管理 === start =======================================================================================
+.role-table-body {
+  max-height: 500px;
+}
+
+// 组织机构 -> 角色管理 === end =======================================================================================
+
+// 组织机构 -> 机构管理 === start ========================================================================
+.platform-branch-table-body {
+  max-height: 500px;
+}
+
+.client-table-body {
+  max-height: 500px;
+}
+
+.storage-table-body {
+  max-height: 500px;
+}
+
+.supplier-table-body {
+  max-height: 500px;
+}
+
+.investor-table-body {
+  max-height: 500px;
+}
+
+.poi-table-body {
+  max-height: 500px;
+}
+
+.message-table-body {
+  max-height: 500px;
+}
+
+.warn-table-body {
+  max-height: 500px;
+}
+/*托盘转租*/
+.sublet-table-body {
+    max-height: 500px;
+}
+/*托盘退板*/
+.return-table-body {
+  max-height: 500px;
+}
+.create-return-table-body {
+  max-height: 500px;
+}
+//下单管理
+.order-table-body,
+.confirm-table-body,
+.allocation-table-body,
+.inventory-table-body,
+.detail-inventory-table-body,
+.relet-table-body,
+.rental-table-body,
+.tracking-table-body,
+.buy-table-body,
+.plan-table-body,
+.network-table-body,
+.preferential-table-body,
+.patchAllocation-table-body,
+create-allocation-table-body,
+input-allocation-table-body,
+result-create-allocation-table-body,
+detail-result-allocation-table-body,
+choose-binding-order-table-body{
+  max-height: 500px;
+}
+.settlement-table-body{
+  max-height: 380px;
+}
+.img {
+  display: inline-block;
+  padding: 1px;
+  margin-right: 20px;
+  position: relative;
+  min-width: 116px;
+  min-height: 115px;
+  border: 1px solid @borderLinkColor;
+  cursor: pointer;
+  vertical-align: top;
+  &:hover {
+
+  }
+  &:before {
+    content: '点击大图';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50px;
+    text-align: center;
+  }
+
+  > span {
+    display: block;
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    a {
+      padding: 0 0 0 10px;
+    }
+  }
+
+}
+
+// 组织机构 -> 机构管理 === end ==========================================================================
+
+
+.address_list{
+  position: absolute;
+  border: 1px solid #e2e2e2;
+  background: #fff;
+  top:30px;
+  left:0;
+  z-index:100;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  li{
+    line-height: 28px;
+    padding:3px 5px;
+    border-bottom: 1px solid #e2e2e2;
+    width:298px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+}
+
+
+.table1{
+  font: bold 16px/1.4em "Trebuchet MS", sans-serif;
+  position: relative;
+}
+.table1 thead th{
+  width: 300px;
+  padding: 15px;
+  border: 1px solid #93CE37;
+  border-bottom: 3px solid ;
+  text-shadow: 1px 1px 1px #568F23;
+  color: white;
+  background-color: 	#66B3FF;
+  border-radius: 5px 5px 0px 0px;
+}
+.table1 thead th:empty{
+  background-color: transparent;
+  border: none;
+}
+.table1 tbody th{
+  padding: 0px 10px;
+  border: 1px solid #93CE37;
+  border-right: 3px solid 	#66B3FF;
+  text-shadow: 1px 1px 1px #568F23;
+  color: #666;
+  background-color: 	#66B3FF;
+  border-radius: 5px 0px 0px 5px;
+}
+.table1 tbody td{
+  padding: 10px;
+  border: 2px solid #E7EFE0;
+  text-align: center;
+  text-shadow: 1px 1px 1px #fff;
+  color: black;
+  background-color: white;
+  border-radius: 2px;
+}
+.table1 tbody td input{
+  padding: 10px;
+  border: 2px solid #E7EFE0;
+  text-align: center;
+  text-shadow: 1px 1px 1px #fff;
+  width: 100%;
+  background-color: white;
+  border-radius: 2px;
+}
+.table1 tbody td select{
+   padding: 10px;
+   border: 2px solid #E7EFE0;
+   text-align: center;
+   text-shadow: 1px 1px 1px #fff;
+   width: 100%;
+   background-color: white;
+   border-radius: 2px;
+ }
+
+.table1 tbody td textarea{
+  padding: 10px;
+  border: 2px solid #E7EFE0;
+  text-align: center;
+  text-shadow: 1px 1px 1px #fff;
+  width: 300px;height: 80px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.table1 tbody td button{
+
+}
+
+.table1 tfoot td{
+  padding: 10px 0px;
+  font-size: 32px;
+  color: #9CD009;
+  text-align: center;
+  text-shadow: 1px 1px 1px #444;
+}
+
+
+
+
+
+
+
+
+
+
+

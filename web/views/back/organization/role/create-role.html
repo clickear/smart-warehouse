@@ -1,0 +1,89 @@
+<div class="create-role-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;角色管理&nbsp;->&nbsp;<span class="active">角色新增</span>
+    </div>
+    <div class="search">
+        <div class="row">
+            <button type="button" class="btn btn-gray" @click.stop="goBack()">返回</button>
+        </div>
+    </div>
+    <div class="inner-wrapper">
+        <h2>新增-角色</h2>
+        <div class="form">
+            <form class="form-horizontal form-hook" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">父级角色选择</label>
+                    <select class="form-control p-role-hook" name="pRoleName">
+                        <option value="" @click.stop="checkRole()"></option>
+                        <option v-for="(type,index) in pRoleName" :value="type.roleId"
+                                v-text="type.roleName" @click.stop="checkRole(type)"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">角色名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="roleName"
+                               v-model="info.roleName" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">角色描述</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="roleDescribe"
+                               v-model="info.roleDescribe">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">权限配置</label>
+                    <div class="col-sm-10">
+                        <div class="form-control-static">
+                            <ul id="roleTree" class="ztree"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">保存</button>
+                        <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-gray-sm" @click.stop="goBack()">返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/organization/role/create-role.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

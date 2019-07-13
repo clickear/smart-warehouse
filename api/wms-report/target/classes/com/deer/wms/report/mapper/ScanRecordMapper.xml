@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.report.dao.ScanRecordMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.report.model.ScanRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="scan_record_id" jdbcType="INTEGER" property="scanRecordId" />
+    <result column="scan_code" jdbcType="VARCHAR" property="scanCode" />
+    <result column="scan_time" jdbcType="TIMESTAMP" property="scanTime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.deer.wms.report.model.ScanRecordCriteria" resultMap="BaseResultMap">
+    select
+    *
+    from scan_record
+    where 1=1
+    <if test="state != null">
+      and state =#{state}
+    </if>
+    <if test="type != null">
+      and type=#{type}
+    </if>
+  </select>
+</mapper>

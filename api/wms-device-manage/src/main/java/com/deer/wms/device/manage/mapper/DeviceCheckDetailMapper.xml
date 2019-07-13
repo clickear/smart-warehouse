@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.device.manage.dao.DeviceCheckDetailMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.device.manage.model.DeviceCheckDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="deviceCheckDetailId" jdbcType="INTEGER" property="deviceCheckDetailId" />
+    <result column="deviceCheckMasterId" jdbcType="INTEGER" property="deviceCheckMasterId" />
+    <result column="device_single_id" jdbcType="INTEGER" property="deviceSingleId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="task_user_id" jdbcType="INTEGER" property="taskUserId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.device.manage.model.DeviceCheckDetailDto" extends="BaseResultMap">
+
+    <result column="device_code" jdbcType="VARCHAR" property="deviceCode" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="task_user_name" jdbcType="VARCHAR" property="taskUserName" />
+  </resultMap>
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.device.manage.model.DeviceCheckDetailCriteria">
+    select
+    detail.device_check_master_id as deviceCheckMasterId,
+    detail.device_check_detail_id as deviceCheckDetailId,
+    detail.device_single_id,
+    detail.memo,
+    detail.task_user_id,
+    detail.state,
+    detail.task_time,
+
+    single.device_code,
+    info.device_name,
+    info.device_id,
+
+    uinfo.user_name as task_user_name
+    from device_check_detail detail
+    left join device_check_master master  on detail.device_check_master_id = master.device_check_master_id
+    left join device_single single  on detail.device_single_id = single.device_single_id
+    left join  device_info info on single.device_id = info.device_id
+    left join user_info uinfo on detail.task_user_id = uinfo.user_id
+
+    where 1=1
+    <if test="deviceCheckMasterId != null">
+      and  detail.device_check_master_id = #{deviceCheckMasterId}
+    </if>
+    <if test="deviceSingleId != null and deviceSingleId != ''">
+      and  detail.device_single_id = #{deviceSingleId}
+    </if>
+
+  </select>
+
+
+
+
+</mapper>

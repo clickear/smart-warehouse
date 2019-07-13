@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.message.dao.HelpContentMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.message.model.HelpContent">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="content_id" jdbcType="INTEGER" property="contentId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  
+  <resultMap id="BaseDtoResultMap" type="com.deer.wms.message.model.HelpContentDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="content_id" jdbcType="INTEGER" property="contentId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  
+  <select id="selectContentByCategoryId" resultMap="BaseResultMap">
+      select content_id,category_id,content from help_content where category_id=#{categoryId}
+  </select>
+  
+  <select id="selectContentAll" parameterType="com.deer.wms.message.model.HelpContentCriteria" resultMap="BaseDtoResultMap">
+  		select con.*,cat.category_name,cat.parent_id,cate.category_name as parent_name 
+  		from help_content con left join help_category cat on con.category_id = cat.category_id 
+  		LEFT JOIN help_category cate ON cat.parent_id = cate.category_id
+		where 1=1 
+  		<if test="parentId != null and parentId != '' ">
+  			and cat.parent_id = #{parentId}
+  		</if>
+  		<if test="categoryId != null and categoryId != '' ">
+  			and cat.category_id = #{categoryId}
+  		</if>
+  		<if test="keywords != null and keywords != '' ">
+  			and con.title like CONCAT('%',#{keywords},'%')
+  		</if>
+  		<if test="state != null and state != ''">
+  			and con.state = #{state}
+  		</if>
+  		order by con.modify_time desc
+  </select>
+  
+  <insert id="insertHelpContent" parameterType="com.deer.wms.message.model.HelpContent">
+  		insert into help_content (
+  		<if test="categoryId != null ">
+  			category_id,
+  		</if>
+  		<if test="content != null and content != '' ">
+  			content,
+  		</if>
+  		<if test="title != null and title != '' ">
+  			title,
+  		</if>
+  		<if test="state != null and state != '' ">
+  			state,
+  		</if>
+  			create_time , modify_time
+  		) values (
+  		<if test="categoryId != null ">
+  			#{categoryId},
+  		</if>
+  		<if test="content != null and content != '' ">
+  			#{content},
+  		</if>
+  		<if test="title != null and title != '' ">
+  			#{title},
+  		</if>
+  		<if test="state != null and state != '' ">
+  			#{state},
+  		</if>
+  			now(),now()
+  		) 
+  </insert>
+  
+  <update id="update" parameterType="com.deer.wms.message.model.HelpContent">
+  		update help_content set
+  		<if test="categoryId != null and categoryId != '' ">category_id = #{categoryId}, </if> 
+  		<if test="content != null and content != '' ">content = #{content}, </if>
+  		<if test="title != null and title != '' ">title = #{title}, </if>
+  		<if test="state != null and state != ''">state = #{state}, </if>
+  		modify_time = now()
+  		where content_id = #{contentId}
+  </update>
+  
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseDtoResultMap">
+  		select con.content_id,con.category_id,con.content,cat.category_name
+  		,cate.category_name as parent_name,con.state,cat.parent_id
+  		,con.title,con.create_time,con.modify_time
+		from help_content con LEFT JOIN help_category cat ON con.category_id=cat.category_id
+		LEFT JOIN help_category cate ON cat.parent_id=cate.category_id
+		where content_id=#{contentId}
+  </select>
+  
+  <select id="selectByTitle" parameterType="com.deer.wms.message.model.HelpContentCriteria" resultMap="BaseResultMap" >
+  		select * from help_content where title = #{title}
+  		and category_id = #{categoryId}
+  </select>
+</mapper>

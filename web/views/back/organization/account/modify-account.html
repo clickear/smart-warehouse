@@ -1,0 +1,102 @@
+<div class="create-account modify-account-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;账户管理&nbsp;->&nbsp;<span class="active">修改账户信息</span>
+    </div>
+    <div class="inner-wrapper">
+        <h2>修改账户信息</h2>
+        <div class="form">
+            <form class="form-horizontal form-hook" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">所属单位</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" v-text="account.companyName"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">用户角色</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" v-text="account.roleName"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">手机号码</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" v-text="account.mobile"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">电子邮箱</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="email"
+                               v-model="account.email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">用户姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="userName" v-model="account.userName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">性别</label>
+                    <div class="col-sm-10">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender" value="0"
+                                       @click.stop="account.gender = 0"
+                                       :checked="account.gender === 0"><span>男</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="1"
+                                       @click.stop="account.gender = 1"
+                                       :checked="account.gender === 1"><span>女</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">保存</button>
+                        <span class="interval-lg"></span>
+                        <button   class="btn btn-gray-sm" @click.stop="prevStep()">返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/organization/account/modify-account.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

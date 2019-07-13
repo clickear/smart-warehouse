@@ -1,0 +1,37 @@
+<div class="next-return create-ware-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;基本信息&nbsp;->仓库设置&nbsp;->&nbsp;<span class="active">新建仓库</span>
+    </div>
+    <form class="form-horizontal create-ware-form" method="post">
+        <div class="order_operation_btn fr">
+            <button class="primary_btn">确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>仓库信息</h3>
+                    <ol class="detail_list">
+
+                        <li  style="margin-top: 20px;">
+
+                            <p><span>仓库名字：</span>
+                                <input type="text"   v-model="info.warenamevch"     name="areaNameVch"    maxlength="11">
+                            </p>
+
+                        </li>
+                        <li style="margin-top: 20px;">
+                            <h4>仓库描述</h4>
+                            <textarea v-model="info.waredesvch" name="remark" class="form_control" maxlength="500" placeholder="请输入描述，最大500字"></textarea>
+                        </li>
+                        <li style="margin-top: 20px;">
+                            <h4>仓库信息</h4>
+                            <textarea v-model="info.memovch" name="remark" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                    </ol>
+            </ul>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="js/back/base/ware/create-ware.js" custom></script>

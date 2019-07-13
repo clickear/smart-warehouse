@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ClientManageMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.ClientManage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="client_id" jdbcType="INTEGER" property="clientId" />
+    <result column="client_code" jdbcType="VARCHAR" property="clientCode" />
+    <result column="client_name" jdbcType="VARCHAR" property="clientName" />
+    <result column="client_site" jdbcType="VARCHAR" property="clientSite" />
+    <result column="client_contacts" jdbcType="VARCHAR" property="clientContacts" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+  </resultMap>
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.ClientManageCriteria">
+
+    delete from client_manage
+
+    where  client_code = #{clientCode}
+
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.ClientManageCriteria"  resultMap="BaseResultMap">
+    select
+    *
+    from client_manage  cli
+    left join company com on  cli.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+      AND cli.client_name LIKE CONCAT('%', #{keyWords}, '%')
+      or cli.client_code LIKE CONCAT('%', #{keyWords}, '%')
+      or cli.contact_phone LIKE CONCAT('%', #{keyWords}, '%')
+
+    </if>
+
+    <if test="companyId != null and companyId != ''">
+      AND com.company_id = #{companyId}
+    </if>
+
+    ORDER BY cli.create_time desc
+  </select>
+</mapper>

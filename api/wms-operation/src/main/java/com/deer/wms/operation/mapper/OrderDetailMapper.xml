@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.operation.dao.OrderDetailMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.operation.model.OrderDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="unit_code" jdbcType="VARCHAR" property="unitCode" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="item_type" jdbcType="VARCHAR" property="itemType" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="memo" jdbcType="INTEGER" property="memo" />
+  </resultMap>
+
+  <resultMap id="DtoMap" type="com.deer.wms.operation.model.OrderDetailDto" extends="BaseResultMap">
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+  </resultMap>
+
+
+
+
+  <delete id="deleteByC" parameterType="com.deer.wms.operation.model.OrderDetailCriteria">
+
+    delete
+    from order_detail
+    where
+    id = #{id}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+
+
+  <select id="findList" resultMap="DtoMap" parameterType="com.deer.wms.operation.model.OrderDetailCriteria">
+    select
+    detail.id,
+    detail.order_no,
+    detail.item_code,
+    detail.item_class,
+    detail.price,
+    detail.unit_code,
+    detail.item_type,
+    detail.quantity,
+    detail.memo ,
+    detail.state ,
+    detail.add_time ,
+    detail.company_id ,
+
+
+    com.company_name,
+    uni.unit_name ,
+    item.item_name,
+    item.item_class
+
+
+    from order_detail  detail
+    left join unit uni on       detail.unit_code = uni.unit_code
+    left join item_info item on detail.item_code = item.item_code
+    left join order_master master on  detail.order_no = master.order_no
+    left join company com on  master.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords !=  ''">
+      and detail.order_no like concat('%','keyWords','%'>
+      and item.item_name like concat('%','keyWords','%'>
+      and item.item_class like concat('%','keyWords','%'>
+    </if>
+    <if test="companyId != null and companyId != ''">
+      and com.company_id = #{companyId}
+    </if>
+    <if test="orderNo != null and orderNo != ''">
+      and master.order_no = #{orderNo}
+    </if>
+
+
+  </select>
+
+</mapper>

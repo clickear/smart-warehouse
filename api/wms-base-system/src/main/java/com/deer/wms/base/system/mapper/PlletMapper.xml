@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.PlletMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.PlletDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="pllet_id" jdbcType="INTEGER" property="plletId" />
+    <result column="pllet_code" jdbcType="VARCHAR" property="plletCode" />
+    <result column="pllet_name" jdbcType="VARCHAR" property="plletName" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="pllet_bar_code" jdbcType="VARCHAR" property="plletBarCode" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="pllet_type" jdbcType="VARCHAR" property="plletType" />
+  </resultMap>
+
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.PlletCriteria">
+    delete from pllet where pllet_code = #{plletCode}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+<select id="findList" parameterType="com.deer.wms.base.system.model.PlletCriteria" resultMap="BaseResultMap">
+
+  select   *
+  from pllet plt
+  left join company com on plt.company_id = com.company_id
+  where 1=1
+  <if test="keyWords != null and keyWords != ''">
+    AND plt.pllet_name LIKE CONCAT('%', #{keyWords}, '%')
+  </if>
+  <if test="companyId != null and companyId != ''">
+    AND com.company_id =#{companyId}
+  </if>
+  <if test="plletCode != null and plletCode != ''">
+    AND plt.pllet_code =#{plletCode}
+  </if>
+
+
+</select>
+
+</mapper>

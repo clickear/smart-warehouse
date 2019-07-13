@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.role.Role">
+        <id column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="company_id" jdbcType="INTEGER" property="companyId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="parent_role_id" jdbcType="INTEGER" property="parentRoleId" />
+        <result column="role_level" jdbcType="INTEGER" property="roleLevel" />
+        <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    </resultMap>
+
+    <!-- 角色信息列表视图类字段映射 -->
+    <resultMap id="RoleListVOMap" type="com.deer.wms.system.manage.model.role.RoleListVO">
+        <result column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
+        <result column="parent_role_id" jdbcType="INTEGER" property="parentRoleId" />
+        <result column="role_level" jdbcType="INTEGER" property="roleLevel" />
+        <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    </resultMap>
+
+    <!-- 角色详细信息视图类字段映射 -->
+    <resultMap id="RoleDetailVOMap" type="com.deer.wms.system.manage.model.role.RoleDetailVO">
+        <result column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_describe" jdbcType="VARCHAR" property="roleDescribe" />
+    </resultMap>
+
+    <!-- 查询角色信息列表 -->
+    <select id="selectRoleFormList" parameterType="com.deer.wms.system.manage.model.role.RoleCriteria" resultMap="RoleListVOMap">
+        SELECT
+            role.role_id
+            , role.role_name
+            , role.role_level
+            , IFNULL(role.role_describe, '') AS role_describe
+            , role.parent_role_id
+            , date_format(role.create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+            , company.company_name
+        FROM role
+        LEFT JOIN company ON company.company_id = role.company_id
+        <if test="userId != null"> LEFT JOIN user_role ur ON ur.role_id = role.role_id </if>
+        WHERE role.state = 'normal'
+        <if test="userId != null"> AND ur.user_id = #{userId} </if>
+        <if test="roleLevel != null"> AND role.role_level = #{roleLevel} </if>
+        <if test="companyId != null"> AND role.company_id = #{companyId} </if>
+        <if test="keyword != null and keyword != ''"> AND role.role_name LIKE CONCAT('%', #{keyword}, '%') </if>
+        ORDER BY role.create_time
+    </select>
+
+    <!-- 查找指定角色的详细信息 -->
+    <select id="selectRoleByRoleId" resultMap="RoleDetailVOMap">
+        SELECT
+              role.role_id
+            , role.role_name
+            , role.role_describe
+        FROM role
+        WHERE role.role_id = #{roleId}
+    </select>
+</mapper>

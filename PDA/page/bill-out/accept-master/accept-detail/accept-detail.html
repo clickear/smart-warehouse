@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>验收</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+ 
+		<link href="../../../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="accept-detail.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav  " style="height: 15%;">
+			<br/>
+		<br/>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">验收</h1>
+		</header>
+		<div class="contain">
+			<br/>
+			<div class="mui-input-row mui-search">
+				<input type="search" style="width: 74%;margin-left: 13%;" v-model="itemBatchBarCode" v-on:oninput="changeBar" placeholder="扫描物料条码">
+			</div>
+
+			<div class="order" style="height: auto;top: 0%;">
+
+				<div class="rowData">
+					<span class="name">物料编码：</span>
+					<span class="value" style="color: #CF2D28;">{{batch.itemCode}}</span>
+				</div>
+				<div class="rowData">
+					<span class="name">物料名称：</span>
+					<span class="value" style="color: #CF2D28;">{{batch.itemName}}</span>
+				</div>
+				<div class="rowData">
+					<span class="name">批次：</span>
+					<span class="value" style="color: #CF2D28;">{{batch.batch}}</span>
+				</div>
+			</div>
+
+			<div class="mui-input-row mui-search" style="width: 74%;height:10%;top: 5%; left: 13%;">
+				<input type="search" placeholder="请输入数量" v-model="acceptQuantity">
+			</div>
+			<br/>
+			<div class="mui-content-padded">
+				<button type="button" @click="change()" class="mui-btn mui-btn-primary ">修改数量</button>
+			</div>
+
+			<div class="order" style="height: auto;top: 2%;">
+				<div class="rowData">
+					<span class="name">物料名称</span>
+					<span class="value">预约数量</span>
+					<span class="value" style="left: 60%;">已验数量</span>
+				</div>
+				
+               <div id="ides" >
+				 <div class="rowData" v-for="item in insertData.billDetails" @click="getshuq(insertData.billDetails)">
+					<span class="name" style="color: #CF2D28;">{{item.itemName}}</span>
+					<span class="value" style="color: #CF2D28;">{{item.quantity}}</span>
+					<span class="value" style="left: 60%;color: #CF2D28;">{{item.acceptQuantity}}</span>
+				 </div>
+			    </div>
+			</div>
+
+			<br/>
+			<div class="mui-content-padded">
+				<button type="button" @click="commit(2)"  class="mui-btn mui-btn-primary">出库</button>
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../../../config/dev.js"></script>
+		<script type="text/javascript" src="../../../../libs/jquery.1.11.min.js"></script>
+		<script type="text/javascript" src="../../../../js/mui.js"></script>
+		<script type="text/javascript" src="../../../../libs/vue.js"></script> 
+
+		<script type="text/javascript" src="accept-detail.js"></script>	
+	</body>
+
+</html>

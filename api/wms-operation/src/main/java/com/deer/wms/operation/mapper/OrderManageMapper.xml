@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.operation.dao.OrderManageMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.operation.model.OrderManageDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="unit_code" jdbcType="VARCHAR" property="unitCode" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="order_total" jdbcType="INTEGER" property="orderTotal" />
+    <result column="supplier_code" jdbcType="VARCHAR" property="supplierCode" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="yn_bill" jdbcType="VARCHAR" property="ynBill" />
+      <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+      <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+      <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
+      <result column="company_id" jdbcType="INTEGER" property="companyId" />
+      <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+  </resultMap>
+
+    <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.operation.model.OrderManageCriteria">
+
+        delete
+        from order_manage
+        where
+        order_code = #{orderCode}
+        <if test="companyId != null and companyId != ''">
+            AND company_id = #{companyId}
+        </if>
+
+    </delete>
+    <select id="findList" parameterType="com.deer.wms.operation.model.OrderManageCriteria" resultMap="BaseResultMap">
+
+        select
+
+        ord.id,
+        ord.order_code,
+        ord.item_code,
+        item.item_class,
+        ord.price,
+        ord.unit_code,
+        ord.order_num,
+        ord.order_total,
+        ord.supplier_code,
+        ord.state,
+        ord.yn_bill,
+        ord.add_time,
+        item.item_name,
+        unit.unit_name,
+        sup.supplier_name,
+        ord.company_id
+
+
+
+          from  order_manage  ord
+        left join item_info item      on ord.item_code = item.item_code
+        left join unit unit           on ord.unit_code = unit.unit_code
+        left join supplier_manage sup on ord.supplier_code = sup.supplier_code
+        left join company     com     on ord.company_id = com.company_id
+
+        where 1=1
+
+        <if test="keyWords != null and keyWords !=  ''">
+            and  item.item_name like concat('%','keyWords','%'>
+            or  sup.supplier_name like concat('%','keyWords','%'>
+            or  ord.order_code like concat('%','keyWords','%'>
+            or  ord.item_code like concat('%','keyWords','%'>
+        </if>
+        <if test="companyId != null and companyId != ''">
+            and com.company_id = #{companyId}
+        </if>
+
+        <if test="itemCode != null and itemCode != ''">
+            and ord.item_code = #{itemCode}
+        </if>
+        <if test="orderCode != null and orderCode != ''">
+            and ord.order_code = #{orderCode}
+        </if>
+        <if test="supplierCode != null and supplierCode != ''">
+            and ord.supplier_code = #{supplierCode}
+        </if>
+    </select>
+</mapper>

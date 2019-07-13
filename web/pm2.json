@@ -1,0 +1,35 @@
+{
+  "apps": // 应用程序数组 pm2 start pm2.json
+  {
+    // 应用程序
+    "name": "DeerWMS",
+    // 应用程序名称
+    "cwd": "./",
+    // 应用程序所在目录，若为相对路径时，表示相对于pm2.json所在路径
+    "script": "./build/startup.js",
+    // 应用程序的启动脚本
+    "exec_interpreter": "node",
+    // 应用程序脚本类型 node 、python、ruby和 bash
+    "min_uptime": "60s",
+    // 最小运行时间；如果应用程序在60s内退出，pm2会认为程序异常退出，此时触发重启max_restarts设置数量
+    "max_restarts": 10,
+    // 设置应用程序异常退出重启的次数，默认15次（从0开始计数）
+    "exec_mode": "fork",
+    // 应用程序启动模式 cluster 和 fork
+    "env": {
+      "NODE_ENV":"production"
+    },
+    "env_production":{
+      "NODE_ENV":"production"
+    },
+    "instances": 1,
+    // 集群中应用程序实例数量
+    "error_file": "logs/pm2_err.log",
+    // 自定义应用程序的错误日志文件
+    "out_file": "logs/pm2_out.log",
+    // 自定义应用程序日志文件
+    //    "pid_file": "./test.pid",
+    "watch": false
+    // 是否启用监控模式，默认是false。true表示当应用程序变动时，pm2会自动重载
+  }
+}

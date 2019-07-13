@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>deerWMS-产品介绍</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="expires" content="Wed,26 Feb 1997 08:01:01 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Cache-Control" content="no-cache,must-revalidate"/>
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <base href="<%=project%>/">
+    <link rel="shortcut icon" href="img/logo/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="lib/jquery/ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap3-dialog/bootstrap-dialog.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="lib/fontello/css/fontello.css"/>
+    <link rel="stylesheet" href="lib/unslider/unslider.css"/>
+    <link rel="stylesheet" href="lib/scroll/jquery.scrollbar.css">
+    <% if (env === "production") { %>
+    <link rel="stylesheet" href="css/product.css">
+    <% } %>
+
+    <script type="text/javascript" src="lib/nodeFlow/depnd/underscore.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery.1.11.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/additional-methods.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/localization/messages_zh.js"></script>
+    <script type="text/javascript" src="lib/lazyloader/xLazyLoader.min.js"></script>
+    <script type="text/javascript" src="lib/scroll/jquery.scrollbar.js"></script>
+    <script type="text/javascript" src="lib/spin/spin.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="lib/bootstrap3-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-select/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="lib/layer/layer.js"></script>
+    <script type="text/javascript" src="lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/raphael.js" defer></script>
+    <script type="text/javascript" src="lib/codemirror/codemirror.js" defer></script>
+</head>
+<body>
+<%include ./consult-service.html%>
+<div class="main-container">
+    <%include ./header.html%>
+    <div class="body">
+        <div class="video">
+            <div class="inner-wrapper">
+                <img src="img/video.png" alt="">
+            </div>
+        </div>
+        <div class="operating-process">
+            <div class="inner-wrapper">
+                <div class="title">
+                    <span>DeerWMS运作流程</span>
+                    <em>Share tray operation process</em>
+                </div>
+                <ul class="process">
+                    <li>
+                        <span>平台化<br>运作</span>
+                        <em>降低管理软件<br>部署成本</em>
+                    </li>
+                    <li>
+                        <span>交互式<br>租赁</span>
+                        <em>从探索的一对一向<br>一对多交互</em>
+                    </li>
+                    <li>
+                        <span>智能化<br>管理</span>
+                        <em>以条形码以及RFID系统，实现对<br>出库、入库等服务智能化</em>
+                    </li>
+
+                </ul>
+                <div class="operator">
+                    <img src="img/home/menhu_pic2.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <%include ./footer.html%>
+</div>
+
+
+<script src="js/common/manifest.js"></script>
+<script src="js/common/constant.js"></script>
+<script src="js/common/common.js"></script>
+<script src="js/product.js"></script>
+<% if (env !== "production" && reload) { %>
+<script src="../reload/reload.js"></script>
+<% } %>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

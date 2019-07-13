@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.device.manage.dao.DeviceCheckMasterMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.device.manage.model.DeviceCheckMaster">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="deviceCheckMasterId" jdbcType="INTEGER" property="deviceCheckMasterId" />
+    <result column="team" jdbcType="VARCHAR" property="team" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="duty_user_id" jdbcType="INTEGER" property="dutyUserId" />
+    <result column="record_user_id" jdbcType="INTEGER" property="recordUserId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.device.manage.model.DeviceCheckMasterDto" extends="BaseResultMap">
+    <result column="duty_user_name" jdbcType="VARCHAR" property="dutyUserName" />
+    <result column="record_user_name" jdbcType="VARCHAR" property="recordUserName" />
+  </resultMap>
+
+
+  <select id="findList" parameterType="com.deer.wms.device.manage.model.DeviceCheckMasterCriteria" resultMap="Dto">
+    select
+    master.device_check_master_id as deviceCheckMasterId,
+    master.task_time,
+    master.team,
+    master.type,
+    master.memo,
+    master.state,
+    master.duty_user_id,
+    master.record_user_id,
+    dutyUser.user_name as duty_user_name,
+    recordUser.user_name as record_user_name
+    from device_check_master master
+    left join company com on master.company_id = com.company_id
+    left join user_info dutyUser on master.duty_user_id = dutyUser.user_id
+    left join user_info recordUser on master.record_user_id = recordUser.user_id
+    where 1=1
+    <if test="companyId != null">
+      and master.company_id = #{companyId}
+    </if>
+    <if test="type != null">
+      and master.type = #{type}
+    </if>
+    <if test="dutyUserId != null">
+      and master.duty_user_id = #{dutyUserId}
+    </if>
+  </select>
+</mapper>

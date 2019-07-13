@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>deerWMS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="expires" content="Wed,26 Feb 1997 08:01:01 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Cache-Control" content="no-cache,must-revalidate"/>
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <base href="<%=project%>/">
+    <link rel="shortcut icon" href="img/logo/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="lib/jquery/ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap3-dialog/bootstrap-dialog.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-table/v2/bootstrap-table.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/fontello/css/fontello.css"/>
+    <link rel="stylesheet" href="lib/unslider/unslider.css"/>
+    <link rel="stylesheet" href="lib/scroll/jquery.scrollbar.css">
+    <link rel="stylesheet" href="lib/ztree/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" href="lib/dateTimePicker/jquery.datetimepicker.css"/>
+    <% if (env === "production") { %>
+    <link rel="stylesheet" href="css/back/back.css">
+    <% } %>
+    <script>window.menus =
+    <%
+    -JSON.stringify(user.menus) % >;
+    window.STATIC_SERVER = '<%=staticServer%>';
+    window.baseURL = '<%=project%>';</script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/underscore.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery.1.11.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/additional-methods.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/localization/messages_zh.js"></script>
+    <script type="text/javascript" src="lib/dateTimePicker/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="lib/lazyloader/xLazyLoader.min.js"></script>
+    <script type="text/javascript" src="lib/scroll/jquery.scrollbar.js"></script>
+    <script type="text/javascript" src="lib/spin/spin.min.js"></script>
+    <script type="text/javascript" src="lib/baiduMap/BMapLib_GeoUtils.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="lib/bootstrap3-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-select/js/bootstrap-select.js"></script>
+    <!--<script type="text/javascript" src="lib/bootstrap-table/v2/bootstrap-table.js"></script>-->
+    <script type="text/javascript" src="lib/bootstrap-table/v2/bootstrap-table.min.js"></script>
+    <!--<script src="lib/bootstrap-table/v2/bootstrap-table-fixed-columns.js"></script>-->
+    <script type="text/javascript" src="lib/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="lib/layer/layer.js"></script>
+    <script type="text/javascript" src="lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/raphael.js" defer></script>
+    <script type="text/javascript" src="lib/codemirror/codemirror.js" defer></script>
+    <script type="text/javascript" src="lib/echarts/echarts-all.js"></script>
+    <script type="text/javascript" src="lib/ztree/js/jquery.ztree.core.min.js"></script>
+    <script type="text/javascript" src="lib/ztree/js/jquery.ztree.excheck.min.js"></script>
+    <script type="text/javascript" src="lib/distpicker/distpicker.js"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=Zvt09wAOQcdH95F8I9hwQZ6sniTwzGOw"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css"/>
+
+    <script type="text/javascript" charset="utf-8" src="lib/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <style type="text/css" media=print>
+        .noprint {
+            display: none
+        }
+
+        @page {
+            size: auto;
+            margin: 0mm;
+            margin-left: -90px;
+            margin-top: 10px;
+        }
+    </style>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <header class="header noprint">
+        <h1 class="logo">
+            <a href="index" target="_blank"><img src="img/logo/logo-3.png"></a>
+        </h1>
+        <h2 class="welcome">欢迎你，<%=user.roleName%>(<%=user.userName%>)</h2>
+        <ul class="right">
+            <li class="backlog message-backlog-hook"
+                module-menu="/back/messageBacklog/page"
+                module-target="page">消息待办
+            </li>
+            <li class="member-center member-center-hook"
+                module-menu="/back/memberCenter"
+                module-target="page">个人中心
+            </li>
+            <li class="dropdown online-service customer-service-hook">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    在线客服</a>
+                <ul class="dropdown-menu">
+                    <li module-menu="/back/averageUser"
+                        module-target="page">普通用户角色
+                    </li>
+                    <li module-menu="/back/customerService"
+                        module-target="page">客服角色
+                    </li>
+                </ul>
+            </li>
+            <li class="help help-hook"
+                module-menu="/back/help"
+                module-target="page">帮助中心
+            </li>
+            <li class="exit logout">安全退出</li>
+        </ul>
+    </header>
+    <div class="menu noprint">
+        <%-menuHtml%>
+        <div class="sub noprint"
+             module-menu="/back/homepage/page"
+             module-target="page">
+            <div class="menu-icon homepage"></div>
+            <span class="text">首页</span>
+        </div>
+        <div class="sub noprint"
+             module-menu=""
+             module-target="page">
+            <div class="menu-icon asset"></div>
+            <span class="text">资产管理</span>
+            <ul module-menu="">
+                <li class="active"
+                    module-menu="/back/asset/lifecycle"
+                    module-target="page">
+                    生命周期
+                </li>
+                <li module-menu="/back/asset/location"
+                    module-target="page">位置管理
+                </li>
+                <li module-menu="/back/asset/possess"
+                    module-target="page">持有管理
+                </li>
+            </ul>
+        </div>
+        <div class="sub noprint"
+             module-menu=""
+             module-target="page">
+            <div class="menu-icon supply"></div>
+            <span class="text">供应管理</span>
+            <ul module-menu="">
+                <li class="active"
+                    module-menu="/back/supply/order/page"
+                    module-target="page">
+                    生产下单
+                </li>
+                <li module-menu="/back/supply/confirm/page"
+                    module-target="page">订单确认
+                </li>
+                <li module-menu="/back/supply/settlement/page"
+                    module-target="page">统计结算
+                </li>
+            </ul>
+        </div>
+        <div class="sub noprint"
+             module-menu="/back/memberCenter"
+             module-target="page" style="display: none">
+            <div class="menu-icon"></div>
+            <span class="text">个人中心</span>
+        </div>
+        <div class="sub"
+             module-menu="/back/messageBacklog/page"
+             module-target="page" style="display: none">
+            <div class="menu-icon"></div>
+            <span class="text">消息待办</span>
+        </div>
+        <div class="sub"
+             module-menu="/back/averageUser"
+             module-target="page" style="display: none">
+            <div class="menu-icon"></div>
+            <span class="text">普通用户角色</span>
+        </div>
+        <div class="sub"
+             module-menu="/back/customerService"
+             module-target="page" style="display: none">
+            <div class="menu-icon"></div>
+            <span class="text">客服角色</span>
+        </div>
+        <div class="sub"
+             module-menu="/back/help"
+             module-target="page" style="display: none">
+            <div class="menu-icon"></div>
+            <span class="text">帮助中心</span>
+        </div>
+        <div class="sub noprint"
+             module-menu=""
+             module-target="page">
+            <div class="menu-icon rent"></div>
+            <span class="text">租单管理</span>
+            <ul module-menu="">
+                <li class="active"
+                    module-menu="/back/rent/rental/page"
+                    module-target="page">
+                    托盘租赁
+                </li>
+                <li module-menu="/back/rent/allocation/page"
+                    module-target="page">租单调拨
+                </li>
+                <li module-menu="/back/rent/tracking/page"
+                    module-target="page">托盘跟踪
+                </li>
+                <li module-menu="/back/rent/relet/page"
+                    module-target="page">托盘续租
+                </li>
+                <li module-menu="/back/rent/sublet/page"
+                    module-target="page">托盘转租
+                </li>
+                <li module-menu="/back/rent/return/page"
+                    module-target="page">租赁退板
+                </li>
+                <li module-menu="/back/rent/inventory/page"
+                    module-target="page">存量管理
+                </li>
+            </ul>
+        </div>
+        <div class="sub noprint"
+             module-menu=""
+             module-target="page">
+            <div class="menu-icon run"></div>
+            <span class="text">运营管理</span>
+            <ul module-menu="">
+                <li module-menu=""
+                    module-target="page">
+                    营业调控
+                    <ul module-menu="">
+                        <li module-menu="/back/run/businessControl/rentPlan/page"
+                            module-target="page">租单计划
+                        </li>
+                        <li module-menu="/back/run/businessControl/distribution"
+                            module-target="page">网点分布
+                        </li>
+                        <!--  <li module-menu="/back/run/businessControl/rentBuy"
+                              module-target="page">换购
+                          </li>-->
+                        <!--  <li>远程控制</li>-->
+                    </ul>
+                </li>
+                <li module-menu="/back/run/networkOperation/page"
+                    module-target="page">
+                    网点作业
+                </li>
+                <!-- <li>统计分析</li>-->
+                <li module-menu="/back/run/preferentialPolicies/page"
+                    module-target="page">优惠政策
+                </li>
+            </ul>
+        </div>
+        <div class="sub noprint"
+             module-menu=""
+             module-target="page">
+            <div class="menu-icon organization"></div>
+            <span class="text">组织机构</span>
+            <ul module-menu="">
+                <li module-menu="/back/organization/account/page"
+                    module-target="page">
+                    账户管理
+                </li>
+                <li module-menu="/back/organization/role/page"
+                    module-target="page">
+                    角色管理
+                </li>
+                <li module-menu="">
+                    机构管理
+                    <ul module-menu="">
+                        <li module-menu="/back/organization/platformBranch/page"
+                            module-target="page">
+                            平台网点管理
+                        </li>
+                        <li module-menu="/back/organization/client/page"
+                            module-target="page">
+                            客户管理
+                        </li>
+                        <li module-menu="/back/organization/supplier/page"
+                            module-target="page">
+                            供应商管理
+                        </li>
+                        <li module-menu="/back/organization/investor/page"
+                            module-target="page">
+                            投资商管理
+                        </li>
+                        <li module-menu="/back/organization/agent/page"
+                            module-target="page">
+                            代理商管理
+                        </li>
+                        <li module-menu="/back/organization/poi/page"
+                            module-target="page">
+                            POI管理
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="sub noprint"
+             module-menu=""
+             module-target="page">
+            <div class="menu-icon system-parameter"></div>
+            <span class="text">系统参数</span>
+            <ul module-menu="">
+                <li class="active"
+                    module-menu="/back/system/cost/page"
+                    module-target="page">成本参数
+                </li>
+                <li module-menu="/back/system/tray/page"
+                    module-target="page">托盘参数
+                </li>
+                <li module-menu="/back/system/message/page"
+                    module-target="page">消息参数
+                </li>
+                <li module-menu="/back/system/warn/page"
+                    module-target="page">告警参数
+                </li>
+            </ul>
+        </div>
+        <!--<div class="sub"-->
+        <!--module-menu="/back/demo"-->
+        <!--module-target="page">-->
+        <!--<div class="menu-icon"></div>-->
+        <!--<span class="text">demo</span>-->
+        <!--</div>-->
+    </div>
+    <div class="position-tier"></div>
+    <div class="content-right page-container-hook">
+        <div class="right-content"></div>
+    </div>
+
+</div>
+
+
+<script src="js/common/manifest.js"></script>
+<script src="js/common/common.js"></script>
+<script src="js/common/constant.js"></script>
+<script src="js/back/back.js"></script>
+<% if (env !== "production" && reload) { %>
+<script src="../reload/reload.js"></script>
+<% } %>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

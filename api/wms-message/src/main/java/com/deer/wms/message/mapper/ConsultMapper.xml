@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.message.dao.ConsultMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.message.model.Consult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="consult_id" jdbcType="INTEGER" property="consultId" />
+	    <result column="consult_user_id" jdbcType="INTEGER" property="consultUserId" />
+	    <result column="consult_user_name" jdbcType="VARCHAR" property="consultUserName" />
+	    <result column="consult_user_mobile" jdbcType="VARCHAR" property="consultUserMobile" />
+	    <result column="consult_time" jdbcType="TIMESTAMP" property="consultTime" />
+	    <result column="reply" jdbcType="BIT" property="reply" />
+	    <result column="reply_user_id" jdbcType="INTEGER" property="replyUserId" />
+	    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+	    <result column="consult_content" jdbcType="LONGVARCHAR" property="consultContent" />
+	    <result column="reply_content" jdbcType="LONGVARCHAR" property="replyContent" />
+  </resultMap>
+  
+  <resultMap id="BaseDtoResultMap" type="com.deer.wms.message.model.ConsultDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="consult_id" jdbcType="INTEGER" property="consultId" />
+	    <result column="consult_user_id" jdbcType="INTEGER" property="consultUserId" />
+	    <result column="consult_user_name" jdbcType="VARCHAR" property="consultUserName" />
+	    <result column="consult_user_mobile" jdbcType="VARCHAR" property="consultUserMobile" />
+	    <result column="consult_time" jdbcType="TIMESTAMP" property="consultTime" />
+	    <result column="reply" jdbcType="BIT" property="reply" />
+	    <result column="reply_user_id" jdbcType="INTEGER" property="replyUserId" />
+	    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+	    <result column="consult_content" jdbcType="LONGVARCHAR" property="consultContent" />
+	    <result column="reply_content" jdbcType="LONGVARCHAR" property="replyContent" />
+	    <result column="reply_user_name" jdbcType="VARCHAR" property="replyUserName" />
+	    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+	    <result column="is_login" jdbcType="VARCHAR" property="isLogin" />
+	    <result column="is_phone" jdbcType="VARCHAR" property="isPhone" />
+  </resultMap>
+ 
+  <select id="selectConsultList"  resultMap="BaseDtoResultMap"  parameterType="com.deer.wms.message.model.ConsultCriteria" >
+      select  con.*,us.user_name as reply_user_name ,
+      (CASE  WHEN con.consult_user_id IS NULL THEN '0' ELSE '1' END) AS is_login,
+      (CASE  WHEN (con.consult_user_id IS NULL AND con.reply = 1) THEN '1' ELSE '0' END) AS is_phone
+      from consult con LEFT JOIN user_info us ON con.reply_user_id = us.user_id 
+      where 1=1
+      <if test="reply != null">
+          and  con.reply = #{reply}
+      </if>
+      <if test="consultTime != null and consultTime != ''">
+          and  con.consult_time = #{consultTime}
+      </if>
+      <if test="consultStartTime != null and consultStartTime != '' ">
+      	  and  con.consult_time &gt;= #{consultStartTime}
+      </if>
+      <if test="consultEndTime != null and consultEndTime != '' ">
+      	  and  con.consult_time &lt;= #{consultEndTime}
+      </if>
+      <if test="keywords != null and keywords !=''">
+          <!-- 关键字 -->
+           and con.consult_content like CONCAT('%',#{keywords},'%')
+      </if>
+      <if test="consultUserId != null ">
+      		and con.consult_user_id = #{consultUserId}
+      </if>
+      order by con.consult_time desc
+  </select>
+  
+   <select id="findById2" parameterType="java.lang.Integer" resultMap="BaseDtoResultMap">
+      	SELECT con.*,com.company_name ,
+      	(CASE  WHEN con.consult_user_id IS NULL THEN '0' ELSE '1' END) AS is_login,
+        (CASE  WHEN (con.consult_user_id IS NULL AND con.reply = 1) THEN '1' ELSE '0' END) AS is_phone
+		FROM consult con 
+		LEFT JOIN user_info us ON con.consult_user_id = us.user_id 
+		LEFT JOIN company com ON us.company_id = com.company_id 
+		where con.consult_id=#{consultId}
+     
+  </select> 
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+          delete from consult where consult_id=#{consultId}
+   </delete>
+   
+   <insert id="insert2"    parameterType="com.deer.wms.message.model.Consult">
+    insert into consult (
+        consult_time
+      <if test="consultUserName != null and consultUserName != ''" >
+        ,consult_user_name
+      </if>
+      <if test="consultUserId != null and consultUserId != ''" >
+     , consult_user_id
+        </if>
+      <if test="consultUserMobile != null and consultUserMobile != ''" >
+        ,consult_user_mobile
+      </if>
+      <if test="consultContent != null and consultContent != ''" >
+        ,consult_content
+      </if>
+   		<if test="reply != null" >
+        ,reply
+      </if>
+      <if test="createTime !=null">
+        ,create_time
+       </if>
+        <if test="modifyTime !=null">
+        ,modify_time
+       </if>
+        )
+    values  
+        (  
+        #{consultTime}
+      <if test="consultUserName != null and consultUserName != ''" >
+        ,#{consultUserName}
+      </if>
+       <if test="consultUserId != null and consultUserId != ''" >
+    ,  #{consultUserId}
+        </if>
+      <if test="consultUserMobile != null and consultUserMobile != ''" >
+        ,#{consultUserMobile}
+      </if>
+      <if test="consultContent != null and consultContent != ''" >
+        ,#{consultContent}
+      </if>
+      <if test="reply != null" >
+        ,#{reply}
+      </if>
+      <if test="createTime != null" >
+        ,#{createTime}
+      </if>
+        <if test="modifyTime !=null">
+        ,#{modifyTime}
+       </if>
+       )
+      
+  </insert> 
+  
+  <update id="update" parameterType="com.deer.wms.message.model.ConsultCriteria">
+  		update consult set  reply_user_id  = #{replyUserId} , reply_content=#{replyContent}
+  		,reply_time= now() , modify_time = now() , reply = #{reply} where consult_id = #{consultId}
+  </update>
+  
+  
+</mapper>

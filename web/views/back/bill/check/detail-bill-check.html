@@ -1,0 +1,48 @@
+<div class="client-detail client-detail-hook">
+    <div class="title noprint">
+        当前位置：&nbsp;&nbsp;->&nbsp;单据管理&nbsp;->&nbsp;盘点&nbsp;->&nbsp;<span class="active">详情</span>
+    </div>
+    <div class="order_operation_btn noprint">
+
+
+        <button class="primary_btn" id="task"data-toggle="modal"@click="task()">作业</button>
+
+
+        <button class="primary_btn fr" @click.stop="prevStep()">返回</button>
+    </div>
+    <div class="inner-wrapper">
+        <ul class="detail_contain">
+            <li>
+                <h3>盘点单信息</h3>
+                <ol class="detail_list">
+                    <li>
+                        <p>
+                            <span>单据号：</span><i v-text="masterData.countId"></i>
+                            <b style="margin-left: 10px;" v-text=" "></b>
+                        </p>
+                        <p><span>制单人：</span><i v-text="masterData.createUserName"></i></p>
+                        <p><span>制单时间：</span><i v-text="masterData.createTime"></i></p>
+                    </li>
+                    <li>
+                        <p><span>盘点方式：</span><i v-text="masterData.countType"></i></p>
+                        <p><span>状态：</span><i v-text="masterData.state"></i></p>
+
+                    </li>
+
+                </ol>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="custom-table-wrapper"    >
+        <table class="custom-table billDetail-check-table-hook"></table>
+    </div>
+
+
+
+</div>
+
+<script type="text/javascript" src="js/back/bill/check/detail_bill_check.js" custom></script>

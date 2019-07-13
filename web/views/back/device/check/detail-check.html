@@ -1,0 +1,420 @@
+<div class="client-detail client-detail-hook">
+    <div class="title noprint">
+        当前位置：&nbsp;&nbsp;->&nbsp;单据管理&nbsp;->&nbsp;入库单&nbsp;->&nbsp;<span class="active">入库详情</span>
+    </div>
+    <div class="order_operation_btn noprint">
+
+        <button class="primary_btn" id="print_btn" @click="printBill()"  stype="display:noe">打印</button>
+        <button class="primary_btn" id="export" @click.stop="exportBill()">导出</button>
+        <button class="primary_btn" id="upShelf" @click.stop="upAllModal()">上架</button>
+
+       <!-- <button class="primary_btn" @click.stop="deleteBill()"    >删除</button>
+        <button class="primary_btn" @click.stop="checkBill()">审核</button>
+        <button class="primary_btn" @click.stop="okBill()">完成</button>-->
+
+
+        <button class="primary_btn fr" @click.stop="prevStep()">返回</button>
+    </div>
+    <div class="inner-wrapper">
+        <input type="hidden" value="<%=staticServer%>" id="staticServer">
+        <ul class="detail_contain">
+            <li>
+                <h3>入库单信息</h3>
+                <ol class="detail_list">
+                    <li>
+                        <p>
+                            <span>单据号：</span><i v-text="masterData.billNo"></i>
+                            <b style="margin-left: 10px;" v-text=" "></b>
+                        </p>
+                        <p><span>制单人：</span><i v-text="masterData.addUserName"></i></p>
+                        <p><span>制单时间：</span><i v-text="masterData.addTime"></i></p>
+                    </li>
+                    <li>
+                        <p><span>仓库：</span><i v-text="masterData.wareName"></i></p>
+                        <p><span>合同号：</span><i v-text="masterData.contractNo"></i></p>
+
+                    </li>
+
+                </ol>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="custom-table-wrapper"  style="height: 150px"  >
+        <table class="custom-table billDetail-in-table-hook"   ></table>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        产品信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search">
+                        <form class="form-search-hook">
+                            <div class="row">
+
+
+
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">产品名称</span>
+                                <span       style="margin-top: 20px;width: 120px">{{rowData.itemName}}</span>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">货区名称</span>
+                                <span      style="margin-top: 20px;width: 120px">{{rowData.areaName}}</span>
+                                <br/>
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</span>
+                                <input type="text" style="margin-top: 20px;width: 200px" class="search-input lg" placeholder="请输入数量" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="8"  v-model = "rowData.quantity">
+
+
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="updateDetail()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="acceptMasterModal" tabindex="-1" role="dialog" aria-labelledby="acceptModal22"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="acceptModal22">
+                        验收信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search" v-for="item in insertData.billDetails">
+                        <form class="form-search-hook">
+                            <div class="row" >
+
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">产品名称</span>
+                                <span       style="margin-top: 20px;width: 120px">{{item.itemName}}</span>
+                                <br/> <span class="search-label"     style="margin-top: 20px;width: 120px">预约数量</span>
+                                <span       style="margin-top: 20px;width: 120px">{{item.quantity}}</span>
+                                <br/>
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">验收数量</span>
+                                <input type="text" style="margin-top: 20px;width: 200px" class="search-input lg" placeholder="请输入数量" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="8"  v-model = "item.acceptQuantity">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="acceptMaster()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="upModal" tabindex="-1" role="dialog" aria-labelledby="acceptModal222"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="acceptModal222">
+                        下发上架任务
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search"  >
+                        <form class="form-search-hook"  >
+                            <div class="row" >
+
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">产品名称</span>
+                                <span       style="margin-top: 20px;width: 120px">{{rowData.itemName}}</span>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">规格</span>
+                                <span       style="margin-top: 20px;width: 120px">{{rowData.itemClass}}</span>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">单位</span>
+                                <span       style="margin-top: 20px;width: 120px">{{rowData.unitName}}</span>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">批次</span>
+                                <span       style="margin-top: 20px;width: 120px">{{rowData.batch}}</span>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">指定货区</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px" id = "select_type" name="stateint" v-model="upInsert.upType" >
+                                    <option    value="">不指定货区</option>
+                                    <option     value="1">同货主>同物料</option>
+                                    <option      value="2">同货主>同物料>ABC分类法</option>
+                                    <option      value="2">同货主>ABC分类法</option>
+
+                                </select>
+
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">指定货架</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px" id = "select_type" name="stateint" v-model="upInsert.upType" >
+                                    <option    value="">不指定货架</option>
+                                    <option     value="1">同货主>同物料</option>
+                                    <option      value="2">同货主>同物料>ABC分类法</option>
+                                    <option      value="2">同货主>ABC分类法</option>
+
+                                </select>
+
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">上架策略</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px" id = "select_type" name="stateint" v-model="upInsert.upType" >
+                                    <option    value=""> </option>
+                                    <option     value="1">同货主>同物料</option>
+                                    <option      value="2">同货主>同物料>ABC分类法</option>
+                                    <option      value="2">同货主>ABC分类法</option>
+
+                                </select>
+
+                                <br/>
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">按波次上架</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px" id = "select_batch" name="stateint" v-model="upInsert.upBatch" >
+                                    <option    value=""></option>
+                                    <option    value="1">1</option>
+                                    <option    value="2">2</option>
+                                    <option    value="3">3</option>
+                                    <option    value="4">4</option>
+                                    <option    value="5">5</option>
+                                    <option    value="6">6</option>
+                                    <option    value="7">7</option>
+                                    <option    value="8">8</option>
+                                    <option    value="9">9</option>
+                                    <option    value="10">10</option>
+
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="commitPrepare()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="upAllModal" tabindex="-1" role="dialog" aria-labelledby="acceptModal223"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="acceptModal223">
+                        下发上架任务
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search"  >
+                        <form class="form-search-hook"  >
+                            <div class="row" >
+
+
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">指定货区</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px"   name="stateint" v-model="upInsert.upType" >
+                                    <option    value="">不指定货区</option>
+                                    <option     value="1">同货主>同物料</option>
+                                    <option      value="2">同货主>同物料>ABC分类法</option>
+                                    <option      value="2">同货主>ABC分类法</option>
+
+                                </select>
+
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">指定货架</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px"   name="stateint" v-model="upInsert.upType" >
+                                    <option    value="">不指定货架</option>
+                                    <option     value="1">同货主>同物料</option>
+                                    <option      value="2">同货主>同物料>ABC分类法</option>
+                                    <option      value="2">同货主>ABC分类法</option>
+
+                                </select>
+
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">上架策略</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px"   name="stateint" v-model="upInsert.upType" >
+                                    <option    value=""> </option>
+                                    <option     value="1">同货主>同物料</option>
+                                    <option      value="2">同货主>同物料>ABC分类法</option>
+                                    <option      value="2">同货主>ABC分类法</option>
+
+                                </select>
+
+                                <br/>
+                                <span class="search-label"  style="margin-top: 20px;width: 120px">按波次上架</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px"  name="stateint" v-model="upInsert.upBatch" >
+                                    <option    value=""></option>
+                                    <option    value="1">1</option>
+                                    <option    value="2">2</option>
+                                    <option    value="3">3</option>
+                                    <option    value="4">4</option>
+                                    <option    value="5">5</option>
+                                    <option    value="6">6</option>
+                                    <option    value="7">7</option>
+                                    <option    value="8">8</option>
+                                    <option    value="9">9</option>
+                                    <option    value="10">10</option>
+
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="commitPrepare()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+
+
+    <div id="batchPrintArea"  style="display: none" >
+        <table border="2" style="width: 200px;height: 100px;border-color: #000000;position: absolute;left: 0px;top: 0px " >
+            <tr><td colspan="2" ><div id="batchBar" style="margin: 0px auto;   "></div></td></tr>
+            <tr>
+
+                <th><span style="display:block;  margin: 0 auto;  ">物料名称</span> </th>
+                <td><span style="display:block;  margin: 0 auto;  text-align: center;  " id="itemName"></span></td>
+            </tr>
+
+            <tr>
+
+                <th><span style="display:block;  margin: 0 auto;   ">批次</span></th>
+                <td><span style="display:block;  margin: 0 auto;   text-align: center; " id="batch"> </span></td>
+            </tr>
+
+
+            <tr>
+
+                <th><span style="display:block; margin: 0 auto;">规格</span></th>
+                <td><span style="display:block; margin: 0 auto; text-align: center; " id="itemClass"> </span></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div id="printArea"  style="display: none">
+
+        <table class="leftArea" border="0"  class="detail" width="700px"
+               cellspacing="0"
+               cellpadding="10px"    style="">
+            <tr>
+                <th colspan="2">
+                    <h1>入库单</h1></tr>
+            </th>
+
+            <tr   >
+                <td  >
+                    <div class="row">
+                        <span class= "name">单据号：</span><span class= "value">{{masterData.billNo}}</span>
+
+                    </div>
+                    <div class="row">
+                        <span class= "name">合同号：</span><span class= "value">{{masterData.contractNo}}</span>
+
+                    </div>
+                    <div class="row">
+                        <span class= "name">制单人：</span><span class= "value">{{masterData.addUserName}}</span>
+
+                    </div>
+                    <div class="row">
+                        <span class= "name">制单时间：</span><span class= "value">{{masterData.addTime}}</span>
+
+                    </div>
+                </td>
+
+                <td  >
+                    <div class="row" style="height: 80px;">
+                        <div id="bcTarget" ></div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <span class= "name">仓库：</span><span class= "value">{{masterData.wareName}}</span>
+
+                    </div>
+
+                </td>
+            </tr>
+
+
+
+        </table>
+
+
+
+        <table border="1"  class="detail" width="700px"
+               cellspacing="0"
+               cellpadding="10px"    >
+
+            <tr height="50px" border="">
+                <th>序号：</th>
+                <th>物料名称：</th>
+                <th>规格</th>
+                <th>单位：</th>
+                <th>批次：</th>
+                <th>数量</th>
+            </tr>
+            <tr  v-for="detail in insertData.billDetails"  >
+                <td>{{detail.index}}</td>
+                <td>{{detail.itemName}}</td>
+                <td>{{detail.itemClass}}</td>
+                <td>{{detail.unitName}}</td>
+                <td>{{detail.batch}}</td>
+                <td>{{detail.quantity}}</td>
+
+            </tr>
+
+        </table>
+
+        <table border="1"  class="detail" width="700px"
+               cellspacing="0"
+               cellpadding="10px"    >
+        <tr height="60px" border="">
+            <td>领用人：</td>
+            <td>领用理由：</td>
+        </tr>
+        <tr height="60px" border="">
+            <td>批准人：</td>
+            <td>库管员：</td>
+        </tr>
+
+        </table>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="js/back/deice/check/detail_check.js" custom></script>

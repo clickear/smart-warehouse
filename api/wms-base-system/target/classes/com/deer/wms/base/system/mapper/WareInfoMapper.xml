@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.WareInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.WareInfoDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ware_id" jdbcType="INTEGER" property="wareId" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+  </resultMap>
+
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.WareInfoCriteria">
+
+    delete from ware_info
+
+    where  ware_code = #{wareCode}
+
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+
+
+
+  </delete>
+  <select id="findList" parameterType="com.deer.wms.base.system.model.WareInfoCriteria"  resultMap="BaseResultMap">
+    select
+
+    ware.ware_id ,
+    ware.ware_code ,
+    ware.ware_name,
+    ware.add_time,
+    ware.memo,
+    ware.company_id,
+    com.company_name
+
+    from ware_info ware
+    left join company com on ware.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+    AND (ware.ware_name LIKE CONCAT('%', #{keyWords}, '%') or com.company_name LIKE CONCAT('%', #{keyWords}, '%') or ware.memo LIKE CONCAT('%', #{keyWords}, '%') )
+  </if>
+
+    <if test="companyId != null and companyId != ''">
+      AND ware.company_id = #{companyId}
+    </if>
+ ORDER  BY add_time asc
+  </select>
+</mapper>

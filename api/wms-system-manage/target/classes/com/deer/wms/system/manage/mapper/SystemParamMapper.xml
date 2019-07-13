@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.SystemParamMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.param.SystemParam">
+        <id column="param_id" jdbcType="INTEGER" property="paramId" />
+        <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+        <result column="param_code" jdbcType="VARCHAR" property="paramCode" />
+        <result column="param_type" jdbcType="INTEGER" property="paramType" />
+        <result column="param_describe" jdbcType="VARCHAR" property="paramDescribe" />
+        <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    </resultMap>
+
+    <!-- 消息参数列表信息字段映射 -->
+    <resultMap id="ParamMessageListVOMap" type="com.deer.wms.system.manage.model.param.ParamMessageListVO">
+        <result column="param_id" jdbcType="INTEGER" property="paramId" />
+        <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+        <result column="param_describe" jdbcType="VARCHAR" property="paramDescribe" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+    </resultMap>
+
+    <!-- 告警参数列表信息字段映射 -->
+    <resultMap id="ParamAlarmListVOMap" type="com.deer.wms.system.manage.model.param.ParamAlarmListVO">
+        <result column="param_id" jdbcType="INTEGER" property="paramId" />
+        <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+        <result column="param_describe" jdbcType="VARCHAR" property="paramDescribe" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+        <result column="alarm_param_id" jdbcType="INTEGER" property="alarmParamId" />
+    </resultMap>
+
+    <!-- 告警参数详细信息字段映射 -->
+    <resultMap id="ParamAlarmDetailMap" type="com.deer.wms.system.manage.model.param.ParamAlarmDetail">
+        <result column="param_id" jdbcType="INTEGER" property="paramId" />
+        <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+        <result column="param_describe" jdbcType="VARCHAR" property="paramDescribe" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+        <result column="alarm_param_id" jdbcType="INTEGER" property="alarmParamId" />
+        <result column="action" jdbcType="INTEGER" property="action" />
+        <result column="alarm_param" jdbcType="INTEGER" property="alarmParam" />
+        <result column="terminal_position" jdbcType="BIT" property="terminalPosition" />
+    </resultMap>
+
+    <!-- 查询消息参数列表 -->
+    <select id="selectMessageParamFormList" resultMap="ParamMessageListVOMap">
+        SELECT
+            param_id, param_name, param_describe, state
+        FROM system_param
+        WHERE state != 'deleted'
+        AND param_type= 1
+        ORDER BY sort_number ASC
+    </select>
+
+    <!-- 查询告警参数列表 -->
+    <select id="selectAlarmParamFormList" resultMap="ParamAlarmListVOMap">
+        SELECT
+            param.param_id
+            , param.param_name
+            , param.param_describe
+            , param.state
+            , ui.user_name AS create_user_name
+            , param.create_time
+            , alarm.alarm_param_id
+        FROM system_param param
+        LEFT JOIN alarm_param alarm ON alarm.param_id = param.param_id
+		LEFT JOIN user_info ui ON ui.user_id = param.create_user_id
+        WHERE param.state != 'deleted'
+		AND param_type= 2
+		<if test="state != null and state != ''">
+            AND param.state = #{state}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (
+              param.param_name LIKE CONCAT('%', #{keyword}, '%')
+              OR ui.user_name LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        ORDER BY param.sort_number ASC
+    </select>
+
+    <!-- 查询告警参数详细信息 -->
+    <select id="selectAlarmDetailByParamId" resultMap="ParamAlarmDetailMap">
+        SELECT
+            param.param_id
+            , param.param_name
+            , param.param_describe
+            , param.state
+            , ui.user_name AS create_user_name
+            , param.create_time
+            , alarm.alarm_param_id
+            , alarm.action
+            , alarm.alarm_param
+            , alarm.terminal_position
+        FROM system_param param
+		LEFT JOIN alarm_param alarm ON alarm.param_id = param.param_id
+		LEFT JOIN user_info ui ON ui.user_id = param.create_user_id
+        WHERE param.state != 'deleted'
+		and param.param_type = 2
+		AND param.param_id = #{paramId}
+    </select>
+</mapper>

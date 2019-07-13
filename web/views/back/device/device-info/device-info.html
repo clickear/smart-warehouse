@@ -1,0 +1,158 @@
+<div class="return-main-hook main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="return-wrapper device-info-hook">
+            <div class="title">
+                当前位置：<span>设备管理</span>&nbsp;&nbsp;->&nbsp;</span><span class="active">设备设置</span>
+            </div>
+            <%if(checkAuthority('device-info')){%>
+            <form class="search form-search-hook">
+                <div class="row">
+
+
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">关键字</span>
+                    <input type="text" class="search-input lg" placeholder="关键字" name="keyWords">
+                    <span class="interval-lg"></span>
+                    <button type="button" class="btn btn-blue search-hook">查询</button>
+                    <span class="interval-xs"></span>
+                    <button type="reset" class="btn btn-gray resert">清空</button>
+                </div>
+            </form>
+            <%}%>
+            <div class="order_operation_btn" >
+                <button type="button" class="btn primary_btn return_btn" data-toggle="modal" data-target="#newModal">新建设备</button>
+            </div>
+
+            <div class="custom-table-wrapper" style="padding: 0;height: auto;">
+                <table class="custom-table device-info-table-hook"></table>
+            </div>
+
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel1">新增</h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="detail_contain">
+                                <li>
+                                    <h3>设备信息</h3>
+                                    <ol class="detail_list">
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">设备名称：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.deviceName"> <br/>
+                                            <!--<span style="margin-top: 20px;width: 100px">所属仓库</span>
+                                            <select  style="margin-top: 20px;width: 300px"  id="" name="wareCode" v-model = "info.wareCode">
+
+                                                <option v-for="item in wareItems" v-bind:value="item.value">{{item.text}}</option>
+                                            </select><br/>-->
+
+
+                                        </li>
+
+                                        <li>
+                                            <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "info.memo">
+
+
+
+                                        </li>
+
+                                    </ol>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default"  @click = "insertDevice()">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="detail_contain">
+                                <li>
+                                    <h3>设备信息</h3>
+                                    <ol class="detail_list">
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">设备名称：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.deviceName"  maxlength="20"> <br/>
+                                            <!--<span style="margin-top: 20px;width: 100px">所属仓库</span>
+                                            <select  style="margin-top: 20px;width: 300px"    name="wareCode" v-model = "info.wareCode">
+
+                                                <option v-for="item in wareItems" v-bind:value="item.value">{{item.text}}</option>
+                                            </select><br/>
+-->
+
+                                        </li>
+
+                                        <li>
+                                            <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"  maxlength="100"  v-model = "rowData.memo">
+
+
+
+                                        </li>
+
+                                    </ol>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default"  @click = "updateArea()">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+        </div>
+    </div>
+    <!--<div id="areaPrintArea"  style="display: none" >
+        <table border="2" style="width: 300px;height: 100px;border-color: #000000;position: absolute;left: 60px;top: 100px " >
+            <tr><td colspan="2" ><div id="areaBar" style="margin:0px auto; text-align: center;  "></div></td></tr>
+            <tr>
+
+                <th><span style="display:block;width: 70px; margin: 0 auto; text-align: center; ">所属仓库</span> </th>
+                <td><span style="display:block;;width: 200px; margin: 0 auto; text-align: center; " id="wareName"></span></td>
+            </tr>
+            <tr>
+
+                <th><span style="display:block;width: 70px; margin: 0 auto; text-align: center; ">货区名称</span></th>
+                <td><span style="display:block;;width: 200px; margin: 0 auto; text-align: center; " id="areaName"> </span></td>
+            </tr>
+            <tr>
+
+                <th><span style="display:block;width: 70px; margin: 0 auto; text-align: center; ">货区编码</span></th>
+                <td><span style="display:block;;width: 200px; margin: 0 auto; text-align: center; " id="areaCode"></span></td>
+            </tr>
+
+
+        </table>
+    </div>-->
+</div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+
+</div>
+<script type="text/javascript" src="js/back/device/device-info/device-info.js" custom></script>

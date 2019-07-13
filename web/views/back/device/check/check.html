@@ -1,0 +1,240 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="network-wrapper ScanResults-hook">
+            <div class="title">
+                当前位置：&nbsp;设备管理&nbsp;->&nbsp;<span class="active">设备检查</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+                        <span class="search-label">关键字（模糊搜索）</span>
+                        <input type="text" class="search-input lg" placeholder="请输入入库单号" style="width: 180px" name="keyWords">
+                        <span class="interval-lg"></span>
+
+                        <span class="search-label">状态</span>
+                        <select class="form-control w120" name="state">
+                            <option value="">全部</option>
+                            <option value="1">初始化</option>
+                            <option value="2">已验收</option>
+                            <option value="3">已上架0</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">时间</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="开始时间" class="search-input datetime" type="text"  name="workStartTime"  >
+                        </div>
+                        <span class="interval-xs"></span>
+                        <span>到</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="结束时间" class="search-input datetime"   type="text" name="workEndTime"  >
+                        </div>
+                       <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray ">清空</button>
+                    </div>
+                </form>
+            </div>
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" @click.stop="newBillIn()">新建检查</button>
+            </div>
+
+
+
+
+            <div class="custom-table-wrapper"  style="height: 150px"  >
+                <table class="custom-table ScanResults-table-hook"   ></table>
+            </div>
+
+
+            <!-- 新增模态框（Modal） -->
+            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+                <div class="modal-dialog" z-index="9999" style="width: 60%" >
+                    <div class="modal-content" z-index="9999" >
+                        <div class="modal-header" z-index="9999" >
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body" style="height: auto">
+                            <div  id="bill-master" >
+                                <ul class="detail_contain" style="margin-left: 20%;width: 70%">
+                                    <li>
+                                        <h3>检查信息</h3>
+                                        <ol class="detail_list" style="margin-top: 6%;border-top: white" >
+                                            <li>
+                                                <span   style="margin-top: 20px;width: 100px;color: #7B68EE">班组：</span>
+                                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入班组"   v-model = "insert.deviceCheckMaster.team"><br/>
+                                            </li>
+                                            <li>
+                                                <span   style="margin-top: 20px;width: 100px;color: #7B68EE">责任人：</span>
+                                                <select style="margin-top: 20px;width: 300px" class="search-input lg"    v-model = "insert.deviceCheckMaster.dutyUserId">
+                                                    <option v-for="user in userItems" v-bind:value="user.value">{{user.text}}</option>
+                                                </select>
+                                            </li>
+                                            <li>
+                                                <span   style="margin-top: 20px;width: 100px;color: #7B68EE">类型：</span>
+                                                <select style="margin-top: 20px;width: 300px" class="search-input lg"    v-model = "insert.deviceCheckMaster.type">
+                                                    <option value="1">周检</option>
+                                                    <option value="2">月检</option>
+                                                </select>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div   id="bill-details" style="display: none">
+                                <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                                    <button type="button" class="btn primary_btn return_btn"     @click="addDetail()"  >添加检查设备</button>
+                                </div>
+                                <div class="custom-table-wrapper create-bill-allot-hook"  style="  overflow-y:auto;    height:600px;"  >
+                                    <table class="table1" >
+                                        <thead  >
+                                        <tr>
+                                            <th   >设备名称</th>
+                                            <th  >单品编码</th>
+                                            <th  >操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(detail, index) in insert.deviceCheckDetails">
+                                            <td>{{detail.deviceName}}</td>
+                                            <td>{{detail.deviceCode}}</td>
+                                            <td>
+                                                <button class="btn  btn-default update"  @click="deleteDetail(index)">删除</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="position: relative;height: 100px">
+                            <div style="position:absolute;left:40%">
+                                <button type="button" style="left: -100px" class="btn btn-default btn-me" id="nextCreate" @click.stop="nextCreate()">下一步</button>
+                                <button type="button" class="btn btn-default btn-me" id="preCreate" @click.stop="preCreate()" style="display: none">上一步</button>
+                                <button type="button" class="btn btn-default btn-me" id="commitCreate"  @click.stop="save()" style="display: none">确定</button>
+                                <button type="button" class="btn btn-default btn-me" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!-- 选择物料（Modal） -->
+            <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+                <div class="modal-dialog" z-index="9999" style="width: 60%" >
+                    <div class="modal-content" z-index="9999" >
+                        <div class="modal-header" z-index="9999" >
+                            <button type="button" class="close"  @click="cancelNew()">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabe1">
+                                选择物料
+                            </h4>
+                        </div>
+                        <div class="modal-body item-hook" style="height: 600px">
+                            <div class="search"  >
+                                <form class="form-search-hook">
+                                    <div class="row">
+                                        <span class="search-label">关键字</span>
+                                        <input type="text" class="search-input lg" placeholder="请输入关键字" style="width: 180px" name="keyWords">
+                                        <span class="interval-lg"></span>
+
+                                        <span class="search-label">设备</span>
+                                        <select class="form-control w120"    name="deviceId"  >
+                                            <option    value=""> </option>
+                                            <option v-for="item in deviceItems" v-bind:value="item.value">{{item.text}}</option>
+                                        </select>
+                                        <span class="interval-lg"></span>
+                                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                                        <span class="interval-xs"></span>
+                                        <button type="reset" class="btn btn-gray search-hook">清空</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="custom-table-wrapper itemInfo-table-hook-wrapper"  style="height: 150px"  >
+                                <table class="custom-table itemInfo-table-hook"   ></table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"    @click.stop="commitItem()" >确定</button>
+                            <button type="button" class="btn btn-default"  @click="cancelNew()">取消</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+
+
+            <!-- 选择物料（Modal） -->
+            <div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"    z-index="9999"   aria-hidden="false">
+                <div class="modal-dialog" z-index="9999" style="width: 60%" >
+                    <div class="modal-content" z-index="9999" >
+                        <div class="modal-header" z-index="9999" >
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabe12">
+                                检查设备
+                            </h4>
+                        </div>
+                        <div class="modal-body item-hook" style="height: 600px">
+                            <table class="table1" >
+                                <thead  >
+                                <tr>
+
+                                    <th   >检查项目</th>
+                                    <th  >检查内容</th>
+                                    <th   >步骤</th>
+                                    <th  >合格标准</th>
+                                    <th  >结果</th>
+                                    <th  >备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(result, index) in resultItems">
+
+
+                                    <td>{{result.checkProjectName}}</td>
+                                    <td>{{result.checkContentName}}</td>
+                                    <td>{{result.step}}</td>
+                                    <td>{{result.standard}}</td>
+                                    </td>
+                                    <td>
+                                        <select v-bind:id="index + '000'"  v-model="result.result"   @change="changeResult(index)" >
+                                            <option >   </option>
+                                            <option value=0 > 未检查 </option>
+                                            <option value=1  > 合格 </option>
+                                            <option value=2  > 不合格 </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <textarea v-model="result.memo" name="step"  style=" " class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"    @click.stop="result()" >确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/device/check/check.js" custom></script>

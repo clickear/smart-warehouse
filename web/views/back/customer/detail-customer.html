@@ -1,0 +1,68 @@
+<div class="create-account detail-settlement-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;在线客服&nbsp;->&nbsp;咨询管理&nbsp;->&nbsp;<span class="active">咨询详情</span>
+    </div>
+    <div class="order_operation_btn">
+        <button class="primary_btn" @click.stop="cancleBack()">取消</button>
+        <!--<button class="primary_btn" @click.stop="reply()">回复</button>-->
+    </div>
+    <div class="inner-wrapper">
+        <ul class="detail_contain">
+            <li>
+                <h3>咨询回复</h3>
+                <ol class="detail_list">
+                    <li>
+                        <p><span>咨询人姓名：</span><i v-text="account.consultUserName"></i></p>
+                        <p><span>咨询人手机：</span><i v-text="account.consultUserMobile"></i></p>
+                        <p><span>所属单位：</span><i v-text="account.companyName"></i></p>
+                        <p><span>咨询时间：</span><i v-text="account.consultTime"></i></p>
+                        <p><span>登录用户：</span><i> - </i></p>
+                    </li>
+                    <li>
+                        <p><span>咨询内容：</span><i v-text="account.consultContent"></i></p>
+
+                    </li>
+                    <li>
+                        <p><span style="float: left">回复：</span><textarea style="width: 80%;height: 10rem" v-text="account.replyContent"></textarea></p>
+                    </li>
+
+                </ol>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/customer-service/detail_customer.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

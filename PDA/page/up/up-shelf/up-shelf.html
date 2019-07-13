@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+ <head>
+  <title>上架</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	
+  <link rel="stylesheet" href="accept-detail.css"/>
+	<link href="../../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="up-shelf.css"/>
+	
+ </head>
+ <body>
+	 <header class="mui-bar mui-bar-nav header">
+		 <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		 <h1 class="mui-title" style="color: #FFFFFF;">上架</h1>
+	 </header>
+	 <div class="contain">
+		 <br/>
+		 <div class="mui-input-row mui-search">
+		 	<input type="search"  style="width: 74%;margin-left: 13%;" v-model="cellBarCode"    placeholder="扫描货位条码" >
+		 </div>
+		 
+		 <div class = "order"  style="height: auto;top: 0%;" >
+		 	 
+		 	<div class="rowData"   >
+		 		<span class="name">当前货架</span>
+		 		<span class="value" style="left: 45%;">行</span>
+		 		<span class="value" style="left: 60%;">列</span> 
+		 	</div>
+			<div class="rowData"   >
+				<span class="name" style="color: #CF2D28;">{{cell.shelfName}}</span>
+				<span class="value" style="color: #CF2D28;left:45%">{{cell.sRow}}</span>
+				<span class="value" style="left: 60%;color: #CF2D28;">{{cell.sColumn}}</span>
+			</div>
+		  
+		 </div>
+		 
+		 <div class="mui-input-row mui-search"  style="width: 74%;height:10%;top: 2%; left: 13%;" >
+		 <input type="search" id="itemBarCode" placeholder="扫描物料条码" v-model="itemBarCode" >
+		 </div>
+		 <div class = "order"  style="height: auto;top: 0%;" >
+		 	
+		 <div class="rowData"   >
+		 	<span class="name">物料名称</span>
+		 	<span class="value" style="left: 50%;">规格</span>
+		 	 
+		 </div>
+		 <div class="rowData"   >
+		 	<span class="name" style="color: #CF2D28;">{{item.itemName}}</span>
+		 	<span class="value" style="color: #CF2D28;left:50%">{{item.itemClass}}</span>
+		  
+		 </div>
+		 
+		 </div>
+		  
+		 <div class="mui-input-row mui-search"  style="width: 74%;height:10%;top: 2%; left: 13%;" >
+		 <input type="search"  placeholder="请输入当前物料数量" v-model="quantity" >
+		 </div>
+		 
+		 <div class="mui-content-padded">
+		 	<button type="button" @click="change()"  class="mui-btn mui-btn-primary ">修改数量</button>
+		 </div>
+		 
+		 
+		 <div class = "order"  style="height: auto;top: 0%;" >
+			 <div class="rowData" >
+			 	<span class="name">物料名称</span>
+			 	<span class="value">规格</span>
+				<span class="value" style="left: 60%;">数量</span>
+			 </div>
+			 
+			  <div class="rowData" v-for="item in list" >
+					<span class="name" style="color: #CF2D28;">{{item.itemName}}</span>
+					<span class="value" style="color: #CF2D28;">{{item.itemClass}}</span>
+					<span class="value" style="left: 60%;color: #CF2D28;">{{item.quantity}}</span>
+				</div>
+		 </div>
+		 
+		 <br/>
+		 <div class="mui-content-padded">
+		 <button type="button" @click="commit()"  class="mui-btn mui-btn-primary   ">确定</button>
+		 <br/>
+		 <br/>
+		 
+		  
+		 </div>
+		 
+		  
+		  
+		 
+		 
+	 </div>
+		
+		<script src="../../../config/dev.js"></script>
+		<script src="../../../libs/jquery.1.11.min.js"></script>
+		<script src="../../../js/mui.min.js"></script>
+		<script src="../../../libs/vue.js"></script>
+		<script src="../../../libs/vue-resource.js"></script>
+	
+	 <script   src="up-shelf.js"></script>
+   
+ </body>
+</html>

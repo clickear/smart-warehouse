@@ -1,0 +1,45 @@
+<div class="next-return create-area-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;基本信息&nbsp;->货架设置&nbsp;->&nbsp;<span class="active">新建货架</span>
+    </div>
+    <form class="form-horizontal create-area-form" method="post">
+        <div class="order_operation_btn fr">
+            <button class="primary_btn">确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>货区信息</h3>
+                    <ol class="detail_list">
+                        <li>
+                            <p ><span>所属仓库</span>
+                                <select class="select_ware" name="select_ware" id="select_customer"      v-model="info.wareCode">
+
+                                    <option v-for="item in items" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+
+                            </p>
+
+
+                        </li>
+                        <li  style="margin-top: 20px;">
+
+                            <p><span>货区名字：</span>
+                                <input type="text"   v-model="info.areaName"    name="areaName"    maxlength="11">
+                            </p>
+
+                        </li>
+
+                        <li style="margin-top: 20px;">
+                            <h4>备注信息</h4>
+                            <textarea v-model="info.memo" name="remark" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                    </ol>
+            </ul>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="js/back/base/area/create-area.js" custom></script>

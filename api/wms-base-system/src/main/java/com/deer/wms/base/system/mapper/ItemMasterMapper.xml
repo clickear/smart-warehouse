@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ItemMasterMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.ItemMaster">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="item_master_id" jdbcType="INTEGER" property="itemMasterId" />
+    <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+    <result column="link_man" jdbcType="VARCHAR" property="linkMan" />
+    <result column="link_phone" jdbcType="VARCHAR" property="linkPhone" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+
+  </resultMap>
+
+  <resultMap extends="BaseResultMap" id="Dto" type="com.deer.wms.base.system.model.ItemMasterDto">
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+
+  </resultMap>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.ItemMasterDto" resultMap="Dto">
+    select
+    com.company_name,
+    master.item_master_id,
+    master.item_master_name,
+    master.link_man,
+    master.link_phone,
+    master.memo,
+    master.company_id,
+    master.create_time
+
+    from item_master master
+    left join company com on com.company_id = master.company_id
+
+    where 1=1
+    <if test="companyId != null and companyId != ''">
+      and com.company_id = #{companyId}
+    </if>
+    ORDER BY create_time desc
+
+  </select>
+</mapper>

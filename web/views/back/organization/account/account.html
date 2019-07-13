@@ -1,0 +1,83 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="account-wrapper account-hook">
+            <div class="title">
+                当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;<span class="active">账户管理</span>
+            </div>
+            <div class="search">
+                <form class="form-hook">
+                    <div class="row">
+                        <%if(checkAuthority('account-query')){%>
+                        <span class="search-label">角色类型</span>
+                        <select class="form-control w120 role-type-hook" name="roleName">
+                            <option value="">全部</option>
+                            <option v-for="(role,index) in roleList" :value="role.roleName"
+                                    v-text="role.roleName"></option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">账户状态</span>
+                        <select class="form-control w80 account-status-hook"  name="accountStatus">
+                            <option value="">全部</option>
+                            <option value="enable">启用</option>
+                            <option value="disable">停用</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" name="keyword" placeholder="用户姓名、所属企业名称、用户电话...">
+                        <span class="interval-lg"></span>
+                        <button type="submit" class="btn btn-blue search-hook">查询</button>
+                        <%}%>
+                        <%if(checkAuthority('account-customer-create') || checkAuthority('account-platform-create')){%>
+                        <span class="interval-xs"></span>
+                        <button type="button" class="btn btn-gray" @click.stop="addAccount('<%=user.companyType%>')">新增</button>
+                        <%}%>
+                    </div>
+                </form>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table account-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/organization/account/account.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

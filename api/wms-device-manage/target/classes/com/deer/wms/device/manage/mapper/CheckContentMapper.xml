@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.device.manage.dao.CheckContentMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.device.manage.model.CheckContent">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="check_content_id" jdbcType="INTEGER" property="checkContentId" />
+    <result column="check_project_id" jdbcType="INTEGER" property="checkProjectId" />
+    <result column="check_content_name" jdbcType="VARCHAR" property="checkContentName" />
+    <result column="step" jdbcType="VARCHAR" property="step" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.device.manage.model.CheckContentDto"  extends="BaseResultMap">
+
+  </resultMap>
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.device.manage.model.CheckContentCriteria">
+      select       *
+      from
+      check_content content
+      left join check_project project on content.check_project_id = project.check_project_id
+      left join device_info info on project.device_id = info.device_id
+
+      where 1=1
+      <if test="checkProjectId != null">
+        and  content.check_project_id =#{checkProjectId}
+      </if>
+      <if test="deviceId != null">
+          and  info.device_id =#{deviceId}
+      </if>
+
+
+
+  </select>
+</mapper>

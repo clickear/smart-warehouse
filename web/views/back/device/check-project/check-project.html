@@ -1,0 +1,120 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="network-wrapper ScanResults-hook">
+            <div class="title">
+                当前位置：&nbsp;仓库作业&nbsp;->&nbsp;<span class="active">入库管理</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+                        <span class="search-label">关键字（模糊搜索）</span>
+                        <input type="text" class="search-input lg" placeholder="请输入关键字" style="width: 180px" name="keyWords">
+                        <span class="interval-lg"></span>
+                        <span class="search-label">设备</span>
+                        <select class="form-control w120"    name="deviceId"   v-model = "info.deviceId">
+                            <option    value=""> </option>
+                            <option v-for="item in deviceItems" v-bind:value="item.value">{{item.text}}</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray ">清空</button>
+                    </div>
+                </form>
+            </div>
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" @click.stop="newProject()">新建检查项目</button>
+            </div>
+            <div class="custom-table-wrapper"  style="height: 150px"  >
+                <table class="custom-table ScanResults-table-hook"   ></table>
+            </div>
+        </div>
+        <div class="add-hook">
+            <!-- 新增模态框（Modal） -->
+            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+                <div class="modal-dialog" z-index="9999" style="width: 60%" >
+                    <div class="modal-content" z-index="9999" >
+                        <div class="modal-header" z-index="9999" >
+                            <button type="button" class="close" @click.stop="cancelAdd()">
+                                &times;
+                            </button>
+                        </div>
+                        <div class="modal-body" style="height: auto">
+                            <div  id="bill-master" >
+                                <ul class="detail_contain" style="margin-left: 20%;width: 70%">
+                                    <li>
+                                        <h3>检查项目信息</h3>
+                                        <ol class="detail_list" style="margin-top: 6%;border-top: white" >
+
+                                            <li>
+                                                <span   style="margin-top: 20px;width: 100px;color: #7B68EE">名称：</span>
+                                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入名称"   v-model = "insert.checkProject.checkProjectName"><br/>
+
+
+                                            </li>
+                                            <li>
+                                                <span style="margin-top: 20px;width: 100px">设备：</span>
+                                                <select  style="margin-top: 20px;width: 300px"  id="type" name="" v-model = "insert.checkProject.deviceId">
+
+                                                    <option v-for="item in deviceItems" v-bind:value="item.value">{{item.text}}</option>
+                                                </select><br/>
+
+                                            </li>
+                                            <li>
+                                                <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注：</span>
+                                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "insert.checkProject.memo">
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div   id="bill-details" style="display: none">
+                                <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                                    <button type="button" class="btn primary_btn return_btn"     @click="addContents()"  >添加检查内容</button>
+                                </div>
+                                <div class="custom-table-wrapper create-bill-allot-hook"  style="  overflow-y:auto;    height:600px;"  >
+                                    <table class="table1" >
+                                        <thead  >
+                                        <tr>
+                                            <th   >检查内容名称</th>
+                                            <th  >检查步骤</th>
+                                            <th   >合格标准</th>
+
+                                            <th   >操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(checkContent, index) in insert.checkContents">
+                                            <td><input   v-model="checkContent.checkContentName"   maxlength="11"></td>
+                                            <td><textarea   v-model="checkContent.step"   maxlength="11"></textarea></td>
+                                            <td><input   v-model="checkContent.standard"   maxlength="11"></td>
+                                            <td>
+                                                <button class="btn  btn-default update"  @click="deleteCheckContent(index)">删除</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="position: relative;height: 100px">
+                            <div style="position:absolute;left:40%">
+                                <button type="button" style="left: -100px" class="btn btn-default btn-me" id="nextCreate" @click.stop="nextCreate()">下一步</button>
+                                <button type="button" class="btn btn-default btn-me" id="preCreate" @click.stop="preCreate()" style="display: none">上一步</button>
+                                <button type="button" class="btn btn-default btn-me" id="commitCreate"  @click.stop="save()" style="display: none">确定</button>
+                                <button type="button" class="btn btn-default btn-me" @click.stop="cancelAdd()" >取消</button>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/device/check-project/check-project.js" custom></script>

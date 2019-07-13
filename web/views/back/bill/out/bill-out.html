@@ -1,0 +1,233 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="network-wrapper ScanResults-hook">
+            <div class="title">
+                当前位置：&nbsp;仓库作业&nbsp;->&nbsp;<span class="active">出库管理</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+                        <span class="search-label">出库单号（模糊搜索）</span>
+                        <input type="text" class="search-input lg" placeholder="请输出库单号" style="width: 180px" name="billNo" id="billNo">
+                        <span class="interval-lg"></span>
+
+                        <span class="search-label">合同单号</span>
+                        <input type="text" class="search-input lg" placeholder="请输氚云合同单号" style="width: 180px" name="contractNo" id="contractNo">
+                        <span class="interval-lg"></span>
+
+                        <span class="search-label">状态</span>
+                        <select class="form-control w120" name="state" id="state">
+                            <option value="">全部</option>
+                            <option value="0">初始化</option>
+                            <option value="1">已审核</option>
+                            <option value="2">已完成</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">时间</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="开始时间" class="search-input datetime" type="text" name="workStartTime"  id="workStartTime">
+                        </div>
+                        <span class="interval-xs"></span>
+                        <span>到</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="结束时间" class="search-input datetime" type="text" name="workEndTime" id="workEndTime">
+                        </div>
+                       <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray ">清空</button>
+                    </div>
+                </form>
+            </div>
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" @click.stop="newBillOut()">新建出库单</button>
+            </div>
+
+
+
+
+            <div class="custom-table-wrapper"  style="height: 150px"  >
+                <table class="custom-table ScanResults-table-hook"  id="tableHook"></table>
+            </div>
+
+
+
+        </div>
+        
+        <div>
+        	
+	        
+	        <!-- 新增出库模态框（Modal） -->
+	        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+	            <div class="modal-dialog" z-index="9999" style="width: 60%" >
+	                <div class="modal-content" z-index="9999" >
+	                    <div class="modal-header" z-index="9999" >
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+	                            &times;
+	                        </button>
+	
+	                    </div>
+	                    <div class="modal-body" style="height: auto">
+	                        <div  id="bill-master" >
+	                            <ul class="detail_contain" style="margin-left: 20%;width: 70%">
+	                                <li>
+	                                    <h3>出库信息</h3>
+	                                    <ol class="detail_list" style="margin-top: 6%;border-top: white" >
+	                                         
+	                                        <li>
+	                                            <span   style="margin-top: 20px;width: 100px;color: #7B68EE">合同号：</span>
+	                                            <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入合同号"   v-model = "insert.billMaster.contractNo"><br/>
+	                                        </li>
+	                                        <li>
+	                                            <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注：</span>
+	                                            <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "insert.billMaster.memo">
+	                                        </li>
+	                                        <li>
+                                                <span   style="margin-top: 20px;width: 100px;color: #7B68EE">氚云objectid:</span>
+                                                <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入氚云obejctid"   v-model = "insert.billMaster.chaunyunid">
+                                            </li>
+                                            <li>
+                                                <span  style="margin-top: 20px;width: 100px;color: #7B68EE">合同类型:</span>
+                                                <select class="form-control w120" style="width:300px;margin-top: 20px" name="state" id="mold" v-model="insert.billMaster.mold">
+                                                    <option value="短租">短租</option>
+                                                    <option value="长租">长租</option>
+                                                    <option value="销售">销售</option>
+                                                </select>
+                                            </li>
+	                                    </ol>
+	                                </li>
+	
+	                            </ul>
+	
+	                        </div>
+	
+	                        <div   id="bill-details" style="display: none">
+                                <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                                    <button type="button" class="btn primary_btn return_btn"     @click="addDetail()">添加出库详情</button>
+                                </div>
+                                <div class="custom-table-wrapper create-bill-allot-hook"  style="  overflow-y:auto;    height:600px;"  >
+                                    <table class="table1" >
+                                        <thead  >
+                                        <tr>
+                                            <th   >物料名</th>
+                                            <th   >规格</th>
+                                            <th  >批次</th>
+                                            <th  >现有数量</th>
+                                            <th   >出库数量</th>
+                                            <th   >是否返库</th>
+                                            <th   >操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(detail, index) in insert.details">
+                                            <td>{{detail.itemName}}</td>
+                                            <td>{{detail.itemClass}}</td>
+                                            <td>
+                                                <div style="position: relative">
+                                                    <select @change="changeBatch(index)" v-bind:id="detail.itemCode" v-model="detail.value"  >
+                                                         
+                                                        <option v-for="batch in detail.batchList"   v-bind:value="batch.value">{{batch.batch}}</option>
+                                                    </select>
+                                                     
+                                                </div>
+                                            </td>
+											<td>{{detail.nowQuantity}}</td>
+                                            <td><input   v-model="detail.quantity" onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');" maxlength="11"></td>
+                                            <td>
+                                                <div  >
+                                                    <select   v-model="detail.needReturn"  >
+                                                         <option  value="2">否</option>
+                                                        <option  value="1">是</option>
+                                                    </select>
+                                                     
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button class="btn  btn-default update"  @click="deleteDetail(index)">删除</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+	                    </div>
+	                    <div class="modal-footer" style="position: relative;height: 100px">
+	                        <div style="position:absolute;left:40%">
+	                            <button type="button" style="left: -100px" class="btn btn-default btn-me" id="nextCreate" @click.stop="nextCreate()">下一步</button>
+	                            <button type="button" class="btn btn-default btn-me" id="preCreate" @click.stop="preCreate()" style="display: none">上一步</button>
+	                            <button type="button" class="btn btn-default btn-me" id="commitCreate"  @click.stop="save()" style="display: none">确定</button>
+	                            <button type="button" class="btn btn-default btn-me" data-dismiss="modal">取消</button>
+	                        </div>
+	
+	                    </div>
+	                </div><!-- /.modal-content -->
+	            </div><!-- /.modal -->
+	        </div>
+	        
+	        <!-- 选择物料模态框（Modal） -->
+	        <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+	            <div class="modal-dialog" z-index="9999" style="width: 60%" >
+	                <div class="modal-content" z-index="9999" >
+	                    <div class="modal-header" z-index="9999" >
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+	                            &times;
+	                        </button>
+	                        <h4 class="modal-title" id="myModalLabe1">
+	                            选择物料
+	                        </h4>
+	
+	                    </div>
+	                    <div class="modal-body item-hook" style="height: 600px">
+	
+	
+	                        <div class="search"  >
+	
+	                            <form class="form-search-hook">
+	                                <div class="row">
+	                                    <span class="search-label">关键字</span>
+	                                    <input type="text" class="search-input lg" placeholder="请输物料关键字" style="width: 180px" name="keyWords">
+	                                    <span class="interval-lg"></span>
+	
+	                                    <span class="search-label">物料类型</span>
+	                                    <select class="form-control w120"    name="itemTypeCode" @change="changeType()" v-model = "info.itemTypeCode">
+	                                        <option    value=""> </option>
+	                                        <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+	
+	                                    </select>
+	
+	                                    <span class="interval-lg"></span>
+	                                    <button type="button" class="btn btn-blue search-hook">查询</button>
+	                                    <span class="interval-xs"></span>
+	                                    <button type="reset" class="btn btn-gray search-hook">清空</button>
+	                                </div>
+	                            </form>
+	                        </div>
+	                        <div class="custom-table-wrapper itemInfo-table-hook-wrapper"  style="height: 150px"  >
+	                            <table class="custom-table itemInfo-table-hook"   ></table>
+	                        </div>
+	
+	
+	
+	
+	                    </div>
+	                    <div class="modal-footer">
+	
+	
+	                        <button type="button" class="btn btn-default"    @click.stop="commitItem()" >确定</button>
+	                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                    </div>
+	                </div><!-- /.modal-content -->
+	            </div><!-- /.modal -->
+	        </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/bill/out/bill_out.js" custom></script>

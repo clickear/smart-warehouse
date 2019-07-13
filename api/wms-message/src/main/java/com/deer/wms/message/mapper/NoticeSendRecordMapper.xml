@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.message.dao.NoticeSendRecordMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.message.model.NoticeSendRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="record_id" jdbcType="BIGINT" property="recordId" />
+    <result column="notice_id" jdbcType="BIGINT" property="noticeId" />
+    <result column="receive_id" jdbcType="INTEGER" property="receiveId" />
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+    <result column="see" jdbcType="BIT" property="see" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="see_time" jdbcType="TIMESTAMP" property="seeTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+</mapper>

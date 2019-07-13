@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.bill.manage.dao.BillMasterMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.bill.manage.model.BillMaster">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bill_no" jdbcType="VARCHAR" property="billNo" />
+    <result column="chaunyunid" jdbcType="VARCHAR" property="chaunyunid"/>
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_user_id" jdbcType="VARCHAR" property="addUserId" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="check_user_id" jdbcType="VARCHAR" property="checkUserId" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+    <result column="task_user_id" jdbcType="VARCHAR" property="taskUserId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="batch" jdbcType="INTEGER" property="batch" />
+    <result column="contract_no" jdbcType="VARCHAR" property="contractNo" />
+    <result column="item_master_id" jdbcType="INTEGER" property="itemMasterId" />
+    <result column="in_type" jdbcType="INTEGER" property="inType" />
+
+  </resultMap>
+
+  <resultMap id="DtoMap" type="com.deer.wms.bill.manage.model.BillMasterDto" extends="BaseResultMap">
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+    <result column="add_user_name" jdbcType="VARCHAR" property="addUserName" />
+    <result column="check_user_name" jdbcType="VARCHAR" property="checkUserName" />
+    <result column="task_user_name" jdbcType="VARCHAR" property="taskUserName" />
+    <result column="accept_user_name" jdbcType="VARCHAR" property="acceptUserName" />
+
+  </resultMap>
+  <update id="updateState" >
+  		update bill_master set  state=3 where bill_no = #{billNo}
+  </update>
+  <select id="findList" resultMap="DtoMap" parameterType="com.deer.wms.bill.manage.model.BillMasterCriteria">
+    select
+    master.id,
+    master.bill_no,
+    master.chaunyunid,
+    master.mold,
+    master.type,
+    master.add_time,
+    master.add_user_id,
+    master.check_time,
+    master.check_user_id,
+    master.task_time,
+    master.task_user_id,
+    master.state,
+    master.ware_code,
+    master.company_id,
+    master.memo,
+    master.batch,
+    master.contract_no,
+    master.item_master_id,
+    master.in_type,
+    com.company_name,
+    ware.ware_name,
+    im.item_master_name,
+    (select user_name from user_info where user_id = master.add_user_id) as add_user_name,
+    (select user_name from user_info where user_id = master.check_user_id) as check_user_name,
+    (select user_name from user_info where user_id = master.task_user_id) as task_user_name,
+    (select user_name from user_info where user_id = master.accept_user_id) as accept_user_name
+
+
+
+
+    from bill_master  master
+    left join ware_info ware on  master.ware_code = ware.ware_code
+    left join company com on master.company_id = com.company_id
+    left join item_master im on master.item_master_id = im.item_master_id
+    where 1=1
+    <if test="keyWords != null and keyWords !=  ''">
+      and master.bill_no like concat('%',#{keyWords}'%')
+    </if>
+    <if test="companyId != null and companyId != ''">
+      and com.company_id = #{companyId}
+    </if>
+    <if test="workStartTime != null and workStartTime != ''">
+      and master.add_time &gt;= #{workStartTime}
+    </if>
+    <if test="workEndTime != null and workEndTime != ''">
+      and master.add_time &lt;= #{workEndTime}
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      and master.ware_code  = #{wareCode}
+    </if>
+    <if test="contractNo != null and contractNo != ''">
+      and  master.contract_no  like concat('%',#{contractNo},'%')
+    </if>
+    <if test="itemMasterId != null and itemMasterId != ''">
+      and master.item_master_id  = #{itemMasterId}
+    </if>
+    <if test="type != null and type != ''">
+      and master.type  = #{type}
+    </if>
+    <if test="state != null and state != ''">
+      and master.state  = #{state}
+    </if>
+    <if test="billNo != null and billNo != ''">
+      and master.bill_no  like  CONCAT('%', #{billNo}, '%')
+    </if>
+    order  by master.add_time desc ,master.state
+  </select>
+
+
+  <select id="tongji" resultType="com.deer.wms.bill.manage.model.TongJi"  parameterType="com.deer.wms.bill.manage.model.BillMasterCriteria">
+    SELECT
+    (
+    SELECT COUNT(*) FROM bill_master WHERE type = 1
+    <if test="wareCode != null and wareCode != ''">
+     and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+    and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+     and company_id =#{companyId}
+    </if>
+    ) AS intotal1,
+    (
+    SELECT COUNT(*) FROM bill_master WHERE type = 1 and state =1
+    <if test="wareCode != null and wareCode != ''">
+      and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+      and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+      and company_id =#{companyId}
+    </if>
+    ) AS intotal2,
+    (
+    SELECT COUNT(*) FROM bill_master WHERE type = 1 and state =2
+    <if test="wareCode != null and wareCode != ''">
+      and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+      and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+      and company_id =#{companyId}
+    </if>
+    ) AS intotal3,
+    (
+    SELECT COUNT(*) FROM bill_master WHERE type = 1 and state =3
+    <if test="wareCode != null and wareCode != ''">
+      and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+      and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+      and company_id =#{companyId}
+    </if>
+    ) AS intotal4,
+    (
+    SELECT COUNT(*) FROM bill_master WHERE type = 2
+    <if test="wareCode != null and wareCode != ''">
+      and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+      and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+      and company_id =#{companyId}
+    </if>
+    ) AS outtotal1,
+    (
+    SELECT COUNT(*) FROM bill_master WHERE type = 2 and state =3
+    <if test="wareCode != null and wareCode != ''">
+      and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+      and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+      and company_id =#{companyId}
+    </if>
+    ) AS outtotal2,
+    (
+    SELECT COUNT(*) FROM bill_master WHERE type = 2 and state =4
+    <if test="wareCode != null and wareCode != ''">
+      and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+      and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+      and company_id =#{companyId}
+    </if>
+    ) AS outtotal3,
+    (
+     SELECT COUNT(*) FROM bill_master WHERE type = 2 and state =5
+    <if test="wareCode != null and wareCode != ''">
+      and  ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null">
+      and  item_master_id = #{itemMasterId}
+    </if>
+    <if test="companyId != null ">
+      and company_id =#{companyId}
+    </if>
+    ) AS outtotal4,
+
+
+
+    TRUNCATE((
+    SELECT COUNT(*) FROM cell_info cell
+    left join  shelf_info shelf on cell.shelf_code = shelf.shelf_code
+    left join  area_info area on shelf.area_code = area.area_code
+    left join ware_info ware on area.ware_code = ware.ware_code
+    left join  company com on ware.company_id = com.company_id
+    WHERE   cell.state =1
+    <if test="wareCode != null and wareCode != ''">
+      and  ware.ware_code = #{wareCode}
+    </if>
+
+    <if test="companyId != null ">
+      and com.company_id =#{companyId}
+    </if>
+    ) / (SELECT COUNT(*) FROM cell_info cell
+    left join  shelf_info shelf on cell.shelf_code = shelf.shelf_code
+    left join  area_info area on shelf.area_code = area.area_code
+    left join ware_info ware on area.ware_code = ware.ware_code
+    left join  company com on ware.company_id = com.company_id
+    WHERE   1 =1
+    <if test="wareCode != null and wareCode != ''">
+      and  ware.ware_code = #{wareCode}
+    </if>
+
+    <if test="companyId != null ">
+      and com.company_id =#{companyId}
+    </if>
+    )  ,2) as cellDouble
+
+    FROM DUAL;
+  </select>
+</mapper>

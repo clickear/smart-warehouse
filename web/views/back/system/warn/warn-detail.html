@@ -1,0 +1,86 @@
+<div class="report-parameter-detail-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;系统参数&nbsp;->&nbsp;告警参数&nbsp;->&nbsp;<span class="active">告警参数详情</span>
+    </div>
+    <div class="inner-wrapper">
+        <h2>告警参数详情</h2>
+        <div class="detail form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">参数名称</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.paramName"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">参数描述</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.paramDescribe"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">参数状态</label>
+                <div class="col-sm-10">
+                        <p class="form-control-static">{{info.state|stageFilter}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">告警动作</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" >{{info.action|actionFilter}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">告警参数</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{info.alarmParam|alarmParamFilter}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">告警是否需要获终端位置</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" v-text="info.terminalPosition === true ?'是':'否'"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-gray-sm" @click.stop="goBack()">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/system/warn/warn-detail.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

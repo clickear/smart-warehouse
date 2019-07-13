@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>验收</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+
+		<link rel="stylesheet" href="../../../../css/mui.min.css">
+		<link rel="stylesheet" href="./task-list.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav  " style="height: 15%;">
+			<br/>
+			<br/>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"  >选择分拣任务</h1>
+		</header>
+
+		<div class="contain">
+
+			<button class="order" v-for="item in items" @click="commit(item)">
+			 <div class="rowData">
+				 <span class="name">货区:</span>
+				 <span class="value" >{{item.areaName}}</span>
+			 </div>
+			 <div class="rowData">
+			 	 <span class="name">货架:</span>
+			 	 <span class="value" >{{item.shelfName}}</span>
+				 
+			 </div>
+			 <div class="rowData">
+				 <div class="name">货位:</div>
+				 <div class="value">{{item.cellCode}}</div>
+			 </div>
+			 <div class="rowData">
+			 	<div class="name">物料:</div>
+			 	<div class="value">{{item.itemName}}</div>
+			 </div> 
+			 <div class="rowData">
+			 	<div class="name">数量:</div>
+			 	<div class="value">{{item.quantity}}</div>
+			 </div>
+			  
+		 </button>
+
+		</div>
+		<script src="../../../../config/dev.js"></script>
+		<script src="../../../../libs/jquery.1.11.min.js"></script>
+		<script src="../../../../js/mui.min.js"></script>
+		<script src="../../../../libs/vue.js"></script>
+		<script src="../../../../libs/vue-resource.js"></script>
+		<script src="task-list.js"></script>
+
+	</body>
+
+</html>

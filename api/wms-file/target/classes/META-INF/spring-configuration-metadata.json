@@ -1,0 +1,30 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.deer.wms.file.configurer.FileSetting",
+      "name": "file",
+      "type": "com.deer.wms.file.configurer.FileSetting"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.deer.wms.file.configurer.FileSetting",
+      "name": "file.upload-content",
+      "description": "文件上传的根目录",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.deer.wms.file.configurer.FileSetting",
+      "name": "file.upload-file-dir",
+      "description": "文件上传的目录",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.deer.wms.file.configurer.FileSetting",
+      "name": "file.upload-temp-dir",
+      "description": "文件上传临时目录",
+      "type": "java.lang.String"
+    }
+  ]
+}

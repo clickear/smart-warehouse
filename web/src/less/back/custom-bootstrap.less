@@ -1,0 +1,105 @@
+div:focus {
+  outline: none;
+}
+
+em {
+  font-style: normal;
+}
+
+label {
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* bootstrap-selecter */
+.bootstrap-select {
+  @color: #555555; //字体颜色
+  @backgroundColor: #fff; //背景颜色
+  @border: 1px solid #CCCCCC; //边框
+  @focusHoverColor: #666; //focus、hover 字体颜色
+  @focusHoverBorderColor: #CCCCCC; // focus、hover 边框颜色
+  @focusHoverBoxShadow: 0 0 6px #4ccdff; //focus、hover 边框阴影
+  @dropDownMenuLiAColor: #666666; //下拉菜单li->a标签 字体颜色
+  @dropDownMenuLiAHoverColor: #666666; //下拉菜单li下a标签 hover字体颜色
+  @dropDownMenuLiAHoverBgColor: #eeeeee; //下拉菜单li下a标签 hover背景颜色
+  @dropDownMenuLiSelectedAColor: #666666; //下拉菜单li下选中a标签 字体颜色
+  @dropDownMenuLiSelectedABgColor: #eeeeee; //下拉菜单li下选中a标签 背景颜色
+  @dropDownMenuLiIconColor: #fff; //下框菜单li下图标颜色
+  .btn-selector {
+    vertical-align: top;
+    height: 34px;
+    line-height: 34px;
+    font-size: 14px;
+    color: @color;
+    background-color: @backgroundColor;
+    border: @border;
+    box-shadow: 0 0 10px transparent;
+    transition: box-shadow 0.2s ease;
+    &:not(.disabled):focus,
+    &:not(.disabled):hover {
+      color: @focusHoverColor;
+      border-color: @focusHoverBorderColor;
+      //box-shadow: @focusHoverBoxShadow;
+      box-shadow: none;
+      outline: none !important;
+    }
+    & .filter-option{
+      text-overflow:ellipsis;
+    }
+  }
+  & .dropdown-menu {
+    padding: 0 !important;
+    outline: none !important;
+    li {
+      a {
+        padding:5px 14px;
+        color: @dropDownMenuLiAColor;
+        &:hover {
+          color: @dropDownMenuLiAHoverColor;
+          background-color: @dropDownMenuLiAHoverBgColor;
+          outline: none;
+        }
+      }
+      &.selected {
+        a {
+          color: @dropDownMenuLiSelectedAColor;
+          background-color: @dropDownMenuLiSelectedABgColor;
+          outline: none;
+          span.check-mark {
+            //position: absolute;
+            margin-top: 0 !important;
+          }
+        }
+        .icon-ok-1 {
+          //color: @dropDownMenuLiIconColor;
+          //font-size: 14px;
+          //left: 2px;
+          display: none;
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .dropdown-menu {
+    .open {
+      position: absolute;
+    }
+  }
+}
+
+
+/* end */
+
+/* bootstrap-dialog */
+@media (min-width:768px){
+  .modal-dialog{
+    margin:70px auto;
+  }
+}
+/* end */

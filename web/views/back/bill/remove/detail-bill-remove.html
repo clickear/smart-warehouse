@@ -1,0 +1,46 @@
+<div class="client-detail client-detail-hook">
+    <div class="title noprint">
+        当前位置：&nbsp;&nbsp;->&nbsp;仓库作业&nbsp;->&nbsp;移库作业&nbsp;->&nbsp;<span class="active">移库详情</span>
+    </div>
+    <div class="order_operation_btn noprint">
+
+        <button class="primary_btn" id="print_btn" onclick="javascript:window.print();"  >打印</button>
+        <button class="primary_btn" id="export" @click.stop="exportBill()">导出</button>
+
+
+
+        <button class="primary_btn fr" @click.stop="prevStep()">返回</button>
+    </div>
+    <div class="inner-wrapper">
+        <input type="hidden" value="<%=staticServer%>" id="staticServer">
+        <ul class="detail_contain">
+            <li>
+                <h3>移库单信息</h3>
+                <ol class="detail_list">
+                    <li>
+                        <p>
+                            <span>单据号：</span><i v-text="masterData.billnovch"></i>
+                            <b style="margin-left: 10px;" v-text=" "></b>
+                        </p>
+                        <p><span>操作员：</span><i v-text="masterData.operatervch"></i></p>
+                        <p><span>操作时间：</span><i v-text="masterData.operatedt"></i></p>
+                    </li>
+                    <li>
+                        <p><span>仓库：</span><i v-text="masterData.wareNameVch"></i></p>
+                        <p><span>合同号：</span><i v-text="masterData.plannovch"></i></p>
+
+                    </li>
+
+                </ol>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="custom-table-wrapper"  style="height: 150px"  >
+        <table class="custom-table BillDetail-table-hook"   ></table>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/bill/remove/detail_bill_remove.js" custom></script>

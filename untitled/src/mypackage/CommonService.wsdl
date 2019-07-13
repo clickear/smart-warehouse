@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://demo1.example.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CommonService" targetNamespace="http://demo1.example.com">
+  <wsdl:message name="InvokeResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetListResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchemaList">
+  </wsdl:message>
+  <wsdl:message name="GetSchemaResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetList">
+    <wsdl:part name="userCode" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="schemaCode" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="filter" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Invoke">
+    <wsdl:part name="userCode" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="schemaCode" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="methodName" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="param" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchemaListResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetSchema">
+    <wsdl:part name="schemaCode" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CommonService">
+    <wsdl:operation name="GetSchemaList">
+      <wsdl:input message="tns:GetSchemaList" name="GetSchemaList">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSchemaListResponse" name="GetSchemaListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetList">
+      <wsdl:input message="tns:GetList" name="GetList">
+    </wsdl:input>
+      <wsdl:output message="tns:GetListResponse" name="GetListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Invoke">
+      <wsdl:input message="tns:Invoke" name="Invoke">
+    </wsdl:input>
+      <wsdl:output message="tns:InvokeResponse" name="InvokeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchema">
+      <wsdl:input message="tns:GetSchema" name="GetSchema">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSchemaResponse" name="GetSchemaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CommonServiceSoapBinding" type="tns:CommonService">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetSchemaList">
+      <soap:operation soapAction="http://demo1.example.com/GetSchemaList" style="rpc"/>
+      <wsdl:input name="GetSchemaList">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetSchemaListResponse">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetList">
+      <soap:operation soapAction="http://demo1.example.com/GetList" style="rpc"/>
+      <wsdl:input name="GetList">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetListResponse">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Invoke">
+      <soap:operation soapAction="http://demo1.example.com/Invoke" style="rpc"/>
+      <wsdl:input name="Invoke">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="InvokeResponse">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchema">
+      <soap:operation soapAction="http://demo1.example.com/GetSchema" style="rpc"/>
+      <wsdl:input name="GetSchema">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetSchemaResponse">
+        <soap:body namespace="http://demo1.example.com" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CommonService">
+    <wsdl:port binding="tns:CommonServiceSoapBinding" name="CommonServiceImplPort">
+      <soap:address location="http://localhost:9089/webservice/CommonService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.ware.task.dao.CountDetailMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.ware.task.model.CountDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="count_detail_id" jdbcType="INTEGER" property="countDetailId" />
+    <result column="count_id" jdbcType="INTEGER" property="countId" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="shelf_code" jdbcType="VARCHAR" property="shelfCode" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+
+
+  <resultMap id="DtoMap" type="com.deer.wms.ware.task.model.CountDetailDto" extends="BaseResultMap">
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass"/>
+    <result column="shelf_name" jdbcType="VARCHAR" property="shelfName"/>
+  </resultMap>
+
+  <select id="findList" resultMap="DtoMap" parameterType="com.deer.wms.ware.task.model.CountDetailCriteria">
+  select
+    detail.count_detail_id,
+    master.count_id,
+    detail.area_code,
+    detail.shelf_code,
+    detail.item_code,
+    detail.state,
+
+
+    ware.ware_name ,
+    area.area_name ,
+    item.item_name,
+    item.item_class
+
+    from count_detail  detail
+    left join shelf_info shelf      on detail.shelf_code = shelf.shelf_code
+    left join area_info area      on detail.area_code = area.area_code
+    left join item_info item      on detail.item_code = item.item_code
+    left join count_master master on  detail.count_id = master.count_id
+    left join ware_info ware on  master.ware_code = ware.ware_code
+
+    where 1=1
+
+    <if test="countId != null and countId != ''">
+      and detail.count_id = #{countId}
+    </if>
+
+
+  </select>
+
+</mapper>

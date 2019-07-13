@@ -1,0 +1,55 @@
+<div class="next-return create-area-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;基本信息&nbsp;->设置&nbsp;->&nbsp;<span class="active">新建货位</span>
+    </div>
+    <form class="form-horizontal next-create-return-form" method="post">
+        <div class="order_operation_btn fr">
+            <button class="primary_btn">确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>货位信息</h3>
+                    <ol class="detail_list">
+                        <li>
+                            <p ><span>所属仓库</span>
+                                <select class="select_customer" name="selectCustomer" id="select_customer" v-model="info.wareidint"  v-if="<%=user.companyType%> === -1 ">
+                                    <option v-for="item in items" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+
+                            </p>
+                            <p ><span>所属货区</span>
+                                <select class="select_customer" name="selectCustomer"  v-model="info.areaidint"  v-if="<%=user.companyType%> === -1 ">
+                                    <option v-for="item in items" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+
+                            </p>
+                            <p ><span>所属货架</span>
+                                <select class="select_customer" name="selectCustomer"   v-model="info.shelfidint"  v-if="<%=user.companyType%> === -1 ">
+                                    <option v-for="item in items" v-bind:value="item.value">{{item.text}}</option>
+                                </select>
+
+                            </p>
+
+
+                        </li>
+                        <li  style="margin-top: 20px;">
+
+                            <p><span>货位名字：</span>
+                                <input type="text"      v-model="info.cellnamevch"  name="cellnamevch"    maxlength="11">
+                            </p>
+
+                        </li>
+
+                        <li style="margin-top: 20px;">
+                            <h4>备注信息</h4>
+                            <textarea v-model="info.memovch" name="remark" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                    </ol>
+            </ul>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="js/back/base/shelf/create-shelf.js" custom></script>

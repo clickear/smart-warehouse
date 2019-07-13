@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.ware.task.dao.PalletBatchMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.ware.task.model.PalletBatch">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="pallet_batch_id" jdbcType="INTEGER" property="palletBatchId" />
+    <result column="pallet_id" jdbcType="INTEGER" property="palletId" />
+    <result column="batch_id" jdbcType="INTEGER" property="batchId" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+  </resultMap>
+
+  <resultMap id="Dto" extends="BaseResultMap" type="com.deer.wms.ware.task.model.PalletBatchDto">
+      <id column="company_name" jdbcType="VARCHAR" property="companyName" />
+      <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+      <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+      <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+
+      <result column="cell_code" jdbcType="VARCHAR" property="cellCode" />
+      <result column="batch" jdbcType="VARCHAR" property="batch" />
+      <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+      <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+
+      <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+      <result column="item_type_name" jdbcType="VARCHAR" property="itemTypeName" />
+      <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+
+      <result column="pallet_code" jdbcType="VARCHAR" property="palletCode" />
+      <result column="pallet_name" jdbcType="VARCHAR" property="palletName" />
+      <result column="pallet_type" jdbcType="INTEGER" property="palletType" />
+
+
+
+
+  </resultMap>
+
+
+
+
+    <select id="findList" parameterType="com.deer.wms.ware.task.model.PalletBatchCriteria" resultMap="Dto">
+        select
+        *
+
+        from pallet_batch_view
+
+        where quantity >0
+        <if test="companyId != null and companyId!= ''">
+           and  company_id = #{companyId}
+        </if>
+        <if test="wareCode != null and wareCode!= ''">
+            and  ware_code = #{wareCode}
+        </if>
+        <if test="areaCode != null and areaCode!= ''">
+            and   area_code = #{areaCode}
+        </if>
+        <if test="shelfCode != null and shelfCode!= ''">
+            and   shelf_code = #{shelfCode}
+        </if>
+        <if test="cellCode != null and cellCode!= ''">
+            and  (cell_bar_code = #{cellCode} or cell_code=#{cellCode})
+        </if>
+        <if test="itemCode != null and itemCode!= ''">
+            and   item_code = #{itemCode}
+        </if>
+        <if test="itemBatchBarCode != null and itemBatchBarCode!= ''">
+            and   item_batch_bar_code = #{itemBatchBarCode}
+        </if>
+        <if test="cellBarCode != null and cellBarCode!= ''">
+            and  (cell_bar_code = #{cellBarCode} or cell_code=#{cellBarCode})
+        </if>
+
+        <if test="palletCode != null and palletCode != ''">
+            and (pallet_code = #{palletCode} or pallet_bar_code =#{palletCode})
+        </if>
+
+        <if test="palletBarCode != null and palletBarCode != ''">
+            and (pallet_code = #{palletBarCode} or pallet_bar_code =#{palletBarCode})
+        </if>
+
+        <if test="palletId != null ">
+            and  pallet_id = #{palletId}
+        </if>
+        <if test="batchId != null ">
+            and  batch_id = #{batchId}
+        </if>
+
+            ORDER BY   create_time
+
+    </select>
+
+    <select id="findQList" parameterType="com.deer.wms.ware.task.model.PalletBatchCriteria" resultMap="Dto">
+        select
+        pb.batch_id,
+        pb.pallet_id,
+        pb.pallet_batch_id,
+        pb.quantity,
+
+        com.company_name,
+        ware.ware_name,
+        area.area_name,
+        shelf.shelf_name,
+        cell.cell_code,
+        pallet.pallet_name,
+
+        batch.batch,
+
+        item.item_name,
+        item.item_class,
+
+        it.item_type_name,
+
+        imaster.item_master_name
+
+        from pallet_batch   pb
+        left join pallet pallet  on pallet.pallet_id = pb.pallet_id
+        left  join cell_info cell on cell.cell_code  = pallet.cell_code
+        left join shelf_info shelf on shelf.shelf_code = cell.shelf_code
+        left  join area_info area on area.area_code = shelf.area_code
+        left  join ware_info ware on ware.ware_code = area.ware_code
+        left join company com on com.company_id = ware.company_id
+        left  join item_batch batch on batch.batch_id = pb.batch_id
+        left join item_info item on batch.item_code = item.item_code
+        left  join item_type it on it.item_type_code = item.item_type_code
+        left join item_master imaster on batch.item_master_id = imaster.item_master_id
+
+        where pb.quantity >0
+        <if test="companyId != null and companyId!= ''">
+            and  com.company_id = #{companyId}
+        </if>
+        <if test="wareCode != null and wareCode!= ''">
+            and  ware.ware_code = #{wareCode}
+        </if>
+        <if test="areaCode != null and areaCode!= ''">
+            and   area.area_code = #{areaCode}
+        </if>
+        <if test="shelfCode != null and shelfCode!= ''">
+            and   shelf.shelf_code = #{shelfCode}
+        </if>
+        <if test="cellCode != null and cellCode!= ''">
+            and   cell.cell_code = #{cellCode}
+        </if>
+        <if test="itemCode != null and itemCode!= ''">
+            and   item.item_code = #{itemCode}
+        </if>
+        <if test="itemBatchBarCode != null and itemBatchBarCode!= ''">
+            and   batch.item_batch_bar_code = #{itemBatchBarCode}
+        </if>
+        <if test="cellBarCode != null and cellBarCode!= ''">
+            and  item.item_code = #{cellBarCode}
+        </if>
+
+        <if test="palletId != null and palletId!= ''">
+            and  pb.pallet_id = #{palletId}
+        </if>
+        <if test="batchId != null and batchId!= ''">
+            and  pb.batch_id = #{batchId}
+        </if>
+        <if test="itemMasterId != null and itemMasterId!= ''">
+            and  batch.item_master_id = #{itemMasterId}
+        </if>
+
+        ORDER BY   pb.quantity
+
+    </select>
+
+
+
+
+
+    <select id="findAreaItemList" parameterType="com.deer.wms.ware.task.model.PalletBatchCriteria" resultMap="Dto">
+        select
+
+
+
+
+        com.company_name,
+        ware.ware_name,
+        area.area_name,
+        imaster.item_master_name,
+        item.item_name,
+        item.item_class,
+        it.item_type_name
+
+        from pallet_batch   pb
+        left join pallet pallet  on pallet.pallet_id = pb.pallet_id
+        left  join cell_info cell on cell.cell_code  = pallet.cell_code
+        left join shelf_info shelf on shelf.shelf_code = cell.shelf_code
+        left  join area_info area on area.area_code = shelf.area_code
+        left  join ware_info ware on ware.ware_code = area.ware_code
+        left join company com on com.company_id = ware.company_id
+        left  join item_batch batch on batch.batch_id = pb.batch_id
+        left join item_info item on batch.item_code = item.item_code
+        left  join item_type it on it.item_type_code = item.item_type_code
+        left join item_master imaster on batch.item_master_id = imaster.item_master_id
+
+        where
+
+            ware.ware_code = #{wareCode}
+             and item.item_code = #{itemCode}
+
+            and   batch.item_master_id = #{itemMasterId}
+
+            and pb.quantity >0
+
+            <if test="batchId != null and batchId != ''">
+                pb.batch_id = #{batchId}
+            </if>
+
+
+
+
+
+
+
+    </select>
+
+
+
+    <select id="findByItemCode" parameterType="com.deer.wms.ware.task.model.PalletBatchCriteria" resultMap="Dto">
+        select
+
+        sum(pb.quantity) as quantity,
+
+        com.company_name,
+        ware.ware_name,
+        area.area_name,
+        imaster.item_master_name,
+        item.item_name,
+        item.item_class,
+        it.item_type_name,
+
+        batch.batch,
+        pb.batch_id
+
+
+
+        from pallet_batch   pb
+        left join pallet pallet  on pallet.pallet_id = pb.pallet_id
+        left  join cell_info cell on cell.cell_code  = pallet.cell_code
+        left join shelf_info shelf on shelf.shelf_code = cell.shelf_code
+        left  join area_info area on area.area_code = shelf.area_code
+        left  join ware_info ware on ware.ware_code = area.ware_code
+        left join company com on com.company_id = ware.company_id
+        left  join item_batch batch on batch.batch_id = pb.batch_id
+        left join item_info item on batch.item_code = item.item_code
+        left  join item_type it on it.item_type_code = item.item_type_code
+        left join item_master imaster on batch.item_master_id = imaster.item_master_id
+
+        where  1=1
+
+         <if test="wareCode != null and wareCode != ''">
+             and ware.ware_code = #{wareCode}
+         </if>
+         <if test="itemCode != '' and itemCode != null">
+             and   item.item_code = #{itemCode}
+         </if>
+        <if test="itemMasterId != null">
+            and   batch.item_master_id = #{itemMasterId}
+        </if>
+
+
+
+
+
+
+            and pb.quantity >0
+
+
+        group by  batch.batch_id
+
+
+
+
+    </select>
+
+
+
+</mapper>

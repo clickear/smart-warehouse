@@ -1,0 +1,92 @@
+<div class="main-hook system">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="preferential-wrapper system-hook">
+            <div class="title">
+                当前位置：&nbsp;运营管理&nbsp;->&nbsp;<span class="active">系统日志</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+                        <%if(checkAuthority('dot-task-query')){%>
+                        <span class="search-label">日志类型</span>
+                        <select class="form-control w120" name="infoType">
+                            <option value="">全部</option>
+                            <option value="">运行日志</option>
+                            <option value="">告警日志</option>
+                            <option value="">操作日志</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">日志时间</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="开始时间" class="search-input datetime" type="text" name="workStartTime">
+                        </div>
+                        <span class="interval-xs"></span>
+                        <span>到</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="结束时间" class="search-input datetime" type="text" name="workEndTime">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" name="customerName" placeholder="请输入内容的关键字">
+                        <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray ">清空</button>
+                    </div>
+                    <%}%>
+                </form>
+            </div>
+            <div class="order_operation_btn fr">
+                <button class="primary_btn delete-all" @click.stop="deleteAll()">批量删除</button>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table system-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/run/system-log/system-log.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

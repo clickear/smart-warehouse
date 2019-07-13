@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.bill.manage.dao.BillDetailMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.bill.manage.model.BillDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="detail_no" jdbcType="VARCHAR" property="detailNo" />
+    <result column="bill_no" jdbcType="VARCHAR" property="billNo" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="cell_code" jdbcType="VARCHAR" property="cellCode" />
+    <result column="to_ware_code" jdbcType="VARCHAR" property="toWareCode" />
+    <result column="to_area_code" jdbcType="VARCHAR" property="toAreaCode" />
+    <result column="to_cell_code" jdbcType="VARCHAR" property="toCellCode" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+    <result column="bill_type" jdbcType="INTEGER" property="billType" />
+    <result column="accept_quantity" jdbcType="INTEGER" property="acceptQuantity" />
+    <result column="complete_quantity" jdbcType="INTEGER" property="completeQuantity" />
+    <result column="check_memo" jdbcType="VARCHAR" property="checkMemo" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="need_return" jdbcType="INTEGER" property="needReturn" />
+  </resultMap>
+  <resultMap id="DtoMap" type="com.deer.wms.bill.manage.model.BillDetailDto" extends="BaseResultMap">
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="to_ware_name" jdbcType="VARCHAR" property="toWareName" />
+    <result column="to_area_name" jdbcType="VARCHAR" property="toAreaName" />
+    <result column="to_cell_name" jdbcType="VARCHAR" property="toCellName" />
+    <result column="state_str" jdbcType="VARCHAR" property="stateStr"/>
+    <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass"/>
+    <result column="item_type_code" jdbcType="VARCHAR" property="itemTypeCode"/>
+    <result column="upper_limit" jdbcType="VARCHAR" property="upperLimit"/>
+    <result column="abc_class" jdbcType="VARCHAR" property="abcClass"/>
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName"/>
+    <result column="bill_type_str" jdbcType="VARCHAR" property="billTypeStr"/>
+    <result column="item_master_id" jdbcType="INTEGER" property="itemMasterId"/>
+
+  </resultMap>
+  <delete id="deleteByC" parameterType="com.deer.wms.bill.manage.model.BillDetailCriteria">
+
+    delete
+    from bill_detail
+    where
+    id = #{id}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+
+
+  <select id="findList" resultMap="DtoMap" parameterType="com.deer.wms.bill.manage.model.BillDetailCriteria">
+    select
+    detail.id,
+    detail.detail_no,
+    detail.bill_no,
+    detail.ware_code,
+    detail.area_code ,
+    detail.cell_code ,
+    detail.to_ware_code ,
+    detail.to_area_code ,
+    detail.to_cell_code ,
+    detail.item_code ,
+    detail.quantity,
+    detail.memo ,
+    detail.state ,
+    detail.add_time ,
+    detail.task_time ,
+    detail.bill_type ,
+    detail.accept_quantity ,
+
+    detail.complete_quantity ,
+    detail.check_memo ,
+    detail.company_id ,
+    detail.batch,
+    detail.need_return,
+    ware.ware_name ,
+    area.area_name ,
+    item.item_name,
+    item.item_class,
+    item.item_type_code,
+    item.upper_limit,
+    item.abc_class,
+    u.unit_name,
+    toware.ware_name as to_ware_name,
+    toarea.area_name as to_area_name
+
+
+
+    from bill_detail  detail
+
+    left join area_info area on detail.area_code = area.area_code
+    left join ware_info toware on detail.to_ware_code = toware.ware_code
+    left join area_info toarea on detail.to_area_code = toarea.area_code
+    left join item_info item on detail.item_code = item.item_code
+    left  join unit u on item.unit_code = u.unit_code
+    left join bill_master master on  detail.bill_no = master.bill_no
+    left join ware_info ware on  master.ware_code = ware.ware_code
+    where 1=1
+
+
+    <if test="billNo != null and billNo != ''">
+      and master.bill_no = #{billNo}
+    </if>
+
+    <if test="wareCode != null and wareCode != ''">
+      and master.ware_code = #{wareCode}
+    </if>
+
+  </select>
+
+
+  <select id="findYesterday" resultMap="DtoMap"  parameterType="com.deer.wms.bill.manage.model.BillDetailCriteria">
+    select
+    detail.id,
+    detail.detail_no,
+    detail.bill_no,
+    detail.ware_code,
+    detail.area_code ,
+    detail.cell_code ,
+    detail.to_ware_code ,
+    detail.to_area_code ,
+    detail.to_cell_code ,
+    detail.item_code ,
+    detail.quantity,
+    detail.memo ,
+    detail.state ,
+    detail.add_time ,
+    detail.task_time ,
+    detail.bill_type ,
+    detail.accept_quantity ,
+
+    detail.complete_quantity ,
+    detail.check_memo ,
+    detail.company_id ,
+    detail.batch,
+    com.company_name,
+    ware.ware_name ,
+    area.area_name ,
+    item.item_name,
+    item.item_class,
+    master.item_master_id,
+
+    (select ware_name from ware_info where ware_code = detail.to_ware_code ) as to_ware_name,
+    (select area_name from area_info where area_code = detail.to_area_code ) as to_area_name
+
+
+
+    from bill_detail  detail
+
+    left join area_info area on detail.area_code = area.area_code
+    left join cell_info cell on detail.cell_code = cell.cell_code
+    left join item_info item on detail.item_code = item.item_code
+    left join bill_master master on  detail.bill_no = master.bill_no
+    left join ware_info ware on  master.ware_code = ware.ware_code
+    left join company com on  master.company_id = com.company_id
+    where
+    TO_DAYS( NOW( ) ) - TO_DAYS(master.accept_time) = 1
+
+     and detail.item_code = #{itemCode}
+     and master.ware_code = #{wareCode}
+     and master.item_master_id = #{itemMasterId}
+
+  </select>
+
+
+  <select id="findShangYue" resultMap="DtoMap"  parameterType="com.deer.wms.bill.manage.model.BillDetailCriteria">
+    select
+    detail.id,
+    detail.detail_no,
+    detail.bill_no,
+    detail.ware_code,
+    detail.area_code ,
+    detail.cell_code ,
+    detail.to_ware_code ,
+    detail.to_area_code ,
+    detail.to_cell_code ,
+    detail.item_code ,
+    detail.quantity,
+    detail.memo ,
+    detail.state ,
+    detail.add_time ,
+    detail.task_time ,
+    detail.bill_type ,
+    detail.accept_quantity ,
+
+    detail.complete_quantity ,
+    detail.check_memo ,
+    detail.company_id ,
+    detail.batch,
+    com.company_name,
+    ware.ware_name ,
+    area.area_name ,
+    item.item_name,
+    item.item_class,
+    master.item_master_id,
+
+    (select ware_name from ware_info where ware_code = detail.to_ware_code ) as to_ware_name,
+    (select area_name from area_info where area_code = detail.to_area_code ) as to_area_name
+
+
+
+    from bill_detail  detail
+
+    left join area_info area on detail.area_code = area.area_code
+    left join cell_info cell on detail.cell_code = cell.cell_code
+    left join item_info item on detail.item_code = item.item_code
+    left join bill_master master on  detail.bill_no = master.bill_no
+    left join ware_info ware on  master.ware_code = ware.ware_code
+    left join company com on  master.company_id = com.company_id
+    where
+     PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( accept_time, '%Y%m' ) ) =1
+
+     and detail.item_code = #{itemCode}
+     and master.ware_code = #{wareCode}
+     and master.item_master_id = #{itemMasterId}
+
+  </select>
+  <update id="updateState" >
+  		update bill_detail set  state=3 where detail_no = #{detailNo}
+  </update>
+
+
+
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.bill.manage.dao.CellItemMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.bill.manage.model.CellItem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cell_code" jdbcType="VARCHAR" property="cellCode" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="pallet_bar_code" jdbcType="VARCHAR" property="palletBarCode" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.bill.manage.model.CellItemDto" extends="BaseResultMap">
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+
+  </resultMap>
+
+  <resultMap id="NoUp" type="com.deer.wms.bill.manage.model.NoUpShelf"  >
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="no_up_quantity" jdbcType="VARCHAR" property="noUpQuantity" />
+
+
+
+  </resultMap>
+
+  <select id="findList"  parameterType="com.deer.wms.bill.manage.model.CellItemCriteria" resultMap="Dto">
+    select
+    ci.id,
+    ci.cell_code,
+    ci.item_code,
+    ci.quantity,
+    ci.pallet_bar_code,
+
+    item.item_name,
+    item.item_class,
+    unit.unit_name
+
+
+    from cell_item  ci
+
+    left join item_info item on ci.item_code = item.item_code
+    left join unit unit on unit.unit_code = item.unit_code
+    left join cell_info cell on ci.cell_code = cell.cell_code
+    left join shelf_info shelf on cell.shelf_code = shelf.shelf_code
+    left join area_info area on shelf.area_code = area.area_code
+    left join ware_info ware on area.ware_code = ware.ware_code
+    left join company com on ware.company_id = com.company_id
+
+
+    where 1=1
+    <if test="companyId != null and companyId != ''">
+      and com.company_id = #{companyId}
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      and ware.ware_code = #{wareCode}
+    </if>
+    <if test="areaCode != null and areaCode != ''">
+      and area.area_code = #{areaCode}
+    </if>
+    <if test="shelfCode != null and shelfCode != ''">
+      and shelf.shelf_code = #{shelfCode}
+    </if>
+    <if test="palletBarCode != null and palletBarCode != ''">
+      and ci.pallet_bar_code = #{palletBarCode}
+    </if>
+    <if test="itemCode != null and itemCode != ''">
+      and ci.item_code = #{itemCode}
+    </if>
+    <if test="cellCode != null and cellCode != ''">
+      and ci.cell_code = #{cellCode}
+    </if>
+  </select>
+
+  <select id="findNoUpShelfList" parameterType="com.deer.wms.bill.manage.model.NoUpShelfCriteria"  resultMap="NoUp">
+    select
+
+    area.area_name,
+    item.item_name,
+    item.item_class,
+    unit.unit_name,
+
+    (ait.quantity - SUM(cit.quantity) ) as  no_up_quantity
+
+    from area_item  ait
+
+    LEFT JOIN area_info area on ait.area_code = area.area_code
+    LEFT JOIN ware_info ware on area.ware_code = ware.ware_code
+    left join shelf_info shelf on  ait.area_code = shelf.area_code
+    LEFT JOIN cell_info cell on shelf.shelf_code = cell.shelf_code
+    LEFT JOIN cell_item cit on cell.cell_code = cit.cell_code   and cit.item_code = ait.item_code
+    LEFT JOIN item_info item on item.item_code = cit.item_code
+    LEFT JOIN unit unit on item.unit_code = unit.unit_code
+
+    where 1=1
+    <if test="companyId != null  and companyId != ''">
+      and  ware.company_id = #{companyId}
+    </if>
+    <if test="wareCode != null  and wareCode != ''">
+      and  ware.ware_code = #{wareCode}
+    </if>
+    <if test="keyWords != null  and keyWords != ''">
+      and  (item.item_name like concat('%',#{keyWords},'%')
+      or   item.item_class like concat('%',#{keyWords},'%')
+      or   area.area_name like concat('%',#{keyWords},'%'))
+    </if>
+
+    GROUP BY ait.item_code
+
+    ORDER BY ait.area_code
+
+  </select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.ware.task.dao.CountMasterMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.ware.task.model.CountMaster">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="count_id" jdbcType="INTEGER" property="countId" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="count_type" jdbcType="INTEGER" property="countType" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="item_master_id" jdbcType="INTEGER" property="itemMasterId" />
+  </resultMap>
+
+  <resultMap id="DtoMap" type="com.deer.wms.ware.task.model.CountMasterDto" extends="BaseResultMap">
+
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+  </resultMap>
+
+
+  <select id="findList" resultMap="DtoMap" parameterType="com.deer.wms.ware.task.model.CountMasterCriteria">
+    select
+    master.count_id,
+    master.create_user_id,
+    master.create_time,
+    master.count_type,
+    master.ware_code,
+    master.item_master_id,
+    master.state,
+
+    cuser.user_name as create_user_name,
+
+    ware.ware_name,
+    im.item_master_name
+
+    from count_master  master
+    left join ware_info ware on  master.ware_code = ware.ware_code
+    left join item_master im on master.item_master_id = im.item_master_id
+    left join user_info cuser on master.create_user_id = cuser.user_id
+
+    where 1=1
+
+    <if test="state != null">
+      and master.state=#{state}
+    </if>
+
+    <if test="countId != null">
+      and master.count_id=#{countId}
+    </if>
+
+    <if test="workStartTime != null and workStartTime != ''">
+      and master.create_time &gt; = #{workStartTime}
+    </if>
+    <if test="workEndTime != null and workEndTime != ''">
+      and master.create_time &lt; = #{workEndTime}
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      and master.ware_code  = #{wareCode}
+    </if>
+    <if test="itemMasterId != null and itemMasterId != ''">
+      and master.item_master_id  = #{itemMasterId}
+    </if>
+    <if test="countType != null and countType != ''">
+      and master.count_type  = #{countType}
+    </if>
+    <if test="countId != null and countId != ''">
+      and master.count_id  = #{countId}
+    </if>
+  </select>
+
+
+</mapper>

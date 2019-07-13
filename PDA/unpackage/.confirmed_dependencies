@@ -1,0 +1,168 @@
+{
+	"index.html": {
+		"refer": [
+			"index-menu.html",
+			"examples/guide.html",
+			"examples/ajax.html"
+		],
+		"resources": []
+	},
+	"page/system/login/login.html": {
+		"refer": [
+			"page/system/main/main.html",
+			"page/system/index/index.html"
+		],
+		"resources": []
+	},
+	"page/system/main/main.html": {
+		"refer": [
+			"page/system/login/login.html"
+		],
+		"resources": []
+	},
+	"index-menu.html": {
+		"refer": [
+			"examples/pullrefresh_main.html",
+			"examples/offcanvas-drag-left.html",
+			"examples/tableviews-with-swipe.html",
+			"examples/tab-with-viewpagerindicator.html",
+			"examples/switches.html"
+		],
+		"resources": []
+	},
+	"examples/pullrefresh_main.html": {
+		"resources": [
+			"examples/pullrefresh_sub.html"
+		],
+		"refer": [
+			"examples/pullrefresh_sub.html"
+		]
+	},
+	"page/down/task/task.html": {
+		"refer": [
+			"page/down/task/task-list/task-list.html",
+			"page/down/down.html"
+		]
+	},
+	"page/down/down.html": {
+		"refer": [
+			"page/down/task/task.html",
+			"page/down/task-batch/task-batch.html",
+			"page/system/index/index.html",
+			"page/down/group-pallet/group-pallet.html",
+			"page/down/up-cell/up-cell.html",
+			"page/down/pallet-down/pallet-down.html"
+		]
+	},
+	"page/system/index/index.html": {
+		"refer": [
+			"page/down/down.html",
+			"page/system/login/login.html",
+			"page/kuaidi/kuaidi.html",
+			"page/in/in.html",
+			"page/up/up.html",
+			"page/re-check/re-check.html",
+			"page/inventory/inventory.html"
+		]
+	},
+	"page/down/task/task-list/task-list.html": {
+		"refer": [
+			"page/down/task/task.html"
+		]
+	},
+	"page/down/task-batch/task-batch.html": {
+		"refer": [
+			"page/down/task-batch/task-list/task-list.html",
+			"page/down/down.html"
+		]
+	},
+	"page/down/task-batch/task-list/task-list.html": {
+		"refer": [
+			"page/down/task-batch/task-batch.html"
+		]
+	},
+	"page/down/group-pallet/group-pallet.html": {
+		"refer": [
+			"page/down/down.html"
+		]
+	},
+	"page/down/up-cell/up-cell.html": {
+		"refer": [
+			"page/down/down.html"
+		]
+	},
+	"page/down/pallet-down/pallet-down.html": {
+		"refer": [
+			"page/down/down.html"
+		]
+	},
+	"page/in/accept/accept.html": {
+		"refer": [
+			"page/in/accept/accept-detail/accept-detail.html",
+			"page/in/in.html"
+		]
+	},
+	"page/in/in.html": {
+		"refer": [
+			"page/in/accept/accept.html",
+			"page/system/index/index.html",
+			"page/in/bill-in/bill-in.html",
+			"page/in/on-bill-in/on-bill-in.html"
+		]
+	},
+	"page/in/accept/accept-detail/accept-detail.html": {
+		"refer": [
+			"page/in/accept/accept.html"
+		]
+	},
+	"page/up/up.html": {
+		"refer": [
+			"page/system/index/index.html",
+			"page/up/pallet-cell/pallet-cell.html",
+			"page/up/group-pallet/group-pallet.html",
+			"page/up/up-cell/up-cell.html"
+		],
+		"resources": [
+			"page/system/index/index.html"
+		]
+	},
+	"page/re-check/re-check.html": {
+		"refer": [
+			"page/system/index/index.html"
+		]
+	},
+	"page/up/pallet-cell/pallet-cell.html": {
+		"refer": [
+			"page/up/up.html"
+		],
+		"resources": [
+			"page/up/up.html"
+		]
+	},
+	"page/up/group-pallet/group-pallet.html": {
+		"refer": [
+			"page/up/up.html"
+		]
+	},
+	"page/in/on-bill-in/on-bill-in.html": {
+		"refer": [
+			"page/in/in.html"
+		]
+	},
+	"page/up/up-cell/up-cell.html": {
+		"refer": [
+			"page/up/up.html"
+		]
+	},
+	"page/in/bill-in/bill-in.html": {
+		"refer": [
+			"page/in/in.html"
+		]
+	},
+	"page/inventory/inventory.html": {
+		"refer": [
+			"page/system/index/index.html",
+			"page/inventory/cell/cell.html"
+		]
+	}
+}

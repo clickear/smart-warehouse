@@ -1,0 +1,234 @@
+@import "./base";
+.main-container {
+  // =======================================================================================
+  > .body {
+    .banner {
+      margin: 1px auto 0 auto;
+      width: @viewportWidth;
+    }
+    .target {
+      margin: 0 auto;
+      width: @viewportWidth;
+      height: 467px;
+      border: 1px solid transparent;
+      .title {
+        position: relative;
+        margin: 40px auto;
+        width: 656px;
+        font-size: 24px;
+        color: #363636;
+        border-bottom: 1px solid #373737;
+        > span, em {
+          display: inline-block;
+          position: absolute;
+          top: -18px;
+          left: 50%;
+          margin-left: -90px;
+          width: 180px;
+          background: white;
+          text-align: center;
+        }
+        > em {
+          top: 18px;
+          color: #929292;
+          font-size: 18px;
+        }
+      }
+      .target-realize {
+        margin: 68px 0 0 568px;
+        position: relative;
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 5px;
+          left: 0;
+          height: 280px;
+          border-left: 1px solid #CECECE;
+        }
+        li {
+          position: relative;
+          padding-left: 26px;
+          height: 90px;
+          color: #3B3B3B;
+          font-size: 18px;
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -7px;
+            left: -135px;
+            width: 124px;
+            height: 39px;
+            background: url("../img/home/menhu_icon3.png") no-repeat;
+          }
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 5px;
+            left: -6px;
+            width: 14px;
+            height: 14px;
+            background: url("../img/home/menhu_icon2.png") no-repeat;
+            background-color: white;
+          }
+          > span {
+            display: block;
+            position: absolute;
+            top: -7px;
+            left: -135px;
+            width: 115px;
+            height: 39px;
+            line-height: 39px;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    // 我们的技术
+    .technique {
+      background-color: #f0f1f5;
+      height: 368px;
+      padding: 1px;
+      .inner-wrapper {
+        margin: 0 auto;
+        height: 100%;
+        width: @viewportWidth;
+        background-color: #f0f1f5;
+        padding: 1px;
+        .title {
+          position: relative;
+          margin: 50px auto 55px auto;
+          width: 656px;
+          font-size: 24px;
+          color: #363636;
+          border-bottom: 1px solid #373737;
+          > span, em {
+            display: inline-block;
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            margin-left: -90px;
+            width: 180px;
+            background: #f0f1f5;
+            text-align: center;
+          }
+          > em {
+            top: 20px;
+            color: #929292;
+            font-size: 18px;
+          }
+        }
+        > p {
+          padding: 3px 0 0 351px;
+          font-size: 16px;
+          color: #3B3B3B;
+        }
+        .exhibition {
+          margin: 30px auto 0 auto;
+          width: 716px;
+          height: 149px;
+        }
+      }
+    }
+
+    // 我们的理念
+    .idea {
+      padding: 1px;
+      height: 357px;
+      .inner-wrapper {
+        margin: 0 auto;
+        height: 100%;
+        width: @viewportWidth;
+        padding: 1px;
+        .title {
+          position: relative;
+          margin: 50px auto 55px auto;
+          width: 656px;
+          font-size: 24px;
+          color: #363636;
+          border-bottom: 1px solid #373737;
+          > span, em {
+            display: inline-block;
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            margin-left: -90px;
+            width: 180px;
+            background: white;
+            text-align: center;
+          }
+          > em {
+            top: 20px;
+            color: #929292;
+            font-size: 18px;
+          }
+        }
+
+        .concept {
+          padding: 10px;
+          font-size: 0;
+          text-align: center;
+          > span {
+            width: 32px;
+            display: inline-block;
+          }
+        }
+        > p {
+          padding: 25px 0 0 351px;
+          font-size: 16px;
+          color: #3B3B3B;
+        }
+      }
+    }
+  }
+}
+// 表单通用==================================================================================
+.form-horizontal {
+  padding: 20px 0;
+  label.control-label {
+    font-weight: normal;
+    &:after {
+      content: ':';
+      padding: 0 0 0 5px;
+      font-weight: bold;
+    }
+  }
+  .form-control {
+    display: inline-block;
+    width: 300px;
+    &.error {
+      border: 1px solid @activeBorderColor;
+    }
+    &.hide-show {
+      display: none;
+    }
+  }
+  label.error {
+    padding: 3px 0 0 10px;
+    color: @dangerFontColor;
+    font-weight: normal;
+  }
+  .form-group {
+    .radio {
+      label {
+
+      }
+      span {
+        padding: 0 20px 0 0;
+      }
+    }
+    span.interval-xs {
+      display: inline-block;
+      padding: 0 0 0 8px;
+    }
+    span.interval-lg {
+      display: inline-block;
+      padding: 0 0 0 35px;
+    }
+  }
+}

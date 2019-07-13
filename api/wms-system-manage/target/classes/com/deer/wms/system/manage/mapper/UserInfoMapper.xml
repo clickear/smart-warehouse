@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.UserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.user.UserInfo">
+      <id column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="company_id" jdbcType="INTEGER" property="companyId" />
+      <result column="account" jdbcType="VARCHAR" property="account" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="salt" jdbcType="VARCHAR" property="salt" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="gender" jdbcType="INTEGER" property="gender" />
+      <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+      <result column="is_admin" jdbcType="BIT" property="admin" />
+      <result column="account_status" jdbcType="VARCHAR" property="accountStatus" />
+      <result column="state" jdbcType="VARCHAR" property="state" />
+      <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+      <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    </resultMap>
+
+    <!-- 用户详细信息字段映射定义 -->
+    <resultMap id="UserDetailMap" type="com.deer.wms.system.manage.model.user.UserDetail">
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="gender" jdbcType="INTEGER" property="gender" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+        <result column="company_id" jdbcType="INTEGER" property="companyId" />
+        <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+        <result column="company_type" jdbcType="VARCHAR" property="companyType" />
+        <result column="linkman_address" jdbcType="VARCHAR" property="linkmanAddress" />
+        <result column="linkman_phone" jdbcType="VARCHAR" property="linkmanPhone" />
+        <result column="role_id" jdbcType="INTEGER" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    </resultMap>
+
+    <!-- 账户详细信息视图类字段映射 -->
+    <resultMap id="UserInfoDetailVOMap" type="com.deer.wms.system.manage.model.user.UserInfoDetailVO">
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="gender" jdbcType="INTEGER" property="gender" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+        <result column="modify_time" jdbcType="VARCHAR" property="modifyTime" />
+    </resultMap>
+
+    <!-- 账户信息列表视图类字段映射 -->
+    <resultMap id="UserListVOMap" type="com.deer.wms.system.manage.model.user.UserListVO">
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="gender" jdbcType="INTEGER" property="gender" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="is_admin" jdbcType="BIT" property="admin" />
+        <result column="account_status" jdbcType="VARCHAR" property="accountStatus" />
+        <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+        <result column="register_time" jdbcType="VARCHAR" property="registerTime" />
+    </resultMap>
+
+    <!-- 查询账户信息列表 -->
+    <select id="selectUserFormList" resultMap="UserListVOMap">
+        SELECT
+              u.user_id
+            , u.mobile
+            , u.user_name
+            , u.gender
+            , u.email
+            , role.role_name
+            , u.is_admin
+            , u.account_status
+            , company.company_name
+            , date_format(u.create_time, '%Y-%m-%d %H:%i:%s') AS register_time
+        FROM user_info u
+        LEFT JOIN user_role ur ON ur.user_id = u.user_id
+        LEFT JOIN role ON role.role_id = ur.role_id
+        LEFT JOIN company ON company.company_id = u.company_id
+        WHERE u.state = 'normal'
+        <if test="roleName != null and roleName != ''">
+            AND role.role_name = #{roleName}
+        </if>
+        <if test="accountStatus != null and accountStatus != ''">
+            AND u.account_status = #{accountStatus}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (
+            company.company_name LIKE CONCAT('%', #{keyword}, '%')
+            OR u.user_name LIKE CONCAT('%', #{keyword}, '%')
+            OR u.mobile LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        <if test="companyId != null">
+            AND u.company_id = #{companyId}
+        </if>
+        ORDER BY u.create_time desc
+    </select>
+
+    <!-- 查询指定登录账号的用户详细信息 -->
+    <select id="selectUserDetailByAccount" resultMap="UserDetailMap">
+        SELECT
+            u.user_id
+          , u.user_name
+          , u.gender
+          , u.mobile
+          , u.email
+          , u.company_id
+          , IFNULL(u.icon_url, '') AS icon_url
+          , company.company_name
+          , company.company_type
+          , company.linkman_address
+          , company.linkman_phone
+          , role.role_id
+          , role.role_name
+        FROM user_info u
+        LEFT JOIN company ON company.company_id = u.company_id AND company.state = 'normal'
+        LEFT JOIN user_role ur ON ur.user_id = u.user_id
+        LEFT JOIN role ON role.role_id = ur.role_id
+        WHERE u.state = 'normal'
+        AND u.account = #{account}
+    </select>
+
+    <!--  查询指定用户的详细信息 -->
+    <select id="selectUserInfoDetailVOByUserId" resultMap="UserInfoDetailVOMap">
+        SELECT
+              company.company_name
+            , role.role_name
+            , uc.user_name AS create_user_name
+            , ui.user_id
+            , ui.mobile
+            , ui.user_name
+            , ui.email
+            , ui.gender
+            , date_format(ui.create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+            , date_format(ui.modify_time, '%Y-%m-%d %H:%i:%s') AS modify_time
+        FROM user_info ui
+        LEFT JOIN company ON company.company_id = ui.company_id
+        LEFT JOIN user_info uc ON uc.user_id = ui.create_user_id
+        LEFT JOIN user_role ur ON ur.user_id = ui.user_id
+        LEFT JOIN role ON role.role_id = ur.role_id
+        WHERE ui.user_id = #{userId}
+    </select>
+
+    <!-- 更新用户的邮箱地址  -->
+	<update id="updateUserInfoById" parameterType="com.deer.wms.system.manage.model.user.UserInfo">
+		update user_info 
+			set user_id=#{userId}
+		  	<if test="email != null and email != ''">
+            	,email = #{email}
+        	</if>
+        	<if test="iconUrl != null and iconUrl != ''">
+            	,icon_url = #{iconUrl}
+        	</if>
+		where user_id=#{userId}
+  	</update>
+
+    <!-- 根据用户名、手机号、邮箱 查找用户信息  -->
+    <select id="selectUserInfo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT * from user_info
+
+        where (account=#{account} or mobile=#{account} or email=#{account})
+        and state='normal' and account_status = 'enable'
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.CompanyStorageMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.storage.CompanyStorageDto">
+        <id column="storage_id" jdbcType="INTEGER" property="storageId" />
+        <result column="company_id" jdbcType="INTEGER" property="companyId" />
+        <result column="storage_type" jdbcType="VARCHAR" property="storageType" />
+        <result column="storage_name" jdbcType="VARCHAR" property="storageName" />
+        <result column="province" jdbcType="VARCHAR" property="province" />
+        <result column="city" jdbcType="VARCHAR" property="city" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="linkman_name" jdbcType="VARCHAR" property="linkmanName" />
+        <result column="lng" jdbcType="VARCHAR" property="lng" />
+        <result column="lat" jdbcType="VARCHAR" property="lat" />
+
+        <result column="stock_count" jdbcType="INTEGER" property="palletCount" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+         <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    </resultMap>
+
+    <!-- 网点/仓储点列表信息视图类字段映射 -->
+    <resultMap id="StorageListVOMap" type="com.deer.wms.system.manage.model.storage.StorageListVO">
+        <result column="storage_id" jdbcType="INTEGER" property="storageId" />
+        <result column="storage_name" jdbcType="VARCHAR" property="storageName" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="linkman_name" jdbcType="VARCHAR" property="linkmanName" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    </resultMap>
+
+    <!-- 网点分布情况统计结果类字段映射 -->
+    <resultMap id="DistributionStatisticsMap" type="com.deer.wms.system.manage.model.storage.statistics.DistributionStatistics">
+        <result column="direct_total" jdbcType="INTEGER" property="directTotal" />
+        <result column="agent_total" jdbcType="INTEGER" property="agentTotal" />
+        <result column="customer_total" jdbcType="INTEGER" property="customerTotal" />
+        <result column="pallet_total" jdbcType="INTEGER" property="palletTotal" />
+    </resultMap>
+
+    <!-- 查询满足查询条件的网点/仓储点信息 -->
+    <select id="selectCompanyStorageByCriteria" parameterType="com.deer.wms.system.manage.model.storage.CompanyStorageCriteria" resultMap="StorageListVOMap">
+        SELECT storage_id, storage_name, address, phone, linkman_name, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+        FROM company_storage WHERE state = 'normal'
+        <if test="companyId != null">
+            AND company_id = #{companyId}
+        </if>
+        <if test="province != null and province != ''">
+            AND address LIKE CONCAT('%', #{province}, '%')
+        </if>
+        <if test="city != null and city != ''">
+            AND address LIKE CONCAT('%', #{city}, '%')
+        </if>
+        <if test="county != null and county != ''">
+            AND address LIKE CONCAT('%', #{county}, '%')
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (
+            storage_name LIKE CONCAT('%', #{keyword}, '%') OR phone LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="selectCompanyStorageListById" parameterType="com.deer.wms.system.manage.model.storage.CompanyStorageCriteria" resultMap="BaseResultMap">
+          select comsto.*,company.company_name ,(select COUNT(1) from pallet p where comsto.storage_id = p.storage_id AND p.state = '0' ) stock_count  from company_storage comsto
+          	left join company company on comsto.company_id=company.company_id 
+          	where 1=1 and comsto.company_id = #{companyId}
+            <if test="keyword != null and keyword != ''">
+                AND (
+                storage_name LIKE CONCAT('%', #{keyword}, '%')
+                OR city LIKE CONCAT('%', #{keyword}, '%')
+                OR province LIKE CONCAT('%', #{keyword}, '%')
+
+                )
+            </if>
+          	 order by comsto.create_time asc
+
+    </select>
+
+    <!-- 网点分布情况统计 -->
+    <select id="statistics" parameterType="com.deer.wms.system.manage.model.storage.statistics.StatisticsCriteria" resultMap="DistributionStatisticsMap">
+        SELECT
+        (
+          SELECT COUNT(*) FROM company_storage WHERE company_id = 1 AND state = 'normal'
+          <if test="province != null and province != ''">
+              AND address LIKE CONCAT('%', #{province}, '%')
+          </if>
+        ) AS direct_total,
+        (
+          SELECT COUNT(*) FROM company_storage a LEFT JOIN company ON company.company_id = a.company_id
+          WHERE company.state = 'normal' AND a.state = 'normal' AND company.company_type = 3
+          <if test="province != null and province != ''">
+              AND a.address LIKE CONCAT('%', #{province}, '%')
+          </if>
+        ) AS agent_total,
+        (
+            SELECT COUNT(*) FROM company_storage a LEFT JOIN company ON company.company_id = a.company_id
+            WHERE company.state = 'normal' AND a.state = 'normal' AND company.company_type = 4
+            <if test="province != null and province != ''">
+                AND a.address LIKE CONCAT('%', #{province}, '%')
+            </if>
+        ) AS customer_total
+        , (
+          <if test="province == null or province == ''">
+              SELECT COUNT(*) FROM pallet WHERE state = '0'
+          </if>
+          <if test="province != null and province != ''">
+              SELECT COUNT(*) FROM pallet LEFT JOIN company_storage a ON a.storage_id = pallet.storage_id
+              WHERE pallet.state = '0' AND a.state = 'normal'
+              AND (a.address LIKE CONCAT('%',#{province}, '%')
+              OR  a.province LIKE CONCAT('%',#{province}, '%'))
+
+          </if>
+          ) AS pallet_total
+        FROM DUAL;
+    </select>
+
+
+
+    <select id="getPlasticStock" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from pallet where storage_id= #{storageId}
+
+    </select>
+    
+    <select id="qryStorageListByCompanyId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    	SELECT * FROM company_storage WHERE company_id = #{companyId}
+    </select>
+</mapper>

@@ -1,0 +1,154 @@
+<div class="main-hook" >
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="return-wrapper pllet-hook">
+            <div class="title">
+                当前位置：<span>基础设置</span>&nbsp;&nbsp;->&nbsp;</span><span class="active">托盘管理</span>
+            </div>
+
+            <form class="search form-search-hook">
+                <div class="row">
+
+
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">关键字</span>
+                    <input type="text" class="search-input lg" placeholder="请输入关键字" name="keyWords">
+                    <span class="interval-lg"></span>
+
+                    <span class="interval-xs"></span>
+                    <button type="button" class="btn btn-blue search-hook">查询</button>
+                    <span class="interval-xs"></span>
+                    <button type="reset" class="btn btn-gray resert">清空</button>
+                </div>
+            </form>
+
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" data-toggle="modal" data-target="#newModal">新建托盘</button>
+            </div>
+            <div class="custom-table-wrapper" style="padding: 0;height: auto;">
+                <table class="custom-table pllet-table-hook"></table>
+            </div>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel1">新增托盘</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>新增托盘</h3>
+                                <ol class="detail_list">
+                                    <li>
+
+                                        <span    style="margin-top: 20px;width: 100px">托盘名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"v-model = "info.palletName"> <br/>
+                                        <span    style="margin-top: 20px;width: 100px">托盘条形编码：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"v-model = "info.palletBarCode"> <br/>
+
+
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"v-model = "info.memo">
+
+                                    </li>
+
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "insertPllet()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">修改</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>托盘信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span    style="margin-top: 20px;width: 100px">托盘名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" v-model = "rowData.palletName"> <br/>
+
+                                        <span    style="margin-top: 20px;width: 100px">托盘条形编码：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" v-model = "rowData.palletBarCode"> <br/>
+
+                                        <span style="margin-top: 20px;width: 100px">类型</span>
+                                        <select class="form-control w120" style="margin-top: 20px;width: 300px" v-model="rowData.palletType">
+                                            <option    value=null> </option>
+                                            <option    value="1">托盘</option>
+                                            <option value="2">料箱</option>
+                                        </select>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg"placeholder="请输入备注"v-model = "rowData.memo">
+
+                                    </li>
+
+
+                                    </li>
+
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "updatePllet()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+
+    <div id="palletPrintArea"  style="display: none" >
+        <table border="2" style="width: 400px;height: 100px;border-color: #000000;position: absolute;left: 60px;top: 100px " >
+            <tr><td colspan="2" ><div id="palletBar" style="margin:0px auto; text-align: center;  "></div></td></tr>
+
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">托盘编码</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="palletCode"> </span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">托盘名称</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="palletName"> </span></td>
+            </tr>
+            <tr>
+                <th><span style="display:block;width: 100px; margin: 0 auto; text-align: center; ">托盘条形编码</span></th>
+                <td><span style="display:block;;width: 100px; margin: 0 auto; text-align: center; " id="palletBarCode"> </span></td>
+            </tr>
+
+
+        </table>
+    </div>
+
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show">2</div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show">3</div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show">4</div>
+</div>
+<script type="text/javascript" src="js/back/base/pllet/pllet.js" custom></script>

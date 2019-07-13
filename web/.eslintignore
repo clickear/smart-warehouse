@@ -1,0 +1,8 @@
+public/*.js
+node_modules/
+build/
+config/
+app/
+bin/
+routes/
+src/

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>巡城鹿</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="expires" content="Wed,26 Feb 1997 08:01:01 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Cache-Control" content="no-cache,must-revalidate"/>
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <base href="<%=project%>/">
+    <link rel="shortcut icon" href="img/logo/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="lib/jquery/ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap3-dialog/bootstrap-dialog.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="lib/fontello/css/fontello.css"/>
+    <link rel="stylesheet" href="lib/unslider/unslider.css"/>
+    <link rel="stylesheet" href="lib/scroll/jquery.scrollbar.css">
+    <% if (env === "production") { %>
+    <link rel="stylesheet" href="css/index.css">
+    <% } %>
+
+    <script type="text/javascript" src="lib/nodeFlow/depnd/underscore.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery.1.11.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/additional-methods.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/localization/messages_zh.js"></script>
+    <script type="text/javascript" src="lib/lazyloader/xLazyLoader.min.js"></script>
+    <script type="text/javascript" src="lib/scroll/jquery.scrollbar.js"></script>
+    <script type="text/javascript" src="lib/spin/spin.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="lib/bootstrap3-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-select/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="lib/layer/layer.js"></script>
+    <script type="text/javascript" src="lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/raphael.js" defer></script>
+    <script type="text/javascript" src="lib/codemirror/codemirror.js" defer></script>
+</head>
+<body>
+<%include ./consult-service.html%>
+<div class="main-container">
+    <%include ./header.html%>
+    <div class="body">
+        <div class="error-wrap">
+            <div class="wrap">
+                <% if(code === 404){ %>
+                <%='404 无效的访问路径，请与管理员联系！'%>
+                <%}else if(code === 403){ %>
+                    <%='403 没有权限，请与管理员联系！'%>
+                <% }else{ %>
+                <h1><%= msg %></h1>
+                <% if(process.env.NODE_ENV === 'development') { %>
+                <h2> (error && error.status)</h2>
+                <pre> error && error.stack </pre>
+                <% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <%include ./footer.html%>
+</div>
+
+
+<script src="js/common/manifest.js"></script>
+<script src="js/common/constant.js"></script>
+<script src="js/common/common.js"></script>
+<script src="js/error.js"></script>
+<% if (env !== "production" && reload) { %>
+<script src="../reload/reload.js"></script>
+<% } %>
+</body>
+</html>

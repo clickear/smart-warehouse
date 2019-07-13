@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.message.dao.ValidateRecordMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.message.model.ValidateRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="record_id" jdbcType="BIGINT" property="recordId" />
+    <result column="business_type" jdbcType="VARCHAR" property="businessType" />
+    <result column="receive_type" jdbcType="VARCHAR" property="receiveType" />
+    <result column="receive_object" jdbcType="VARCHAR" property="receiveObject" />
+    <result column="validate_code" jdbcType="VARCHAR" property="validateCode" />
+    <result column="generate_time" jdbcType="TIMESTAMP" property="generateTime" />
+    <result column="invalid_time" jdbcType="TIMESTAMP" property="invalidTime" />
+    <result column="validate_time" jdbcType="TIMESTAMP" property="validateTime" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+
+
+  <select id="findBySms" parameterType="com.deer.wms.message.model.Sms" resultMap="BaseResultMap">
+      select * from validate_record
+
+      where    receive_object = #{mobile} and business_type = #{type} and validate_time is NULL
+
+      order by generate_time DESC
+
+  </select>
+</mapper>

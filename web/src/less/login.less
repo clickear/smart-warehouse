@@ -1,0 +1,235 @@
+@import "./base";
+
+// 登录页面===================================================================================
+.login-body {
+  margin: 0 auto;
+  width: 1400px;
+  height: 500px;
+  .login-left {
+    width: 45%;
+    float: left;
+    padding-left: 180px;
+    h1 {
+      color: #0B8DD9;
+      font-weight: bold;
+      font-size: 36px;
+      &.left30 {
+        margin-left: 165px;
+      }
+    }
+    .login-img{
+      margin-top: 34px;
+      img{
+        border-radius: 3px;
+      }
+    }
+  }
+  .login-right {
+    //width: 52%;
+    float: right;
+    padding: 0 180px 0 0;
+    .login-form {
+      border: 1px solid #e5e5e5;
+      border-radius: 5px;
+      padding: 0 60px;
+      form {
+        .pwd-forget, .register-new {
+          cursor: pointer;
+        }
+        .login-p {
+          border-radius: 10px;
+          color: #fff;
+          background-color: #0B8DD9;
+          font-size: 28px;
+          font-weight: bold;
+          width: 100%;
+          //margin-left: 56px;
+        }
+        .user-label {
+          position: relative;
+          top: 28px;
+          left: 10px;
+          width: 60px;
+        }
+        .pwd-label {
+          position: relative;
+          top: 28px;
+          left: 10px;
+          width: 60px;
+        }
+        .form-control {
+          width: 250px;
+        }
+        .form-user, .form-pwd {
+          margin-left: 70px;
+          &.form-yzm {
+            margin-left: 70px;
+            width: 150px;
+          }
+        }
+        .btn-login {
+          width: 100%;
+          background-color: #0B8DD9;
+        }
+        .form-verify-img {
+          cursor: pointer;
+          //position: relative;
+          //top: -34px;
+          //left: 111px;
+        }
+        .register-new {
+          float: right;
+        }
+        .form-group{
+          label.error{
+            position: absolute;
+            left: 72px;
+            top: 53px;
+          }
+        }
+      }
+    }
+  }
+}
+// 用户注册===================================================================================
+.register-body {
+  position: relative;
+  left: 0;
+  right: 0;
+  .form{
+    width: 550px;
+    .btn-default{
+      margin-left: 0;
+    }
+    .btn-gray{
+      margin-left: 240px;
+    }
+    .login-title{
+      text-align: center;
+      color: #0B8DD9;
+      font-size: 35px;
+    }
+  }
+}
+.retrieve-password-body{
+  position: relative;
+  left: 0;
+  right: 0;
+  .form{
+    width: 550px;
+    .btn-default{
+      margin-left: 0;
+    }
+    .btn-gray{
+      margin-left: 240px;
+    }
+    .login-title{
+      text-align: center;
+      color: #0B8DD9;
+      font-size: 35px;
+    }
+  }
+}
+.identification-body{
+  position: relative;
+  left: 0;
+  right: 0;
+  .form{
+    width: 550px;
+    .btn-default{
+      margin-left: 0;
+    }
+    .btn-gray{
+      margin-left: 190px;
+    }
+    .login-title{
+      text-align: center;
+      color: #ffa200;
+      font-size: 20px;
+    }
+    .icheck-desc{
+      font-weight: initial;
+    }
+  }
+}
+// 企业认证页面==========================================================================================
+.identification-page{
+  .form-group{
+    .file-input{
+      display: none;
+    }
+    img {
+      width: 200px;
+      cursor: pointer;
+    }
+    .img-big{
+      opacity: 0.7;
+      position: absolute;
+      left: 187px;
+      top: -19px;
+    }
+    .date-time-box {
+      display: inline-block;
+      height: 25px;
+      line-height: 35px;
+    }
+  }
+  .form-control {
+    display: inline-block;
+  }
+  .forget-input {
+    width: 280px;
+  }
+  .required {
+    width: 120px;
+  }
+}
+.register-page{
+  .form-horizontal{
+    label.error{
+      position: absolute;
+      display: inline-block !important;
+    }
+  }
+  .send-code{
+    cursor: pointer;
+    margin-left: -85px;
+    color: @blueFontColor;
+  }
+  .disable-click{
+    margin-left: -85px;
+    color: #e5e5e5;
+  }
+  padding-left: 50px;
+  .required {
+    width: 60px;
+    text-align: right;
+  }
+}
+// 找回密码页面===============================================================================
+.retrieve-password-page, .reinstall-password-page{
+  .form-horizontal{
+    label.error{
+      position: absolute;
+      display: inline-block !important;
+    }
+  }
+  .form-group {
+    .forget-input{
+      width: 240px;
+    }
+  }
+  .send-code {
+    position: relative;
+    top: 0px;
+    left: -85px;
+    color: #0B8DD9;
+    cursor: pointer;
+  }
+  .disable-click {
+    position: relative;
+    top: 0px;
+    left: -89px;
+    color: #e5e5e5;
+  }
+}

@@ -1,0 +1,94 @@
+.content{
+	height: 80%;
+	width: 100%;
+	top: 17%;
+	 
+	 
+	position: absolute;
+}
+
+.yanshou{
+	
+	background-color:  #004444;
+	left: 2%;
+	
+	
+	
+}
+ 
+.shangjia{
+	 
+	background-color: #800080;
+	 
+	 
+	left: 34.33%;
+	 
+}
+.jiepan{
+	 
+	background-color: #678CB1;
+	 
+	 left: 2%;
+	top: 33.33%;
+	
+}
+.inventory{
+	 
+	background-color: #00AA00;
+	 
+	left: 66.66%;
+}
+ 
+.re-check{
+	background-color: #ACACB4;
+	left: 34.33%;
+	top: 33.33%;
+}
+.kuai-di{
+	background-color: #0062CC;
+	left: 66.67%;
+	top: 33.33%;
+}
+.chu-ku{
+	background-color: #FFB400;
+	 left: 2%;
+	top: 66.67%;
+}
+
+.tuichu{
+	 
+	background-color: #FF0000;
+	 
+	left: 66.66%;
+	top: 66.66%;
+}
+
+.item{
+	height: 32%;
+	width: 31%;
+	position: absolute;
+	font-weight: bold;
+	font-size: 16px;
+	color: #FFFFFF;
+	text-align:center;
+	line-height:160px;
+}
+
+.mui-plus .plus{
+	display: inline;
+}
+			
+.plus{
+	display: none;
+}
+
+#topPopover {
+ width: 50%;
+ top: -15%;
+ 
+}
+
+
+ 
+ 
+ 

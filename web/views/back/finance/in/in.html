@@ -1,0 +1,216 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="network-wrapper finance-in-main-hook">
+            <div class="title">
+                当前位置：&nbsp;财务管理&nbsp;->&nbsp;<span class="active">应收管理</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+                        <span class="interval-lg"></span>
+                        <span class="search-label">合同号</span>
+                        <input type="text" class="search-input lg" placeholder="请输入合同号" style="width: 180px" name="keywords">
+                        <span class="interval-lg"></span>
+
+                        <span class="search-label">状态</span>
+                        <select class="form-control w120" name="state">
+                            <option value="">全部</option>
+                            <option value="0">待审核</option>
+                            <option value="1">审核通过</option>
+                            <option value="2">审核失败</option>
+                            <option value="3">部分付款</option>
+                            <option value="4">全部付款</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">类别</span>
+                            <select class="form-control w120"      name="fTypeCode"    >
+                                <option value="">全部</option>
+                                <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                        </select>
+
+
+                        <span class="search-label">时间范围</span>
+                        <select class="form-control w120" name="state">
+                            <option value="">全部</option>
+                            <option value="0">今日</option>
+                            <option value="1">近一月</option>
+                            <option value="2">近三月</option>
+                            <option value="3">近一年</option>
+                            <option value="4">近三年</option>
+                        </select>
+                        <span class="interval-xs"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray ">清空</button>
+                    </div>
+                </form>
+            </div>
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" data-toggle="modal" data-target="#newModal">新建应收项目</button>
+            </div>
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="detail_contain">
+                                <li>
+                                    <h3>应收管理信息</h3>
+                                    <ol class="detail_list">
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">合同号：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.flowCode"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">项目名称：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.flowName"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span style="margin-top: 20px;width: 100px">财务类别</span>
+                                            <select  style="margin-top: 20px;width: 300px"  id="fTypeCodeo" name="fTypeCode" v-model = "rowData.fTypeCode">
+                                                <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                                            </select><br/>
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">付款方：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.payer"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">应收金额：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.shouldArMoney"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">实收金额：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.factArMoney"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">剩余金额：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.restMoney"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "rowData.memo">
+
+                                        </li>
+                                    </ol>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default"  @click = "updateIn()">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel1">新增</h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="detail_contain">
+                                <li>
+                                    <h3>应收管理信息</h3>
+                                    <ol class="detail_list">
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">合同号：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.flowCode"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">项目名称：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.flowName"></input> <br/>
+                                        <li>
+                                            <span style="margin-top: 20px;width: 100px">财务类别</span>
+                                            <select  style="margin-top: 20px;width: 300px"  id="fTypeCode" name="fTypeCode" v-model = "info.fTypeCode">
+                                                <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+                                            </select><br/>
+                                        </li>
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">付款方：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.payer"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">应收金额：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.shouldArMoney"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">实收金额：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.factArMoney"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span    style="margin-top: 20px;width: 100px">剩余金额：</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.restMoney"></input> <br/>
+
+
+                                        </li>
+                                        <li>
+                                            <span   style="margin-top: 20px;width: 100px;color: #7B68EE">备注</span>
+                                            <input type="text" style="margin-top: 20px;width: 300px" class="search-input lg" placeholder="请输入备注"   v-model = "info.memo">
+
+                                        </li>
+
+
+                                    </ol>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default"  @click = "insertIn()">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+
+            <div class="custom-table-wrapper"  style="height: 150px"  >
+                <table class="custom-table finance-in-table-hook"   ></table>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/finance/in/in.js" custom></script>

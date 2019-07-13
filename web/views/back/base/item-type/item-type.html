@@ -1,0 +1,115 @@
+<div class="return-main-hook main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook type-main-hook" v-show="boxs.box1.show">
+        <div class="return-wrapper return-hook">
+            <div class="title">
+                当前位置：<span>基础设置</span>&nbsp;&nbsp;->&nbsp;</span><span class="active">物料种类</span>
+            </div>
+
+            <form class="search form-search-hook">
+                <div class="row">
+
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">关键字</span>
+                    <input type="text" class="search-input lg" placeholder="物料种类关键字" name="keyWords">
+                    <span class="interval-lg"></span>
+                    <button type="button" class="btn btn-blue search-hook">查询</button>
+                    <span class="interval-xs"></span>
+                    <button type="reset" class="btn btn-gray resert">清空</button>
+                </div>
+            </form>
+
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                <button type="button" class="btn primary_btn return_btn" data-toggle="modal" data-target="#insertModal">新建物料种类</button>
+            </div>
+            <div class="custom-table-wrapper" style="padding: 0;height: auto;">
+                <table class="custom-table itemType-table-hook"></table>
+            </div>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">修改</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>物料种类信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span    style="margin-top: 20px;width: 100px">种类名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.itemTypeName"></input> <br/>
+
+                                    </li>
+                                </ol>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span    style="margin-top: 20px;width: 100px">备注：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "rowData.memo"></input> <br/>
+
+                                    </li>
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "updateItem()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel2">新增</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>物料种类信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span    style="margin-top: 20px;width: 100px">种类名称：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.itemTypeName "></input> <br/>
+
+                                    </li>
+                                </ol>
+                                <ol class="detail_list">
+                                    <li>
+                                        <span    style="margin-top: 20px;width: 100px">备注：</span>
+                                        <input type="text" style="margin-top: 20px;width: 300px"      v-model = "info.memo"></input> <br/>
+
+                                    </li>
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "insertItem()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/base/item-type/item-type.js" custom></script>

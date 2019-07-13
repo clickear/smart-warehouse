@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.operation.dao.SaleMasterMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.operation.model.SaleMasterDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sale_no" jdbcType="VARCHAR" property="saleNo" />
+    <result column="sale_total" jdbcType="INTEGER" property="saleTotal" />
+    <result column="client_site" jdbcType="VARCHAR" property="clientSite" />
+    <result column="client_code" jdbcType="VARCHAR" property="clientCode" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="client_contacts" jdbcType="VARCHAR" property="clientContacts" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="request_supply_time" jdbcType="TIMESTAMP" property="requestSupplyTime" />
+    <result column="transport_time" jdbcType="TIMESTAMP" property="transportTime" />
+    <result column="client_name" jdbcType="VARCHAR" property="clientName" />
+  </resultMap>
+
+  <select id="findList"  parameterType="com.deer.wms.operation.model.SaleMasterCriteria" resultMap="BaseResultMap">
+
+    select
+    sal.id,
+    sal.sale_no,
+    sal.sale_total,
+    sal.client_site,
+    cli.client_code,
+    sal.contact_phone,
+    sal.client_contacts,
+    sal.status,
+    sal.company_id,
+    sal.memo,
+    ware.ware_code,
+    cli.client_name,
+
+   DATE_FORMAT(sal.add_time, '%Y-%m-%d %H:%i:%s') AS add_time,
+    DATE_FORMAT(sal.request_supply_time, '%Y-%m-%d') AS request_supply_time,
+    DATE_FORMAT(sal.transport_time, '%Y-%m-%d %H:%i:%s') AS transport_time
+
+    from sale_master  sal
+
+    left join ware_info    ware on sal.ware_code       = ware.ware_code
+    left join client_manage cli on  sal.client_code = cli.client_code
+    where 1=1
+
+
+    <if test="keyWords != null  and keyWords != ''">
+      AND sale_no LIKE CONCAT('%', #{keyWords}, '%') or  client_code LIKE CONCAT('%', #{keyWords}, '%')
+    </if>
+    <if test="status != null  and status != ''">
+      and status = #{status}
+    </if>
+
+  </select>
+
+
+
+
+</mapper>

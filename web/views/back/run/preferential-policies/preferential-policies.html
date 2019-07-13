@@ -1,0 +1,85 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="preferential-wrapper preferential-hook">
+            <div class="title">
+                当前位置：&nbsp;运营管理&nbsp;->&nbsp;<span class="active">优惠政策</span>
+            </div>
+            <div class="search">
+                <form class="form-hook">
+                    <div class="row">
+                        <span class="search-label">类型</span>
+                        <select class="form-control w80" name="infoType">
+                            <option value="">全部</option>
+                            <option value="0">租赁优惠</option>
+                            <option value="1">用户推广</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input sm" name="keyword">
+                        <span class="interval-lg"></span>
+                        <span class="search-label"> 发布时间</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input type="text" class="search-input datetime" name="startTime">
+                        </div>
+                        <span class="interval-xs"></span>
+                        <span>到</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input type="text" class="search-input datetime" name="endTime">
+                        </div>
+                        <span class="interval-lg"></span>-->
+                        <button type="submit" class="btn btn-blue">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="button" class="btn btn-gray" @click.stop="newRelease()">新增</button>
+                    </div>
+                </form>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table preferential-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/run/preferential-policies/preferential-policies.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

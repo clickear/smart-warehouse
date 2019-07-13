@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ItemInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.ItemInfoDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_bar_code" jdbcType="VARCHAR" property="itemBarCode" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="item_type_code" jdbcType="VARCHAR" property="itemTypeCode" />
+    <result column="upper_limit" jdbcType="INTEGER" property="upperLimit" />
+    <result column="floor_limit" jdbcType="INTEGER" property="floorLimit" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="item_type_name" jdbcType="VARCHAR" property="itemTypeName" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="default_price" jdbcType="DOUBLE" property="defaultPrice" />
+    <result column="weight" jdbcType="VARCHAR" property="weight" />
+    <result column="supplier_code" jdbcType="VARCHAR" property="supplierCode" />
+    <result column="client_code" jdbcType="VARCHAR" property="clientCode" />
+    <result column="internal_code" jdbcType="VARCHAR" property="internalCode" />
+    <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
+    <result column="client_name" jdbcType="VARCHAR" property="clientName" />
+    <result column="unit_code" jdbcType="VARCHAR" property="unitCode" />
+      <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+
+    <result column="abc_class" jdbcType="VARCHAR" property="abcClass" />
+  </resultMap>
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.ItemInfoCriteria">
+    delete from item_info where item_code = #{itemCode}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+  <select id="findList" parameterType="com.deer.wms.base.system.model.ItemInfoCriteria" resultMap="BaseResultMap">
+    select
+    item.id  ,
+    item.item_code,
+    item.item_bar_code,
+    item.item_name,
+    item.item_class,
+    item.item_type_code,
+    item.upper_limit,
+    item.floor_limit,
+    item.memo,
+    itemType.item_type_name,
+    com.company_id,
+    com.company_name,
+    item.default_price,
+    item.weight,
+    item.supplier_code,
+    item.client_code,
+    item.internal_code,
+    item.unit_code,
+    item.abc_class,
+    unit.unit_name,
+    item.batch
+    from item_info  item
+
+
+
+    left join item_type itemType on item.item_type_code = itemType.item_type_code
+    left join company    com        on item.company_id = com.company_id
+      left join  unit        unit  on  item.unit_code= unit.unit_code
+
+
+
+
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+      AND item.item_name LIKE CONCAT('%', #{keyWords}, '%')
+
+    </if>
+    <if test="itemTypeCode != null and itemTypeCode != ''">
+      AND item.item_type_code =#{itemTypeCode}
+    </if>
+    <if test="companyId != null and companyId != ''">
+      AND com.company_id =#{companyId}
+    </if>
+      <if test="unitCode != null and unitCode != ''">
+          AND unit.unit_code =#{unitCode}
+      </if>
+
+      ORDER BY item_type_code,item_name,item_class,item_code,abc_class
+  </select>
+
+
+</mapper>

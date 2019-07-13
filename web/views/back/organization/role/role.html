@@ -1,0 +1,80 @@
+
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="role-hook">
+            <div class="title">
+                当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;<span class="active">角色管理</span>
+            </div>
+            <input type="hidden" class="role-id-hook" value="<%=user.roleId%>">
+            <div class="search">
+                <form class="form-hook">
+                    <div class="row">
+                        <%if(checkAuthority('role-query')){%>
+                        <span class="search-label">角色级别</span>
+                        <select class="form-control w120 role-type-hook" name="roleLevel">
+                            <option value="">全部</option>
+                            <option v-for="(role,index) in roleRankList" :value="role.id"
+                                    v-text="role.name"></option>
+                        </select>
+
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" name="keyword" placeholder="角色名称关键字">
+                        <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook" @click.stop="searchTable()">查询</button>
+                        <span class="interval-xs"></span>
+                        <%}%>
+                        <%if(checkAuthority('role-create')){%>
+                        <button type="button" class="btn btn-gray" @click.stop="addRole()">新增</button>
+                        <%}%>
+                    </div>
+                </form>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table role-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/organization/role/role.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

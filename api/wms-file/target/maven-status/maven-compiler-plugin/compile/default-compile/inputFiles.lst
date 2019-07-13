@@ -1,0 +1,8 @@
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\constant\FileConstant.java
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\service\impl\FileServiceImpl.java
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\model\FileInfo.java
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\configurer\FileMybatisConfigurer.java
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\configurer\FileWebMvcConfigurer.java
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\service\FileService.java
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\configurer\FileSetting.java
+D:\英雄时刻\deer-wms\api\wms-file\src\main\java\com\deer\wms\file\configurer\FileSwaggerConfigurer.java

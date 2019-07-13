@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.InventoryReportMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.InventoryReport">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="item_master_id" jdbcType="INTEGER" property="itemMasterId" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="start_inventory" jdbcType="INTEGER" property="startInventory" />
+    <result column="in_inventory" jdbcType="INTEGER" property="inInventory" />
+    <result column="out_inventory" jdbcType="INTEGER" property="outInventory" />
+    <result column="inventory" jdbcType="INTEGER" property="inventory" />
+    <result column="loss_inventory" jdbcType="INTEGER" property="lossInventory" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="report_type" jdbcType="INTEGER" property="reportType" />
+  </resultMap>
+  <resultMap id="Dto" extends="BaseResultMap" type="com.deer.wms.system.manage.model.InventoryReportDto">
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+  </resultMap>
+
+  <select id="findQianTian" resultType="com.deer.wms.system.manage.model.InventoryReport" parameterType="com.deer.wms.system.manage.model.InventoryReportCriteria">
+    select
+    *
+    from
+    inventory_report report
+    where report.report_type =1
+
+      and report.item_code = #{itemCode}
+      and report.ware_code = #{wareCode}
+      and report.item_master_id = #{itemMasterId}
+
+      and     TO_DAYS( NOW( ) ) - TO_DAYS( report.start_time) = 2
+
+
+  </select>
+
+  <select id="findShangShangYue" resultType="com.deer.wms.system.manage.model.InventoryReport" parameterType="com.deer.wms.system.manage.model.InventoryReportCriteria">
+    select
+    *
+    from
+    inventory_report report
+    where report.report_type =2
+
+      and report.item_code = #{itemCode}
+      and report.ware_code = #{wareCode}
+      and report.item_master_id = #{itemMasterId}
+
+      and     PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( start_time, '%Y%m' ) ) =2
+
+
+  </select>
+
+  <select id="findList" resultMap="Dto" parameterType="com.deer.wms.system.manage.model.InventoryReportCriteria">
+    SELECT
+    report.id,
+    report.item_code,
+    report.ware_code,
+    report.item_master_id,
+    report.start_time,
+    report.end_time,
+    report.start_inventory,
+    report.in_inventory,
+    report.out_inventory,
+    report.inventory,
+    report.loss_inventory,
+    report.report_type,
+    ii.item_name,
+    ii.item_class,
+    un.unit_name,
+    i.ware_name,
+    m.item_master_name
+
+    FROM  inventory_report report
+    left join item_info ii on report.item_code = ii.item_code
+    left join unit un on ii.unit_code = un.unit_code
+    left join ware_info i on report.ware_code = i.ware_code
+    left join item_master m on report.item_master_id = m.item_master_id
+    WHERE 1=1
+    <if test="type != null and type ==1">    <!--本周-->
+     and YEARWEEK(date_format(start_time,'%Y-%m-%d')) = YEARWEEK(now())
+    </if>
+    <if test="type != null and type ==2">    <!--上周-->
+      and YEARWEEK(date_format(start_time,'%Y-%m-%d')) = YEARWEEK(now())-1
+    </if>
+    <if test="type != null and type ==3">    <!--本月-->
+      and date_format(start_time,'%Y-%m')=date_format(now(),'%Y-%m')
+    </if>
+    <if test="type != null and type ==4">    <!--上月-->
+      and date_format(start_time,'%Y-%m')=date_format(now(),'%Y-%m')-1
+    </if>
+
+    <if test="type != null and type ==4">    <!--上月-->
+      and date_format(start_time,'%Y-%m')=date_format(now(),'%Y-%m')-1
+    </if>
+
+    <if test="reportType != null ">    /*1-日报表   2-月报表*/
+      and report.report_type = #{reportType}
+    </if>
+
+    <if test="keyWords != null and keyWords != ''">
+      and ii.item_name LIKE CONCAT('%', #{keyWords}, '%')
+    </if>
+    <if test="itemCode != null and itemCode != ''">
+      and report.item_code = #{itemCode}
+    </if>
+    <if test="wareCode != null and wareCode != ''">
+      and report.ware_code = #{wareCode}
+    </if>
+    <if test="itemMasterId != null and itemMasterId != ''">
+      and report.item_master_id =#{itemMasterId}
+    </if>
+    order  by report.start_time desc
+  </select>
+
+
+
+
+
+
+</mapper>

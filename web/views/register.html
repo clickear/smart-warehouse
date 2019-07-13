@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>deerWMS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="expires" content="Wed,26 Feb 1997 08:01:01 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Cache-Control" content="no-cache,must-revalidate"/>
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <base href="<%=project%>/">
+    <link rel="shortcut icon" href="img/logo/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="lib/jquery/ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap3-dialog/bootstrap-dialog.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="lib/fontello/css/fontello.css"/>
+    <link rel="stylesheet" href="lib/unslider/unslider.css"/>
+    <link rel="stylesheet" href="lib/scroll/jquery.scrollbar.css">
+    <link rel="stylesheet" href="lib/dateTimePicker/jquery.datetimepicker.css"/>
+    <% if (env === "production") { %>
+    <link rel="stylesheet" href="css/register.css">
+    <% } %>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/underscore.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery.1.11.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/dateTimePicker/jquery.datetimepicker.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/additional-methods.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/localization/messages_zh.js"></script>
+    <script type="text/javascript" src="lib/lazyloader/xLazyLoader.min.js"></script>
+    <script type="text/javascript" src="lib/scroll/jquery.scrollbar.js"></script>
+    <script type="text/javascript" src="lib/spin/spin.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="lib/bootstrap3-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-select/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="lib/layer/layer.js"></script>
+    <script type="text/javascript" src="lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/raphael.js" defer></script>
+    <script type="text/javascript" src="lib/codemirror/codemirror.js" defer></script>
+    <script type="text/javascript">
+        function clearNoNum(obj){
+            //修复第一个字符是小数点 的情况.
+            if(obj.value !=''&& obj.value.substr(0,1) == '.'){
+                obj.value="";
+            }
+            obj.value = obj.value.replace(/^0*(0\.|[1-9])/, '$1');//解决 粘贴不生效
+            obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+            obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的
+            obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+            obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数
+            if(obj.value.indexOf(".")< 0 && obj.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+                if(obj.value.substr(0,1) == '0' && obj.value.length == 2){
+                    obj.value= obj.value.substr(1,obj.value.length);
+                }
+            }
+        }
+    </script>
+</head>
+<body class="core">
+<div class="main-container register-page-hook">
+    <div class="header">
+        <div class="inner-wrapper">
+            <!--<h1 class="logo"><a href="index"><img src="img/logo/logo-41.png"></a></h1>-->
+          <!--  <h1 class="logo"><a href="index"><img src="img/mobileLogo/logo-4.png"></a></h1>-->
+        </div>
+    </div>
+    <div class="body">
+        <div class="register-body" v-show="isShow">
+            <div class="register-page setting-dialog">
+                <form class="form form-horizontal center-block  register-form-hook" method="post">
+                    <p class="login-title">用户注册</p>
+                    <div class="form-group">
+                        <label class="form-label required"> 手机号</label>
+                        <input type="text" class="forget-input form-control" name="mobile" v-model="info.mobile"
+                               placeholder="请输入手机号码"/>
+                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label class="form-label required"> 验证码</label>-->
+
+                        <!--<input type="text" class="forget-input form-control" maxlength="10" name="smsCode"-->
+                               <!--v-model="info.smsCode" placeholder="请输入验证码"/>-->
+                        <!--<span class="send-code send-code-hook">发送验证码</span>-->
+                    <!--</div>-->
+                    <div class="form-group">
+                        <label class="form-label required"> 密码</label>
+                        <input type="password" class="forget-input form-control" name="password" id="password"
+                               v-model="info.password" placeholder="密码"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required"> 确认密码</label>
+                        <input type="password" class="forget-input form-control" name="confirm_password"
+                               v-model="info.confirm_password" placeholder="再次输入密码"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"> 姓名</label>
+                        <input type="text" class="forget-input form-control" name="userName"
+                               v-model="info.userName" placeholder="姓名"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required">性别</label>
+                        <label class="form-icheck">
+                            <input type="radio" name="gender" value="0" checked @click.stop="info.gender = 1">
+                            <span class="icheck-desc">男</span>
+                        </label>
+                        <label class="form-icheck">
+                            <input type="radio" name="gender" value="1" @click.stop="info.gender = 2">
+                            <span class="icheck-desc">女</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required"> 电子邮箱</label>
+                        <input type="text" class="forget-input form-control" name="email"
+                               v-model="info.email" placeholder="电子邮箱"/>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">下一步</button>
+                        <button type="button" class="btn btn-cancel btn-gray" @click.stop="goToLogin()">返回登录</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="identification-body" v-show="!isShow">
+            <div class="identification-page setting-dialog">
+                <form class="form form-horizontal center-block identification-form-hook">
+                    <p class="login-title">企业认证</p>
+                    <!--<div class="form-group">
+                        <label class="form-label required">企业类型</label>
+                        <label class="form-icheck">
+                            <input type="radio" name="companyType" value="1" checked @click.stop="info.companyType = 1;showtype=true">
+                            <span class="icheck-desc">托盘生产商</span>
+                        </label>
+                        <label class="form-icheck">
+                            <input type="radio" name="companyType" value="4" @click.stop="info.companyType = 4;showtype=false">
+                            <span class="icheck-desc">托盘承租方</span>
+                        </label>
+                    </div>-->
+                    <div class="form-group  check-phone">
+                        <label class="form-label required"> 企业名称</label>
+                        <input type="text" class="forget-input form-control" name="companyName" v-model="info.companyName"
+                               placeholder="请输入企业名称"/>
+                    </div>
+                    <!--<div class="form-group  check-key">
+                        <label class="form-label required"> 法人名称</label>
+
+                        <input type="text" class="forget-input form-control" maxlength="20" name="artificialPersonName"
+                               v-model="info.artificialPersonName" placeholder="请输入法人名称"/>
+                    </div>
+                    <div class="form-group  check-phone">
+                        <label class="form-label required"> 法人身份证号码</label>
+                        <input type="text" class="forget-input form-control" name="artificialPersonIdCard"
+                               v-model="info.artificialPersonIdCard" placeholder="请输入法人身份证号码"/>
+                    </div>
+                    <div class="form-group  check-phone">
+                        <label class="form-label required"> 社会信用代码</label>
+                        <input type="text" class="forget-input form-control" name="creditCode" v-model="info.creditCode"
+                               placeholder="社会信用代码"/>
+                    </div>
+                    <div class="form-group  check-phone">
+                        <label class="form-label required"> 企业注册地址</label>
+                        <input type="text" class="forget-input form-control" name="registeredAddress"
+                               v-model="info.registeredAddress"
+                               placeholder="营业执照注册地址"/>
+                    </div>
+
+                    <div class="form-group  check-phone">
+                        <label class="form-label required"> 企业成立时间</label>
+                        <div class="date-time-box">
+                            <input type="text" class="forget-input form-control" name="establishDate" v-model="info.establishDate"
+                                   placeholder="企业注册时间"/>
+                        </div>
+                    </div>-->
+                    <div class="form-group  check-phone">
+                        <label class="form-label required"> 联系地址</label>
+                        <input type="text" class="forget-input form-control" name="linkmanAddress" v-model="info.linkmanAddress"
+                               placeholder="企业在用联系地址"/>
+                    </div>
+                    <div class="form-group  check-phone">
+                        <label class="form-label required"> 联系电话</label>
+                        <input type="text" class="forget-input form-control" name="linkmanPhone" v-model="info.linkmanPhone"
+                               placeholder="联系电话"/>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <label class="form-label required"> 营业执照</label>
+                        <img :src="license"  alt="" @click="previewImg($event)">
+                        <span class="img-big">点击查看大图</span>
+                        </a>
+
+                        <input type="file" class="file-input" name="license" id="license1">
+                        <button type="button" class="btn btn-default" @click="uploadImg($event,'license1')">点击上传营业执照</button>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required"> 身份证正面</label>
+                        <img :src="cardFront" alt="" @click="previewImg($event)">
+                        <span class="img-big">点击查看大图</span>
+                        </a>
+
+                        <input type="file" class="file-input" name="cardFront" id="cardFront1">
+                        <button type="button" class="btn btn-default" @click="uploadImg($event,'cardFront1')">点击上传身份证正面</button>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required"> 身份证背面</label>
+                        <img :src="cardContrary"  alt="" @click="previewImg($event)">
+                        <span class="img-big">点击查看大图</span>
+                        </a>
+
+                        <input type="file" class="file-input" name="cardContrary" id="cardContrary1">
+                        <button type="button" class="btn btn-default" @click="uploadImg($event,'cardContrary1')">点击上传身份证背面</button>
+                    </div>-->
+                   <!-- <div class="form-group  check-ability " v-show="showtype">
+                        <label class="form-label required"> 供应能力</label>
+                        <input type="text" class="forget-input form-control" name="supplyAbility" id="ability" v-model="info.supplyAbility"
+                               placeholder="万块/月" onkeyup="clearNoNum(this)"/>
+                    </div>-->
+                    <div class="form-group text-center">
+                        <button type="button" @click.stop="isShow = true" class="btn btn-default">返回上一页</button>
+                        <button type="submit" class="btn btn-cancel btn-gray">提交注册</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="inner-wrapper">
+            联系电话：1230610086 网站备案：苏ICP-888888888<br>
+
+            智能仓储管理系统 &copy;版权所有
+        </div>
+    </div>
+</div>
+<script src="js/common/manifest.js"></script>
+<script src="js/common/constant.js"></script>
+<script src="js/common/common.js"></script>
+<script type="text/javascript" src="js/register.js" custom></script>
+<% if (env !== "production" && reload) { %>
+<script src="../reload/reload.js"></script>
+<% } %>
+</body>
+</html>

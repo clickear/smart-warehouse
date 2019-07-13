@@ -1,0 +1,98 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="network-wrapper ScanResults-hook">
+            <div class="title">
+                当前位置：&nbsp;统计报表&nbsp;->&nbsp;<span class="active">货区信息</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+
+                        <span class="interval-lg"></span>
+                        <span class="search-label">所属仓库</span>
+                        <select class="form-control w120" id="wareidint" name="wareidint"  >
+
+                            <option v-for="item in wareItems" v-bind:value="item.value">{{item.text}}</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" placeholder="请输入关键字" style="width: 180px" name="keywords">
+                        <span class="interval-lg"></span>
+
+
+                       <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray ">清空</button>
+                    </div>
+                </form>
+                <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+                    <button type="button" class="btn primary_btn return_btn"  onclick="javascript:window.print();">打印</button>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="custom-table-wrapper"  style="height: 150px"  >
+                <table class="custom-table ScanResults-table-hook"   ></table>
+            </div>
+
+
+
+        </div>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">修改</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="detail_contain">
+                            <li>
+                                <h3>货区信息</h3>
+                                <ol class="detail_list">
+                                    <li>
+                                         <span    style="margin-top: 20px;width: 100px">货&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：</span>
+                                        <i type="text" style="margin-top: 20px;width: 200px"      v-text = "rowData.areaName"></i> <br/>
+                                        <span    style="margin-top: 20px;width: 100px">物&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;料：</span>
+                                        <i type="text" style="margin-top: 20px;width: 300px"      v-text = "rowData.itemName"></i><br/>
+                                        <span    style="margin-top: 20px;width: 100px">原来数量：</span>
+                                        <i type="text" style="margin-top: 20px;width: 200px"      v-text = "rowData.quantity"></i>
+
+                                    </li>
+                                    <li>
+                                        <span   style="margin-top: 20px;width: 100px;color: #7B68EE">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量</span>
+                                        <input type="text" style="margin-top: 20px;width: 200px" class="search-input lg" placeholder="请输入数量"   v-model = "rowData.newquantity">
+
+
+
+                                    </li>
+
+                                </ol>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default"  @click = "commit()">确定</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+
+
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/report/area-item/area_item.js" custom></script>

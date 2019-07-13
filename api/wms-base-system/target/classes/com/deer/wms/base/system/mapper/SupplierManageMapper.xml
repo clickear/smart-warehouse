@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.SupplierManageMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.SupplierManage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="supplier_id" jdbcType="INTEGER" property="supplierId" />
+    <result column="supplier_code" jdbcType="VARCHAR" property="supplierCode" />
+    <result column="supplier_name" jdbcType="VARCHAR" property="supplierName" />
+    <result column="supplier_type" jdbcType="VARCHAR" property="supplierType" />
+    <result column="supplier_contacts" jdbcType="VARCHAR" property="supplierContacts" />
+    <result column="supplier_phone" jdbcType="VARCHAR" property="supplierPhone" />
+    <result column="supplier_site" jdbcType="VARCHAR" property="supplierSite" />
+    <result column="supplier_email" jdbcType="VARCHAR" property="supplierEmail" />
+    <result column="supplier_fax" jdbcType="VARCHAR" property="supplierFax" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+  </resultMap>
+
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.SupplierManageCriteria">
+
+    delete from supplier_manage
+
+    where  supplier_code = #{supplierCode}
+
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.SupplierManageCriteria"  resultMap="BaseResultMap">
+  select
+  *
+  from supplier_manage  sup
+  left join company com on  sup.company_id = com.company_id
+  where 1=1
+  <if test="keyWords != null and keyWords != ''">
+    AND (sup.supplier_name LIKE CONCAT('%', #{keyWords}, '%')
+    or sup.supplier_code LIKE CONCAT('%', #{keyWords}, '%')
+    or sup.supplier_phone LIKE CONCAT('%', #{keyWords}, '%')
+    or sup.supplier_email LIKE CONCAT('%', #{keyWords}, '%')
+    or sup.supplier_site LIKE CONCAT('%', #{keyWords}, '%')
+    or sup.supplier_type LIKE CONCAT('%', #{keyWords}, '%')
+    or sup.supplier_contacts LIKE CONCAT('%', #{keyWords}, '%'))
+
+  </if>
+
+  <if test="companyId != null and companyId != ''">
+    AND com.company_id = #{companyId}
+  </if>
+
+  </select>
+</mapper>

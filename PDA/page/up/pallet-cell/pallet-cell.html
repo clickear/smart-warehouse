@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+	<head>
+		 
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		 
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="pallet-cell.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav  " style="height: 15%;">
+			<br/>
+			<br/>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"  >托盘上架</h1>
+		</header>
+		<div class="contain">
+			<br/>
+			<div class="mui-input-row mui-search" style="width: 80%;height:50px;top: 25px; left: 13%;">
+				托盘：<input type="search" id="palletBarCode" style="width: 60%;margin-left: 5%;" v-model="palletBarCode" placeholder="扫描托盘条码">
+			</div>
+
+			
+
+			<div class="mui-input-row mui-search" style="width: 80%;height:50px;top: 65px; left: 13%;">
+				货位：<input type="search" id="CellBarCode" style="width: 60%;margin-left: 5%;" placeholder="扫描货位条码" v-model="cellBarCode">
+			</div>
+			<div class="order" style="height: auto;top: 60px;">
+				<div class="rowData">
+					<span class="name">当前托盘</span>
+					<span class="value">{{pallet.palletCode}}</span>
+
+				</div>
+				<div class="rowData">
+					<span class="name">当前货位</span>
+					<span class="value">{{cell.cellCode}}</span>
+
+				</div>
+
+			</div>
+
+			<br/>
+			<br/>
+			<br/>
+
+			<br/>
+			<br/>
+
+			<div class="mui-content-padded">
+				<button type="button" id='commit' @click="commit()" class="mui-btn mui-btn-primary  ">确定</button>
+				<br/>
+				<br/>
+
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../../config/dev.js"></script>
+		<script type="text/javascript" src="../../../js/mui.js"></script>
+		<script type="text/javascript" src="../../../libs/vue.js"></script>
+		<script type="text/javascript" src="../../../libs/jquery.1.11.min.js"></script>
+		<script type="text/javascript" src="pallet-cell.js"></script>
+		 
+		 <nav class="mui-bar mui-bar-tab">
+    <a class="mui-tab-item mui-active">
+        <span class="mui-icon mui-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+    </a>
+    <a class="mui-tab-item">
+        <span class="mui-icon mui-icon-phone"></span>
+        <span class="mui-tab-label">电话</span>
+    </a>
+    <a class="mui-tab-item">
+        <span class="mui-icon mui-icon-email"></span>
+        <span class="mui-tab-label">邮件</span>
+    </a>
+    <a class="mui-tab-item">
+        <span class="mui-icon mui-icon-gear"></span>
+        <span class="mui-tab-label">设置</span>
+    </a>
+</nav>
+	</body>
+
+</html>

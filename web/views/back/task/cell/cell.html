@@ -1,0 +1,180 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="network-wrapper ScanResults-hook">
+            <div class="title">
+                当前位置：&nbsp;作业管理&nbsp;->&nbsp;<span class="active">货位信息</span>
+            </div>
+            <div class="search">
+                <form class="form-search-hook">
+                    <div class="row">
+                        <span class="search-label">所属货区</span>
+                        <select class="form-control w120" name="areaCode" v-model ='areaCode' @change="changeArea()">
+                            <option    value=""> </option>
+                            <option v-for="item in areaItems" v-bind:value="item.value">{{item.text}}</option>
+                        </select>
+                        <span class="interval-xs"></span>
+                        <span class="search-label">所属货架</span>
+                        <select class="form-control w120" name="shelfCode" v-model="shelf" @change="getCellsData()">
+
+                            <option v-for="item in shelfItems" v-bind:value="item">{{item.shelfName}}</option>
+                        </select>
+                       <span class="interval-xs"></span>
+
+                    </div>
+                </form>
+            </div>
+
+
+             
+
+
+            <div id ="contain" style="width: 100%;position: absolute;border-style: outset;">
+                <!--<div class="qiang"></div>
+                <div class ="pingmian"  >
+                    <button class ="shelf" @click="clickShelf('20180711101457')" style="top: 6%;left: 10%;" >一号架</button>   <button class ="shelf" @click="clickShelf('')"   style="top: 6%;left: 55%;" ></button>
+
+                    <button class ="shelf" @click="clickShelf('')" style="top: 18%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 18%;left: 55%;" ></button>
+                    <button class ="shelf" @click="clickShelf('')" style="top: 24%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 24%;left: 55%;"></button>
+
+                    <button class ="shelf" @click="clickShelf('')" style="top: 36%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 36%;left: 55%;"></button>
+                    <button class ="shelf" @click="clickShelf('')" style="top: 42%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 42%;left: 55%;"></button>
+
+                    <button class ="shelf" @click="clickShelf('')" style="top: 54%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 54%;left: 55%;"></button>
+                    <button class ="shelf" @click="clickShelf('')" style="top: 60%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 60%;left: 55%;"></button>
+
+                    <button class ="shelf" @click="clickShelf('')" style="top: 72%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 72%;left: 55%;"></button>
+                    <button class ="shelf" @click="clickShelf('')" style="top: 78%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 78%;left: 55%;"></button>
+
+                    <button class ="shelf" @click="clickShelf('')" style="top: 90%;left: 10%;" ></button>   <button class ="shelf" @click="clickShelf('')"  style="top: 90%;left: 55%;"></button>
+
+
+                </div>-->
+                <h3 style="width: 45%;position:absolute;left:50%;top: 5%;border-bottom-style: solid;font-size: 30px">{{info.cellName}}</h3>
+                <div style="width: 45%;position:absolute;left:50%;top: 16%; ">
+                    <div v-bind:style="item.color" style="width:28%;background-color: #ACCD3C;border-radius:10px; float:left;margin-left: 3%;margin-bottom: 5%" v-for="item in palletBatchs">
+
+
+                        <div style="width: 100%;height: 25px; position: relative; ">
+
+                            <span style="position: absolute; left: 30%;top: 5%;">{{item.palletName}}</span>
+                        </div>
+
+                        <!--<div style="width: 100%;height: 25px; position: relative;margin-bottom: 10% ">
+                            <span style="position: absolute; left: 5%;top: 20px;">物料：</span>
+                            <span style="position: absolute; left: 88%;top: 20px;">数量</span>
+                        </div>-->
+                        <div style="width: 100%;height: 25px; position: relative; "v-for="batch in item.palletBatchList">
+                            <span style="position: absolute; left: 5%;button: 12px;color: white"> {{batch.itemName}}</span>
+                            <span style="position: absolute; left: 88%;button: 12px;color: white">{{batch.quantity}}</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <h3 style="width: 40%;position:absolute;left:5%;top: 5%;border-bottom-style: solid;font-size: 30px">{{info.shelfName}}</h3>
+                <div class = "cells" id="cells" style="width: 40%;position:absolute;left:5%;top: 16%; ">
+                    <div class="cell"  @click="clickCell(item)" v-bind:style="item.style"  v-for="item in cellItems" style="height: 60px; float:left;" >
+                        <div v-bind:id="item.cellCode" v-bind:style="item.color" style="border-radius:5px;width:80%;height:80% ;margin-left: 10% ;margin-top: 3%;text-align: center;color: white"><p style="line-height:50px;" >{{item.stateName}}</p></div>
+                    </div>
+
+
+
+                </div>
+
+                <div class ="foot" style="position:absolute; bottom:0; left:0;width: 100%" >
+                    <div style="width: 13%;height:20%;border-left-style: solid;border-left-color:  #3C4E76; margin:15px 0px 15px 50px">
+
+
+                        <div style="width: 200px;height: 35px;border-color: aliceblue;position: relative;">
+                            <div  style='position: absolute; left: 18px;top: 12px; width: 70px;height: 15px;background-color: #DCDCDC;' ></div>
+
+                            <span style="position: absolute; left: 125px;top: 9px;">无货</span>
+                        </div>
+                        <div style="width: 200px;height: 35px; position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">货架合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">5000</span>
+                        </div>
+
+                        <div style="width: 200px;height: 35px; position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">仓库合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">10000</span>
+                        </div>
+                    </div>
+
+                    <div style="width: 13%;height: 20%;border-left-style: solid;border-left-color: #3C4E76; position: absolute; left: 15%;top: 15px;">
+
+
+                        <div style="width: 200px;height: 35px;border-color: aliceblue;position: relative;">
+                            <div  style='position: absolute; left: 18px;top: 12px; width: 70px;height: 15px;background-color: #00FFFF;' ></div>
+
+                            <span style="position: absolute; left: 125px;top: 9px;">有货</span>
+                        </div>
+                        <div style="width: 200px;height: 35px; position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">货架合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">5000</span>
+                        </div>
+
+                        <div style="width: 200px;height: 35px;position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">仓库合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">10000</span>
+                        </div>
+                    </div>
+
+                    <div style="width: 13%;height: 115px;border-left-style: solid;border-left-color:  #3C4E76; position: absolute; left: 27%;top: 15px;">
+
+
+                        <div style="width: 200px;height: 35px;border-color: aliceblue;position: relative;">
+                            <div  style='position: absolute; left: 18px;top: 12px; width: 70px;height: 15px;background-color: #FFFF00;' ></div>
+
+                            <span style="position: absolute; left: 125px;top: 9px;">锁定</span>
+                        </div>
+                        <div style="width: 200px;height: 35px; position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">货架合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">5000</span>
+                        </div>
+
+                        <div style="width: 200px;height: 35px;position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">仓库合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">10000</span>
+                        </div>
+
+
+                    </div>
+
+                    <div style="width: 13%;height: 115px;border-left-style: solid;border-left-color:  #3C4E76; position: absolute; left: 39%;top: 15px;">
+
+
+                        <div style="width: 200px;height: 35px;border-color: aliceblue;position: relative;">
+                            <div  style='position: absolute; left: 18px;top: 12px; width: 70px;height: 15px;background-color: #FF4500;' ></div>
+
+                            <span style="position: absolute; left: 125px;top: 9px;">故障</span>
+                        </div>
+                        <div style="width: 200px;height: 35px; position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">货架合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">5000</span>
+                        </div>
+
+                        <div style="width: 200px;height: 35px; position: relative; ">
+                            <span style="position: absolute; left: 15px;top: 12px;">仓库合计：</span>
+                            <span style="position: absolute; left: 125px;top: 12px;">10000</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/task/cell/cell.js" custom></script>

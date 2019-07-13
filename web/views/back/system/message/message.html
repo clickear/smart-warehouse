@@ -1,0 +1,19 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="default-hook">
+            <div class="title">
+                当前位置：&nbsp;&nbsp;->&nbsp;系统参数&nbsp;->&nbsp;<span class="active">消息参数</span>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table message-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/system/message/message.js" custom></script>

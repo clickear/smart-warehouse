@@ -1,0 +1,77 @@
+<div class="storage-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;机构管理&nbsp;->&nbsp;客户管理&nbsp;->&nbsp;<span class="active">仓储点管理</span>
+    </div>
+    <div class="search">
+        <form class="search-hook">
+            <div class="row">
+                <!--<span class="search-label">区域</span>-->
+                <!--<select class="province-hook">-->
+                    <!--<option>全国</option>-->
+                    <!--<option>重庆</option>-->
+                    <!--<option>北京</option>-->
+                <!--</select>-->
+                <!--<span class="interval-xs"></span>-->
+                <!--<select class="city-hook">-->
+                    <!--<option>市辖区</option>-->
+                    <!--<option>广州</option>-->
+                <!--</select>-->
+                <!--<span class="interval-xs"></span>-->
+                <!--<select class="county-hook">-->
+                    <!--<option>全部</option>-->
+                    <!--<option>白云区</option>-->
+                    <!--<option>渝北区</option>-->
+                <!--</select>-->
+                <!--<span class="interval-lg"></span>-->
+                <!--<span class="search-label">关键字</span>-->
+                <!--<input type="text" class="search-input lg" placeholder="客户名称或电话号码">-->
+                <!--<span class="interval-lg"></span>-->
+                <!--<button type="button" class="btn btn-blue">查询</button>-->
+                <!--<span class="interval-xs"></span>-->
+                <%if(checkAuthority('customer-storage-point-create')){%>
+                <button type="button" class="btn btn-gray" @click.stop="add()">新增</button>
+                <span class="interval-xs"></span>
+                <%}%>
+                <button type="button" class="btn btn-gray" @click.stop="goBack()">返回</button>
+            </div>
+        </form>
+    </div>
+    <div class="custom-table-wrapper">
+        <table class="custom-table storage-table-hook"></table>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/organization/client/storage/storage.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

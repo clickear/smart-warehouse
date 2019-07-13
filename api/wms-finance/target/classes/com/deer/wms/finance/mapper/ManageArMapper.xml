@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.finance.dao.ManageArMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.finance.model.ManageArDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ar_id" jdbcType="INTEGER" property="arId" />
+    <result column="flow_code" jdbcType="VARCHAR" property="flowCode" />
+    <result column="flow_name" jdbcType="VARCHAR" property="flowName" />
+    <result column="f_type_code" jdbcType="VARCHAR" property="fTypeCode" />
+    <result column="payer" jdbcType="VARCHAR" property="payer" />
+    <result column="rest_money" jdbcType="VARCHAR" property="restMoney" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="add_datetime" jdbcType="TIMESTAMP" property="addDatetime" />
+    <result column="should_ar_money" jdbcType="VARCHAR" property="shouldArMoney" />
+    <result column="fact_ar_money" jdbcType="VARCHAR" property="factArMoney" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+      <result column="company_name" jdbcType="INTEGER" property="companyName" />
+    <result column="f_type_name" jdbcType="VARCHAR" property="fTypeName" />
+  </resultMap>
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.finance.model.ManageArCriteria">
+    delete from manage_ar where flow_code = #{flowCode}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+  <select id="findList" parameterType="com.deer.wms.finance.model.ManageArCriteria" resultMap="BaseResultMap">
+    select
+      mar.ar_id,
+      mar.flow_code,
+      mar.flow_name,
+      mar.f_type_code,
+      fty.f_type_name,
+      mar.payer,
+      mar.rest_money,
+      mar.state,
+      mar.add_datetime,
+      mar.should_ar_money,
+      mar.fact_ar_money,
+      mar.memo,
+      com.company_id
+
+    from manage_ar  mar
+    left join finance_type fty on mar.f_type_code = fty.f_type_code
+    left join company com on mar.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+      AND mar.flow_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR  fty.f_type_name LIKE CONCAT('%', #{keyWords}, '%')
+    </if>
+    <if test="fTypeCode != null and fTypeCode != ''">
+      AND mar.f_type_code =#{fTypeCode}
+    </if>
+    <if test="companyId != null and companyId != ''">
+      AND com.company_id =#{companyId}
+    </if>
+    <if test="flowCode != null and flowCode != ''">
+      AND mar.flow_code =#{flowCode}
+    </if>
+  </select>
+
+</mapper>

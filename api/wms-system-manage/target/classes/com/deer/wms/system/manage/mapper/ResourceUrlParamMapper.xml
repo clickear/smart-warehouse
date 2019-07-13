@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.ResourceUrlParamMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.resource.ResourceUrlParam">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="param_id" jdbcType="INTEGER" property="paramId" />
+    <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
+    <result column="url_id" jdbcType="INTEGER" property="urlId" />
+    <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+    <result column="param_type" jdbcType="VARCHAR" property="paramType" />
+    <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+</mapper>

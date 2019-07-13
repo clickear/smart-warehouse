@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.StorageBaseMapper">
+
+    <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.storage.StorageBase">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="storage_id" jdbcType="INTEGER" property="storageId" />
+        <result column="base_station_id" jdbcType="VARCHAR" property="baseStationId" />
+        <result column="lac" jdbcType="VARCHAR" property="lac" />
+        <result column="cell_id" jdbcType="VARCHAR" property="cellId" />
+
+    </resultMap>
+
+    <delete id="deleteByStorageId" >
+        delete from storage_base where storage_id = #{storageId}
+
+    </delete>
+
+    <select id="findByStorageId" resultMap="BaseResultMap">
+        SELECT * from storage_base where storage_id=#{storageId}
+
+
+    </select>
+
+  	
+  
+  
+</mapper>

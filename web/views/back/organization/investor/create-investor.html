@@ -1,0 +1,208 @@
+<div class="create-investor-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;机构管理&nbsp;->&nbsp;投资商管理&nbsp;->&nbsp;<span
+            class="active">新增-投资商</span>
+    </div>
+    <div class="inner-wrapper">
+        <h2>新增-投资商</h2>
+        <div class="form">
+            <form class="form-horizontal form-hook">
+                <form class="form-horizontal form-hook">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="companyName" class="form-control"
+                                           v-model="info.companyName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">法人名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="artificialPersonName" class="form-control"
+                                           v-model="info.artificialPersonName">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">法人身份证号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="artificialPersonIdCard" class="form-control"
+                                           v-model="info.artificialPersonIdCard">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">统一社会信用代码</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="creditCode" class="form-control"
+                                           v-model="info.creditCode">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业注册地址</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="registeredAddress" class="form-control"
+                                           v-model="info.registeredAddress">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">企业成立时间</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="establishDate" id="establishDateDateTime" class="form-control"
+                                           v-model="info.establishDate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">联系地址</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="linkmanAddress" class="form-control"
+                                           v-model="info.linkmanAddress">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">联系电话</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="linkmanPhone" class="form-control"
+                                           v-model="info.linkmanPhone">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="row">-->
+                        <!--<div class="col-sm-6">-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">位置坐标，经度</label>-->
+                                <!--<div class="col-sm-g">-->
+                                    <!--<input type="text" class="form-control" name="lng"-->
+                                           <!--placeholder="请输入经度,例:103,12345678"-->
+                                           <!--v-model="info.lng">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-sm-6">-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">位置坐标，纬度</label>-->
+                                <!--<div class="col-sm-g">-->
+                                    <!--<input type="text" class="form-control" name="lat"-->
+                                           <!--placeholder="请输入经度,例:103,12345678"-->
+                                           <!--v-model="info.lat">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">营业执照</label>
+                                <div class="col-sm-9">
+                                    <div class="form-control-static">
+                                        <div class="hide-opacity">
+                                            <input type="file" name="license" id="license">
+                                            <input type="file" name="cardFront" id="cardFront">
+                                            <input type="file" name="cardContrary" id="cardContrary">
+                                        </div>
+                                        <div class="img">
+                                            <img :src="license" alt="" width="116" height="115"
+                                                 @click="previewImg($event)">
+                                            <span><a @click="uploadImg($event,'license')">点击上传</a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">法人身份证</label>
+                                <div class="col-sm-9">
+                                    <div class="form-control-static">
+                                        <div class="img">
+                                            <img :src="cardFront" alt="" width="116" height="115"
+                                                 @click="previewImg($event)">
+                                            <span>
+                                            正面
+                                            <a @click="uploadImg($event,'cardFront')">点击上传</a>
+                                        </span>
+                                        </div>
+                                        <div class="img">
+                                            <img :src="cardContrary" width="116" height="115"
+                                                 @click="previewImg($event)">
+                                            <span>
+                                            反面
+                                            <a @click="uploadImg($event,'cardContrary')">点击上传</a>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-offset-5 col-sm-5">
+                                <button type="submit" class="btn btn-default">保存</button>
+                                <button type="button" class="btn btn-gray-sm" @click.stop="goBack()">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/organization/investor/create-investor.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,78 @@
+<div class="main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="default-hook">
+            <div class="title">
+                当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;机构管理&nbsp;->&nbsp;<span class="active">代理商管理</span>
+            </div>
+            <div class="search">
+                <form class="search-hook">
+                    <div class="row">
+                        <%if(checkAuthority('agent-query')){%>
+                        <span class="search-label">区域</span>
+                        <div class="distpicker distpicker-hook">
+                            <select class="form-control w120" name="province"></select>
+                            <span class="interval-xs"></span>
+                            <select class="form-control w120" name="city"></select>
+                            <span class="interval-xs"></span>
+                            <select class="form-control w120" name="county"></select>
+                        </div>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" name="keyword" placeholder="代理商名称或电话号码">
+                        <span class="interval-lg"></span>
+                        <button type="submit" class="btn btn-blue query-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <%}%>
+                        <%if(checkAuthority('agent-create')){%>
+                        <button type="button" class="btn btn-gray" @click.stop="add()">新增</button>
+                        <%}%>
+                    </div>
+                </form>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table agent-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/organization/agent/agent.js" custom></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

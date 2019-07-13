@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>验收</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+
+		<link rel="stylesheet" href="../../../../css/mui.min.css">
+		<link rel="stylesheet" href="./list.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">扫描货位</h1>
+		</header>
+
+		<div class="contain">
+			
+			<div class="mui-input-row mui-search">
+				<input type="search" style="width: 74%;margin-left: 13%;" v-model="billNo" placeholder="扫描入库单">
+			</div>
+
+			<button class="order" v-for="item in items" @click="commit(item)">
+			 <div class="rowData">
+				 <span class="name">货区:</span>
+				 <span class="value" >{{item.areaName}}</span>
+			 </div>
+			 <div class="rowData">
+			 	 <span class="name">货架:</span>
+			 	 <span class="value" >{{item.shelfName}}</span>
+				 
+			 </div>
+			 <div class="rowData">
+			 	 <span class="name">货位:</span>
+			 	 <span class="value" >{{item.cellCode}}</span>
+				 
+			 </div>
+			 <div class="rowData">
+				 <div class="name">物料:</div>
+				 <div class="value">{{item.itemName}}</div>
+			 </div>
+			  
+			  <div class="rowData">
+				 <div class="name">数量:</div>
+				 <div class="value">{{item.quantity}}</div>
+			 </div>
+			  
+		 </button>
+
+		</div>
+		<script src="../../../../config/dev.js"></script>
+		<script src="../../../../libs/jquery.1.11.min.js"></script>
+		<script src="../../../../js/mui.min.js"></script>
+		<script src="../../../../libs/vue.js"></script>
+		<script src="../../../../libs/vue-resource.js"></script>
+		<script src="list.js"></script>
+
+	</body>
+
+</html>

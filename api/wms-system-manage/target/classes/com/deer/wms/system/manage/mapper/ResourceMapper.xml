@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.ResourceMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.resource.Resource">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="resource_id" jdbcType="INTEGER" property="resourceId" />
+    <result column="resource_code" jdbcType="VARCHAR" property="resourceCode" />
+    <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="resource_type" jdbcType="VARCHAR" property="resourceType" />
+    <result column="control" jdbcType="BIT" property="control" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="style" jdbcType="VARCHAR" property="style" />
+    <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+</mapper>

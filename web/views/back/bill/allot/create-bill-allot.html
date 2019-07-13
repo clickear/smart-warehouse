@@ -1,0 +1,73 @@
+<div class="next-return create-bill-allot-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;库内管理&nbsp;->调拨管理&nbsp;->&nbsp;<span class="active">新建调拨单</span>
+    </div>
+    <form class="form-horizontal create-area-form" method="post">
+        <div class="order_operation_btn fr">
+            <button class="primary_btn">确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>调拨信息信息</h3>
+                    <ol class="detail_list">
+                        <li>
+                            <p ><span>目标仓库：</span>
+                                <select class="select_ware" name="select_ware" id="select_customer"      v-model="info.wareCode">
+
+                                    <option v-for="item in wareItems" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+
+                            </p>
+
+
+                        </li>
+                        <li  style="margin-top: 20px;">
+
+                            <p><span>货区名字：</span>
+                                <input type="text"   v-model="info.wareidint"    name="areanamevch"    maxlength="11">
+                            </p>
+
+                        </li>
+                        <li style="margin-top: 20px;">
+                            <h4>货区描述</h4>
+                            <textarea v-model="info.areadesvar" name="areadesvar" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                        <li style="margin-top: 20px;">
+                            <h4>备注信息</h4>
+                            <textarea v-model="info.memovar" name="remark" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                    </ol>
+            </ul>
+        </div>
+    </form>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加产品信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="commit()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+<script type="text/javascript" src="js/back/bill/allot/create-bill-allot.js" custom></script>

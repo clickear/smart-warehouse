@@ -1,0 +1,112 @@
+<div class="next-return create-bill-check-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;库内管理&nbsp;->盘点&nbsp;->&nbsp;<span class="active">新建盘点单</span>
+    </div>
+    <form class="form-horizontal create-area-form" method="post">
+        <div class="order_operation_btn fr">
+            <button class="primary_btn" @click="save()">确定</button>
+            <a class="primary_btn" @click.stop="prevStep()">上一步</a>
+
+       </div>
+        <div class="inner-wrapper">
+            <ul class="detail_contain">
+                <li>
+                    <h3>入库信息</h3>
+                    <ol class="detail_list">
+                        <li>
+                            <p ><span>盘点方式</span>
+                                <select class="form_control" style="margin-left:50px;width: 120px" name="select_ware" id="select_customer"     v-model="info.countType">
+
+                                    <option  value="1">明盘</option>
+                                    <option  value="2">暗盘</option>
+
+                                </select>
+
+                            </p>
+
+
+                        </li>
+
+
+                        <li style="margin-top: 20px;">
+                            <h4>备注信息</h4>
+                            <textarea v-model="info.memo" name="remark" class="form_control" maxlength="500" placeholder="请输入备注，最大500字"></textarea>
+                        </li>
+                    </ol>
+            </ul>
+        </div>
+    </form>
+
+
+    <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+        <button type="button" class="btn primary_btn return_btn"       @click = "newDetail()">添加盘点详情</button>
+    </div>
+
+    <div class="custom-table-wrapper"  style="height: 150px"  >
+        <table class="custom-table billDetail-check-table-hook"   ></table>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"    z-index="9999"   aria-hidden="false">
+        <div class="modal-dialog" z-index="9999" >
+            <div class="modal-content" z-index="9999" >
+                <div class="modal-header" z-index="9999" >
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加盘点详情信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="search">
+                        <form class="form-search-hook">
+                            <div class="row">
+
+                                <span class="search-label" style="margin-top: 20px;width: 120px">盘点货区</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px" id = "select_area" name="stateint" @change="changeArea()" v-model = "info.areaCode">
+                                    <option    value="">盘点所有货区</option>
+                                    <option v-for="item in areaItems" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">盘点货架</span>
+                                <select class="form-control w120" style="margin-top: 20px;width: 200px" name="stateint" id = "select_shelf" @change="changeShelf()"  v-model = "info.shelfCode">
+                                    <option    value="">盘点所有货架</option>
+                                    <option v-for="item in shelfItems" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+                                <br/>
+
+                                <span class="search-label" style="margin-top: 20px;width: 120px">盘点产品类别</span>
+                                <select class="form-control w120"  style="margin-top: 20px;width: 200px" id = "select_type" name="stateint" @change="changeType()" v-model = "info.itemTypeCode">
+                                    <option    value="">盘点所有产品</option>
+                                    <option v-for="item in typeItems" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+                                <br/>
+                                <span class="search-label"     style="margin-top: 20px;width: 120px">盘点产品名称</span>
+                                <select class="form-control w120" style="margin-top: 20px;width: 200px" name="stateint" id = "select_item" @change="changeItem()"  v-model = "info.itemCode">
+                                    <option    value="">盘点所有产品</option>
+                                    <option v-for="item in itemItems" v-bind:value="item.value">{{item.text}}</option>
+
+                                </select>
+                                <br/>
+
+
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default"  @click.stop="commit()">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+<script type="text/javascript" src="js/back/bill/check/create-bill-check.js" custom></script>

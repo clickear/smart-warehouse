@@ -1,0 +1,26 @@
+<div class="customer-main-hook main-hook">
+
+    <div class="box-wrapper box1-hook">
+        <div class="customer-wrapper customer-hook">
+            <div class="title">
+                当前位置：&nbsp;在线客服&nbsp;->&nbsp;<span class="active">在线客服</span>
+            </div>
+            <div class="custom-table-wrapper" >
+               <div class="history_dialog">
+                   <ul class="dialog_list">
+                        <h4>您正在与客服机器人进行会话</h4>
+                       <li v-for="item in items">
+                           <p class="msg_left">{{item.replyContent}}</p>
+                           <p class="msg_right">{{item.consultContent}}</p>
+                       </li>
+                   </ul>
+               </div>
+                <div class="send_dialog">
+                      <textarea name=""  v-model="account.msg"  @keyup.enter.stop="sendMsg"></textarea>
+                      <button class="btn btn-default send-btn" @click.stop="sendMsg()">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/back/customer-service/user_dialog.js" custom></script>

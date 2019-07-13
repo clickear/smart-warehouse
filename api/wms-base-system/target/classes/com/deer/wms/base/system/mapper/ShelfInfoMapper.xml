@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ShelfInfoMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.ShelfInfoDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="shelf_id" jdbcType="INTEGER" property="shelfId" />
+
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="shelf_code" jdbcType="VARCHAR" property="shelfCode" />
+    <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+    <result column="a_column" jdbcType="INTEGER" property="aColumn" />
+    <result column="a_row" jdbcType="INTEGER" property="aRow" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="shelf_row" javaType="INTEGER" property="shelfRow"/>
+    <result column="shelf_column" javaType="INTEGER" property="shelfColumn"/>
+
+    <result column="abc_class" jdbcType="VARCHAR" property="abcClass" />
+    <result column="order_no" jdbcType="INTEGER" property="orderNo" />
+
+
+
+
+  </resultMap>
+
+
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.base.system.model.ShelfInfoCriteria">
+    delete from shelf_info
+    where shelf_code = #{shelfCode}
+
+
+  </delete>
+  <select id="findList" parameterType="com.deer.wms.base.system.model.ShelfInfoCriteria" resultMap="BaseResultMap">
+    select
+    shelf.area_code,
+    shelf.shelf_code,
+    shelf.shelf_name,
+    shelf.a_column,
+
+    shelf.a_row,
+    shelf.add_time,
+    shelf.memo,
+    shelf.abc_class,
+    area.area_name,
+
+    ware.ware_name,
+    ware.ware_code,
+    shelf.shelf_row,
+    shelf.shelf_column,
+    shelf.order_no
+
+
+    from shelf_info  shelf
+    left join area_info area on shelf.area_code = area.area_code
+    left join ware_info ware on area.ware_code = ware.ware_code
+    left join company com on ware.company_id = com.company_id
+    where 1=1
+    <if test="keyWords != null and keyWords != ''">
+      AND area.area_name LIKE CONCAT('%', #{keyWords}, '%')
+      OR  ware.ware_name  LIKE CONCAT('%', #{keyWords}, '%')
+      OR  shelf.shelf_name  LIKE CONCAT('%', #{keyWords}, '%')
+    </if>
+    <if test="areaCode !=null and  areaCode !=''">
+      AND area.area_code=#{areaCode}
+    </if>
+    <if test="wareCode !=null and  wareCode !=''">
+      AND ware.ware_code=#{wareCode}
+    </if>
+    <if test="companyId !=null and  companyId !=''">
+      AND com.company_id=#{companyId}
+    </if>
+  </select>
+
+</mapper>

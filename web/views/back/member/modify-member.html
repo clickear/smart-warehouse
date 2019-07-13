@@ -1,0 +1,52 @@
+<div class="member-info-page-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;个人信息&nbsp;->&nbsp;<span class="active">修改个人信息</span>
+    </div>
+    <div class="member-info-page inner-wrapper">
+        <h2>修改个人信息</h2>
+        <div class="form member-info">
+            <form class="form-horizontal member-hook">
+                <div class="hide-opacity">
+                    <input type="file" name="iconUrlFile" id="iconUrlFile">
+                </div>
+                <div class="form-group">
+                    <img class="portrait" :src="iconUrlFile" alt="" @click="uploadImg($event,'iconUrlFile')">
+                    <span v-text="info.gender"></span>
+                    <span v-text="info.userName"></span>
+                    <span class="member-phone" v-text="info.mobile"></span>
+                </div>
+                <div class="form-group">
+                    <span>账户角色：</span>
+                    <span class="left50" v-text="info.roleName"></span>
+                </div>
+                <div class="form-group">
+                    <span>电子邮箱：</span>
+                    <input type="text" class="form-control input300" name="email" v-model="info.email">
+                </div>
+                <div class="form-group">
+                    <span>公司名称：</span>
+                    <span class="left50" v-text="info.companyName"></span>
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<span>公司类型：</span>-->
+                    <!--<span class="left50" v-text="info.companyType"></span>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <span>公司地址：</span>
+                    <input type="text" class="form-control input300" name="linkmanAddress" v-model="info.linkmanAddress" >
+                </div>
+                <div class="form-group">
+                    <span>公司电话：</span>
+                    <input type="text" class="form-control input300" name="linkmanPhone" v-model="info.linkmanPhone">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" @click.stop="goBack()">返回</button>
+                    <button type="submit" class="btn btn-default left50" >保 存</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="js/back/member/modify-member.js" custom></script>

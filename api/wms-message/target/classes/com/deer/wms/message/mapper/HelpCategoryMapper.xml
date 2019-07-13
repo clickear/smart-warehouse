@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.message.dao.HelpCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.message.model.HelpCategory">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  
+  <select id="selectHelpCategoryByCriteria" parameterType="com.deer.wms.message.model.HelpCategoryCriteria" resultMap="BaseResultMap">
+      select help.* from help_category help where 1=1
+      <if test="parentId != null and parentId != ''">
+           and help.parent_id = #{parentId}
+      </if>
+      <if test="categoryId != null">
+           and help.category_id = #{categoryId}
+      </if>
+      <if test="level != null and level != '' ">
+      		and help.level = #{level}
+      </if>
+  </select>
+  
+  <insert id="add" parameterType="com.deer.wms.message.model.HelpCategory" useGeneratedKeys="true" keyProperty="categoryId" >
+  	insert into help_category(
+  		<if test="categoryName != null and categoryName != '' ">
+  			category_name,
+  		</if>
+  		<if test="parentId != null and parentId != '' ">
+  			parent_id,
+  		</if>
+  		<if test="createUserId != null and createUserId != '' ">
+  			create_user_id,
+  		</if>
+  		<if test="level != null and level != '' ">
+  			level,
+  		</if>
+  		create_time
+  	) values (
+  		<if test="categoryName != null and categoryName != '' ">
+  			#{categoryName},
+  		</if>
+  		<if test="parentId != null and parentId != '' ">
+  			#{parentId},
+  		</if>
+  		<if test="createUserId != null and createUserId != '' ">
+  			#{createUserId},
+  		</if>
+  		<if test="level != null and level != '' ">
+  			#{level},
+  		</if>
+  		now()
+  	)
+  </insert>
+  
+  <select id="selectByName" parameterType="com.deer.wms.message.model.HelpCategoryCriteria" resultMap="BaseResultMap">
+  		select * from help_category where 1=1 
+  		and level = #{level} and category_name = #{categoryName}
+  		<if test="parentId != null and parentId != ''">
+  			and parent_id = #{parentId}
+  		</if>
+  </select>
+</mapper>

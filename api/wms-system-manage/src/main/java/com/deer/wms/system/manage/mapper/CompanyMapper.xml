@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.CompanyMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.company.Company">
+        <id column="company_id" jdbcType="INTEGER" property="companyId" />
+        <result column="company_type" jdbcType="INTEGER" property="companyType" />
+        <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+        <result column="artificial_person_name" jdbcType="VARCHAR" property="artificialPersonName" />
+        <result column="artificial_person_id_card" jdbcType="VARCHAR" property="artificialPersonIdCard" />
+        <result column="credit_code" jdbcType="VARCHAR" property="creditCode" />
+        <result column="registered_address" jdbcType="VARCHAR" property="registeredAddress" />
+        <result column="establish_date" jdbcType="DATE" property="establishDate" />
+        <result column="linkman_address" jdbcType="VARCHAR" property="linkmanAddress" />
+        <result column="linkman_phone" jdbcType="VARCHAR" property="linkmanPhone" />
+        <result column="supply_capability" jdbcType="INTEGER" property="supplyCapability" />
+        <result column="linkman_user_phone" jdbcType="VARCHAR" property="linkmanUserPhone" />
+        <result column="lng" jdbcType="VARCHAR" property="lng" />
+        <result column="lat" jdbcType="VARCHAR" property="lat" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="supply_ability" jdbcType="VARCHAR" property="supplyAbility" />
+    </resultMap>
+
+    <!-- 机构列表信息视图类字段映射 -->
+    <resultMap id="CompanyListVOMap" type="com.deer.wms.system.manage.model.company.CompanyListVO">
+      <result column="company_id" jdbcType="INTEGER" property="companyId" />
+      <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+      <result column="artificial_person_name" jdbcType="VARCHAR" property="artificialPersonName" />
+      <result column="linkman_address" jdbcType="VARCHAR" property="linkmanAddress" />
+      <result column="linkman_phone" jdbcType="VARCHAR" property="linkmanPhone" />
+      <result column="supply_capability" jdbcType="INTEGER" property="supplyCapability" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="supply_ability" jdbcType="VARCHAR" property="supplyAbility" />
+      <result column="company_type" jdbcType="INTEGER" property="companyType" />
+    </resultMap>
+
+    <!-- 企业详细信息视图类字段映射 -->
+    <resultMap id="CompanyDetailVOMap" type="com.deer.wms.system.manage.model.company.CompanyDetailVO">
+        <result column="company_id" jdbcType="INTEGER" property="companyId" />
+        <result column="company_type" jdbcType="INTEGER" property="companyType" />
+        <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+        <result column="artificial_person_name" jdbcType="VARCHAR" property="artificialPersonName" />
+        <result column="artificial_person_id_card" jdbcType="VARCHAR" property="artificialPersonIdCard" />
+        <result column="credit_code" jdbcType="VARCHAR" property="creditCode" />
+        <result column="registered_address" jdbcType="VARCHAR" property="registeredAddress" />
+        <result column="establish_date" jdbcType="DATE" property="establishDate" />
+        <result column="linkman_address" jdbcType="VARCHAR" property="linkmanAddress" />
+        <result column="linkman_phone" jdbcType="VARCHAR" property="linkmanPhone" />
+        <result column="supply_capability" jdbcType="INTEGER" property="supplyCapability" />
+        <result column="linkman_user_phone" jdbcType="VARCHAR" property="linkmanUserPhone" />
+        <result column="lng" jdbcType="VARCHAR" property="lng" />
+        <result column="lat" jdbcType="VARCHAR" property="lat" />
+        <result column="business_license_img_url" jdbcType="VARCHAR" property="businessLicenseImgUrl" />
+        <result column="id_card_positive_img_url" jdbcType="VARCHAR" property="idCardPositiveImgUrl" />
+        <result column="id_card_opposite_img_url" jdbcType="VARCHAR" property="idCardOppositeImgUrl" />
+        <result column="supply_ability" jdbcType="VARCHAR" property="supplyAbility" />
+    </resultMap>
+
+    <!-- 查找企业信息 -->
+    <select id="selectCompanyFormList" parameterType="com.deer.wms.system.manage.model.company.CompanyCriteria" resultMap="CompanyListVOMap">
+        SELECT
+            company_id
+          , company_name
+          , linkman_address
+          , linkman_phone
+          , artificial_person_name
+          , supply_capability
+          , supply_ability
+          , company_type
+          , DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS create_time
+        FROM company
+        WHERE state = 'normal'
+        <if test="companyId != null">
+            AND company_id = #{companyId}
+        </if>
+        <if test="companyType != null">
+            AND company_type = #{companyType}
+        </if>
+        <if test="province != null and province != ''">
+            AND registered_address LIKE CONCAT('%', #{province}, '%')
+        </if>
+        <if test="city != null and city != ''">
+            AND registered_address LIKE CONCAT('%', #{city}, '%')
+        </if>
+        <if test="county != null and county != ''">
+            AND registered_address LIKE CONCAT('%', #{county}, '%')
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (
+            company_name LIKE CONCAT('%', #{keyword}, '%') OR linkman_phone LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        order by create_time desc
+    </select>
+
+    <!-- 查找指定企业的详细信息 -->
+    <select id="selectCompany" parameterType="com.deer.wms.system.manage.model.company.CompanyCriteria" resultMap="CompanyDetailVOMap">
+        SELECT
+              company.company_id
+            , company.company_type
+            , company.company_name
+            , company.artificial_person_name
+            , company.artificial_person_id_card
+            , company.credit_code
+            , company.establish_date
+            , company.registered_address
+            , company.linkman_address
+            , company.linkman_phone
+            , company.supply_capability
+            , company.linkman_user_phone
+            , company.lng
+            , company.lat
+            , company.supply_ability
+            , IFNULL(bli.url, '') AS business_license_img_url
+            , IFNULL(icp.url, '') AS id_card_positive_img_url
+            , IFNULL(ico.url, '') AS id_card_opposite_img_url
+        FROM company
+        LEFT JOIN company_attachment bli ON bli.company_id = company.company_id AND bli.category = 1 AND bli.state = 'normal'
+        LEFT JOIN company_attachment icp ON icp.company_id = company.company_id AND icp.category = 2 AND icp.state = 'normal'
+        LEFT JOIN company_attachment ico ON ico.company_id = company.company_id AND ico.category = 3 AND ico.state = 'normal'
+        WHERE company.company_id = #{companyId}
+        <if test="companyType != null">
+            AND company.company_type = #{companyType}
+        </if>
+        <if test="state != null and state != ''">
+            AND company.state = #{state}
+        </if>
+    </select>
+    
+    <select id="selectCompanyList" parameterType="com.deer.wms.system.manage.model.company.CompanyCriteria" resultMap="BaseResultMap">
+        SELECT
+			com.*, company_sto.palletCount,
+			company_sto.storageCount
+		FROM
+			company com
+		JOIN (
+			SELECT
+				company_id,
+				count(*) AS storageCount,
+				(
+					SUM(woodiness_stock) + SUM(plastic_stock) + SUM(die_stock) + SUM(other_stock)
+				) AS palletCount
+			FROM
+				company_storage
+			WHERE
+				storage_type = 1
+			GROUP BY
+				company_id
+		) AS company_sto ON company_sto.company_id = com.company_id
+		WHERE 1=1
+		<if test="areaId != null">
+		   <!-- 区域的id -->
+		</if> 
+		
+		<if test="stockCount != null">
+		     and company_sto.palletCount > #{stockCount}
+		</if> 
+        <if test="keyword != null and keyword != ''">
+             <!-- 关键字查询 -->
+              and (company_name like CONCAT('%',#{keyword},'%') 
+        )
+        </if>
+    </select>
+    
+
+    <!-- 更新企业的企业电话和企业地址-->
+	<update id="updateCompanyInfoById" parameterType="com.deer.wms.system.manage.model.company.Company">
+		update company 
+			set company_id=#{companyId} 
+		  	<if test="linkmanPhone != null and linkmanPhone != ''">
+            	,linkman_phone = #{linkmanPhone}
+        	</if>
+        	<if test="linkmanAddress != null and linkmanAddress != ''">
+            	,linkman_address = #{linkmanAddress}
+        	</if>
+        	<if test="lng != null and lng != ''">
+            	,lng = #{lng}
+        	</if>
+        	<if test="lat != null and lat != ''">
+            	,lat = #{lat}
+        	</if>
+		where company_id=#{companyId}
+  	</update>
+  	
+  	<select id="findByStorageId" parameterType="int" resultType="java.lang.String">
+  		select company_name from company where company_id = (select company_id from company_storage where storage_id = #{storageId})
+  		
+  	</select>
+
+    <select id="findByCom" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from company where company_name LIKE   CONCAT('%', #{companyName}, '%')
+
+    </select>
+  	
+  	
+  
+  
+</mapper>

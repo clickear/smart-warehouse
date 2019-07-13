@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8"  />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="./index.css" />
+		<link rel="stylesheet" href="../../../css/mui.min.css">
+
+	</head>
+
+	<body>
+		<div class="main">
+			<header class="mui-bar mui-bar-nav header" style="height: 15%;">
+				 <br/>
+				 <br/>
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover">
+
+				</a>
+				<h1 class="mui-title" id="ware">{{wareName}}--{{itemMasterName}}</h1>
+
+			</header>
+
+			<!--右上角弹出菜单-->
+			<div id="topPopover" class="mui-popover">
+				<h5 class="mui-content-padded">选择仓库</h5>
+				<div>
+					<select style="width: 70%;margin-left: 5%;" @change="changeWare()" v-model="wareCode">
+						<option v-for="item in wareItems" v-bind:value="item.wareCode">{{item.wareName}}</option>
+					</select>
+				</div>
+
+				<h5 class="mui-content-padded">选择货主</h5>
+				<div>
+					<select style="width: 70%;margin-left: 5%;" @change="changeMaster()" v-model="itemMasterId">
+						<option v-for="item in masterItems" v-bind:value="item.itemMasterId">{{item.itemMasterName}}</option>
+					</select>
+				</div>
+				<div class="mui-content-padded">
+					<button @click="commit()" class="mui-btn-block">确&nbsp;&nbsp;&nbsp;定</button>
+				</div>
+			</div>
+			
+			 
+			<div class="content">
+			<div class="item yanshou" id="../accept/accept.html" onclick="window.location.href = '../../in/in.html'">入库</div>
+			<div class="item shangjia" id="../up-shelf/up-shelf.html" onclick="window.location.href = '../../up/up.html'">上架</div>
+			<div class="item inventory" id="../zupan/zupan.html" onclick="window.location.href = '../../inventory/inventory.html'">盘点</div>
+
+			<div class="item jiepan" id="../jiepan/jiepan.html" onclick="window.location.href = '../../down/down.html'">拣货</div>
+			<div class="item re-check" id="../jiepan/jiepan.html" onclick="window.location.href = '../../re-check/re-check.html'">复核（播种）</div>
+			<div class="item kuai-di" id="../jiepan/jiepan.html" onclick="window.location.href = '../../kuaidi/kuaidi.html'">快递</div>
+			<div class="item chu-ku" id="../jiepan/jiepan.html" onclick="window.location.href = '../../bill-out/out.html'">出库</div>
+
+			<div class="item tuichu"  @click="tuichu()">退出</div>
+
+			</div>
+
+		</div>
+
+		
+
+		<script src="../../../config/dev.js"></script>
+		<script src="../../../libs/jquery.1.11.min.js"></script>
+		<script src="../../../js/mui.min.js"></script>
+		<script src="../../../libs/vue.js"></script>
+		<script src="../../../libs/vue-resource.js"></script>
+
+		<script src="index.js"></script>
+
+		<script>
+			mui.init();
+
+			mui.plusReady(function() {});
+
+			mui('.mui-scroll-wrapper').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+		</script>
+
+	</body>
+
+</html>

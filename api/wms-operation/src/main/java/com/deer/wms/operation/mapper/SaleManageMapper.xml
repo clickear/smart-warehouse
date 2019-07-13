@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.operation.dao.SaleManageMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.operation.model.SaleManageDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sale_code" jdbcType="VARCHAR" property="saleCode" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="unit_code" jdbcType="VARCHAR" property="unitCode" />
+    <result column="sale_num" jdbcType="INTEGER" property="saleNum" />
+    <result column="sale_total" jdbcType="INTEGER" property="saleTotal" />
+    <result column="client_code" jdbcType="VARCHAR" property="clientCode" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="yn_bill" jdbcType="VARCHAR" property="ynBill" />
+
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="client_name" jdbcType="VARCHAR" property="clientName" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+
+
+  </resultMap>
+  <delete id="deleteByCodeAndCom" parameterType="com.deer.wms.operation.model.SaleManageCriteria">
+
+    delete
+    from sale_manage
+    where
+    sale_code = #{saleCode}
+    <if test="companyId != null and companyId != ''">
+      AND company_id = #{companyId}
+    </if>
+  </delete>
+
+
+  <select id="findList" parameterType="com.deer.wms.operation.model.OrderManageCriteria" resultMap="BaseResultMap">
+
+    select
+    sal.id,
+    sal.sale_code,
+    sal.item_code,
+    sal.item_class,
+    sal.price,
+    sal.unit_code,
+    sal.sale_num,
+    sal.sale_total,
+    sal.client_code,
+    sal.state,
+    sal.yn_bill,
+
+    sal.add_time,
+    sal.company_id,
+    item.item_name,
+    unit.unit_name,
+    cli.client_name
+
+    from  sale_manage  sal
+
+    left join item_info item on sal.item_code = item.item_code
+    left join unit unit on sal.unit_code = unit.unit_code
+    left join client_manage cli  on sal.client_code = cli.client_code
+    left join company com on sal.company_id = com.company_id
+
+    where 1=1
+
+    <if test="keyWords != null and keyWords !=  ''">
+      and  item.item_name like concat('%','keyWords','%'>
+      or  cli.client_name like concat('%','keyWords','%'>
+      or  sal.sale_code like concat('%','keyWords','%'>
+      or  sal.item_code like concat('%','keyWords','%'>
+    </if>
+    <if test="companyId != null and companyId != ''">
+      and com.company_id = #{companyId}
+    </if>
+
+    <if test="itemCode != null and itemCode != ''">
+      and sal.item_code = #{itemCode}
+    </if>
+    <if test="saleCode != null and saleCode != ''">
+      and sal.sale_code = #{saleCode}
+    </if>
+    <if test="clientCode != null and clientCode != ''">
+      and sal.client_code = #{clientCode}
+    </if>
+
+  </select>
+
+</mapper>

@@ -1,0 +1,56 @@
+<div class="main-hook main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="return-wrapper detail-item-hook" id ="aaaaaa">
+            <div class="title">
+                当前位置：<span>统计报表</span>&nbsp;&nbsp;->&nbsp;</span><span class="active">出入详情</span>
+            </div>
+
+            <form class="search form-search-hook">
+                <div class="row">
+
+                    <span class="interval-lg"></span>
+                    <!--<span class="search-label">所属仓库</span>
+                    <select class="form-control w120" id="wareidint" name="wareidint" v-model = "wareCode">
+
+                        <option v-for="item in wareItems" v-bind:value="item.value">{{item.text}}</option>
+                    </select>-->
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">物料类型</span>
+                    <select class="form-control w120" id="goodstypecodevch" name="goodstypecodevch" v-model = "itemTypeCode">
+
+                        <option v-for="item in typeItems" v-bind:value="item.value">
+                            {{item.text}}
+                        </option>
+                    </select>
+
+
+                    <span class="interval-lg"></span>
+                    <span class="search-label">关键字</span>
+                    <input type="text" class="search-input lg" placeholder="物料名称关键字"   name="keyWords">
+                    <span class="interval-lg"></span>
+                    <button type="button" class="btn btn-blue search-hook">查询</button>
+                    <span class="interval-xs"></span>
+                    <button type="reset" class="btn btn-gray resert" @click="clearType()">清空</button>
+                </div>
+            </form>
+
+            <div class="order_operation_btn" style="padding: 10px 0 0 25px;height: 56px;">
+
+                <button class="primary_btn" id="print_btn"  @click="exports()"  stype="display:noe">打印</button>
+            </div>
+
+
+            <div class="custom-table-wrapper" style="padding: 0;height: auto;">
+                <table class="custom-table detail-item-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show">2</div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show">3</div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show">4</div>
+</div>
+<script type="text/javascript" src="js/back/report/inventory/inventory.js" custom></script>

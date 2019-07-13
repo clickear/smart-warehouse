@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>巡城鹿</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=1220, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <base href="<%=project%>/">
+    <link rel="shortcut icon" href="images/icons/myico.ico" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="lib/jquery/ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap3-dialog/bootstrap-dialog.css"/>
+    <link rel="stylesheet" href="lib/fontello/css/fontello.css"/>
+    <link rel="stylesheet" href="lib/unslider/unslider.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="lib/scroll/includes/style.css">
+    <link rel="stylesheet" href="lib/scroll/jquery.scrollbar.css">
+    <% if (env === "production") { %>
+    <link rel="stylesheet" href="css/error.css">
+    <% } %>
+    <!-- 全局js -->
+    <script type="text/javascript" src="lib/nodeFlow/depnd/underscore.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery.1.11.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="lib/lazyloader/xLazyLoader.min.js"></script>
+    <script type="text/javascript" src="lib/scroll/jquery.scrollbar.js"></script>
+    <script type="text/javascript" src="lib/spin/spin.min.js"></script>
+    <script src="lib/bootstrap-table/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="lib/bootstrap3-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-select/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="lib/form/validationEngine/validation-cn.js"></script>
+    <script type="text/javascript" src="lib/form/validationEngine/validation.modify.js"></script>
+    <script type="text/javascript" src="lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/raphael.js" defer></script>
+    <script type="text/javascript" src="lib/codemirror/codemirror.js" defer></script>
+
+</head>
+<body class="core">
+<div class="error-page">
+    <div class="error-msg">
+        <% if(code === 404){ %>
+        <div class="logo"><p style="font-size: 20px"><%='404 无效的访问路径，请与管理员联系！'%>:(</p></div>
+        <%}else if(code === 403){ %>
+        <div class="logo"><p style="font-size: 20px"><%='403 没有权限，请与管理员联系！'%>:(</p></div>
+        <% }else{ %>
+        <h1><%= msg %></h1>
+        <% if(process.env.NODE_ENV === 'development') { %>
+        <h2> (error && error.status)</h2>
+        <pre> error && error.stack </pre>
+        <% } %>
+        <% } %>
+        <a href="">首页</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="login">登录</a>
+    </div>
+    <div class="form-group col-md-12 text-center form-address">
+        <address>
+            地址 : 重庆市南岸区玉马路8号<br>
+            邮编 : 40000 &nbsp;&nbsp;&nbsp;&nbsp; 邮箱 : iot_service@cmiot.chinamobile.com<br>
+            电话 : 023-81390011(工作日8:00-17:00) &nbsp;&nbsp;&nbsp;&nbsp;传真 : 023-81390033<br>
+        </address>
+    </div>
+</div>
+</body>
+<script src="js/common/manifest.js?m.js"></script>
+<script src="js/common/common.js"></script>
+<script src="js/error.js"></script>
+<% if (env !== "production" && reload) { %>
+<script src="../reload/reload.js"></script>
+<% } %>
+</html>

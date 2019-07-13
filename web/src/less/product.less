@@ -1,0 +1,78 @@
+@import "./base";
+
+.main-container {
+  > .body {
+    .inner-wrapper {
+      margin: 0 auto;
+      width: @viewportWidth;
+    }
+    .video {
+      border-top: 1px solid white;
+      background: #000000;
+      .inner-wrapper {
+        height: 500px;
+      }
+    }
+
+    // 共享托盘运作流程
+    .operating-process {
+      .inner-wrapper {
+        height: 850px;
+        .title {
+          position: relative;
+          margin: 45px auto;
+          width: 656px;
+          font-size: 24px;
+          color: #363636;
+          border-bottom: 1px solid #373737;
+          > span, em {
+            display: inline-block;
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            margin-left: -125px;
+            width: 250px;
+            background: white;
+            text-align: center;
+          }
+          > em {
+            top: 18px;
+            color: #929292;
+            font-size: 16px;
+          }
+        }
+        .process {
+          padding: 30px 0 0 0;
+          font-size: 0;
+          text-align: center;
+          li {
+            display: inline-block;
+            width: 230px;
+            span {
+              display: inline-block;
+              width: 117px;
+              height: 117px;
+              font-size: 20px;
+              color: white;
+              background-color: #0B8DD9;
+              border-radius: 50%;
+              text-align: center;
+              padding-top: 28px;
+            }
+            em {
+              display: block;
+              padding: 20px 0;
+              font-size: 18px;
+              color: #363636;
+            }
+          }
+        }
+        .operator {
+          margin: 80px auto;
+          width: 1082px;
+          height: 364px;
+        }
+      }
+    }
+  }
+}

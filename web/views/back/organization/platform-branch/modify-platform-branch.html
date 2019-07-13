@@ -1,0 +1,70 @@
+<div class="modify-platform-branch-hook">
+    <div class="title">
+        当前位置：&nbsp;&nbsp;->&nbsp;组织机构&nbsp;->&nbsp;机构管理&nbsp;->&nbsp;平台网点管理&nbsp;->&nbsp;<span class="active">修改平台网点</span>
+    </div>
+    <form class="form-horizontal form-hook" method="post">
+        <div class="order_operation_btn fr">
+            <button type="submit" class="primary_btn">保存</button>
+            <a class="primary_btn" @click.stop="goBack()">返回</a>
+        </div>
+        <div class="inner-wrapper" style="padding: 20px 70px;">
+            <h2 style="font-size: 18px;">修改平台网点</h2>
+            <div class="form">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">仓储点名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="storageName" class="form-control" placeholder="请输入仓储点名称" v-model="info.storageName">
+                        </div>
+                    </div>
+                    <div class="form-group address_ul">
+                        <label class="col-sm-2 control-label">仓储点地址</label>
+                        <div id="search-map"></div>
+                        <div class="col-sm-10" id="addressCol">
+                            <input type="text" name="address1" class="form-control" placeholder="请输入仓储点地址" v-model="info.address1" autocomplete="off" id="address">
+                            <input type="hidden" name="address" v-model="info.address" >
+                            <ul class="address_list" id="address_list">
+                                <!--<li v-for="item in list" @click="addressSelected(item)">{{item.address}}</li>-->
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">仓储点电话</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="phone" placeholder="请输入仓储点电话" v-model="info.phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">仓储点联系人</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="linkmanName" placeholder="请输入仓储点联系人" v-model="info.linkmanName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">基站ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="baseStationId" placeholder="请输入基站ID" v-model="info.baseStationId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">经纬度坐标</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="lng" placeholder="请输入经度,例:103,12345678" v-model="info.lng">
+                            <br><br>
+                            <input type="text" class="form-control" name="lat" placeholder="请输入维度,例:95,958721545" v-model="info.lat">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">省市</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="province" placeholder="请输入省份" v-model="info.province">
+                            <br><br>
+                            <input type="text" class="form-control" name="city" placeholder="请输入市区" v-model="info.city">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="js/back/organization/platform-branch/modify-platform-branch.js" custom></script>

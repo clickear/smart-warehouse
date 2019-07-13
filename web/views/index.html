@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>智能仓储管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="expires" content="Wed,26 Feb 1997 08:01:01 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Cache-Control" content="no-cache,must-revalidate"/>
+    <meta name="applicable-device" content="pc">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <base href="<%=project%>/">
+    <link rel="shortcut icon" href="img/logo/logo.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="lib/jquery/ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="lib/bootstrap3-dialog/bootstrap-dialog.css"/>
+    <link rel="stylesheet" href="lib/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="lib/fontello/css/fontello.css"/>
+    <link rel="stylesheet" href="lib/unslider/unslider.css"/>
+    <link rel="stylesheet" href="lib/scroll/jquery.scrollbar.css">
+    <% if (env === "production") { %>
+    <link rel="stylesheet" href="css/index.css">
+    <% } %>
+
+    <script type="text/javascript" src="lib/nodeFlow/depnd/underscore.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/jquery/jquery.1.11.min.js"></script>
+    <script type="text/javascript" src="lib/jquery/ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/additional-methods.js"></script>
+    <script type="text/javascript" src="lib/form/jquery-validation-1.17.0/localization/messages_zh.js"></script>
+    <script type="text/javascript" src="lib/lazyloader/xLazyLoader.min.js"></script>
+    <script type="text/javascript" src="lib/scroll/jquery.scrollbar.js"></script>
+    <script type="text/javascript" src="lib/spin/spin.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-table/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="lib/bootstrap3-dialog/bootstrap-dialog.js"></script>
+    <script type="text/javascript" src="lib/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="lib/bootstrap-select//js/i18n/defaults-zh_CN.min.js"></script>
+    <script type="text/javascript" src="lib/layer/layer.js"></script>
+    <script type="text/javascript" src="lib/unslider/unslider.js"></script>
+    <script type="text/javascript" src="lib/nodeFlow/depnd/raphael.js" defer></script>
+    <script type="text/javascript" src="lib/codemirror/codemirror.js" defer></script>
+</head>
+<body>
+
+<%include ./consult-service.html%>
+<div class="main-container">
+    <%include ./header.html%>
+    <div class="body">
+        <div class="banner">
+            <img src="img/home/menhu_banner.png" alt="">
+        </div>
+        <div class="target">
+            <div class="title">
+                <span>愿景与目标</span>
+                <em>Goals and vision</em>
+            </div>
+            <ul class="target-realize">
+                <li><span>2018年10月</span>智慧Deer WMS正式运营</li>
+                <li><span>2018年12月</span>完成第一个小目标：运营达100使用量</li>
+                <li><span>2019年</span>完成中期小目标：1000使用量，国内云WMS领导品牌</li>
+                <li><span>2022年</span>市场占有率超过10%，物流数据服务商，产业金融载体</li>
+            </ul>
+        </div>
+        <div class="technique">
+            <div class="inner-wrapper">
+                <div class="title">
+                    <span>我们的技术</span>
+                    <em>Our technology</em>
+                </div>
+                <p>
+                    基于互联网思维，通过技术+运营模式创新，将WMS推动大面积商用，降本增效。<br>
+                    以仓库管理软件为入口，截取物流大数据，重构物流全新价值链，优化供应链，物流行业正式开启智慧物流窗口。
+                </p>
+                <div class="exhibition">
+                    <img src="img/home/menhu_pic1.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="idea">
+            <div class="inner-wrapper">
+                <div class="title">
+                    <span>我们的技术</span>
+                    <em>Our philosophy</em>
+                </div>
+                <div class="concept">
+                    <a href="" class="btn btn-concept">赋能</a>
+                    <span></span>
+                    <a href="" class="btn btn-concept">连接</a>
+                    <span></span>
+                    <a href="" class="btn btn-concept">共享</a>
+                </div>
+                <p>
+                    发展定位：<br>
+                        专注于仓储物流领域，提供基于业务需求与领域领先技术的产品与服务，以独特的商业模式，为客户提供一种可快速构建、最低拥有成本的全方位、立体化、灵活的解决方案。<br>
+                    我们是物流大数据服务商！<br>
+                    我们当前技术领先，我们将持续引领技术创新！
+                </p>
+            </div>
+        </div>
+    </div>
+    <%include ./footer.html%>
+</div>
+
+<script src="js/common/manifest.js"></script>
+<script src="js/common/constant.js"></script>
+<script src="js/common/common.js"></script>
+<script src="js/index.js"></script>
+<% if (env !== "production" && reload) { %>
+<script src="../reload/reload.js"></script>
+<% } %>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

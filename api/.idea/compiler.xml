@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wms-system-manage" />
+        <module name="wms-finance" />
+        <module name="wms-project-seed" />
+        <module name="wms-api" />
+        <module name="wms-ware-task" />
+        <module name="wms-bill-manage" />
+        <module name="wms-file" />
+        <module name="wms-device-manage" />
+        <module name="wms-report" />
+        <module name="wms-operation" />
+        <module name="wms-intercept" />
+        <module name="wms-base-system" />
+        <module name="wms-message" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

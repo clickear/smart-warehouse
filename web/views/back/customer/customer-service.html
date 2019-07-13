@@ -1,0 +1,49 @@
+<div class="customer-main-hook main-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+        <div class="customer-wrapper customer-hook">
+            <div class="title">
+                当前位置：&nbsp;在线客服&nbsp;->&nbsp;<span class="active">咨询管理</span>
+            </div>
+            <div class="search">
+                <form class="form-hook">
+                    <div class="row">
+                        <span class="search-label">状态</span>
+                        <select class="form-control w80 order-status-hook" name="reply">
+                            <option value="">全部</option>
+                            <option value="0">未回复</option>
+                            <option value="1">已回复</option>
+                        </select>
+                        <span class="interval-lg"></span>
+                        <span class="search-label">咨询时间</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="开始时间" type="text" class="search-input datetime" name="consultStartTime">
+                        </div>
+                        <span class="interval-xs"></span>
+                        <span>到</span>
+                        <span class="interval-xs"></span>
+                        <div class="date-time-box">
+                            <input placeholder="结束时间" type="text" class="search-input datetime" name="consultEndTime">
+                        </div>
+                    </div>
+                        <span class="search-label">关键字</span>
+                        <input type="text" class="search-input lg" placeholder="咨询内容关键字" name="keywords">
+                        <span class="interval-lg"></span>
+                        <button type="button" class="btn btn-blue search-hook">查询</button>
+                        <span class="interval-xs"></span>
+                        <button type="reset" class="btn btn-gray resert">清空</button>
+                </form>
+            </div>
+            <div class="custom-table-wrapper">
+                <table class="custom-table customer-table-hook"></table>
+            </div>
+        </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show">2</div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show">3</div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show">4</div>
+</div>
+<script type="text/javascript" src="js/back/customer-service/customer-service.js" custom></script>

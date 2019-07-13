@@ -1,0 +1,13 @@
+<div class="wrap" style="min-height: 360px">
+    <% if(code === 404){ %>
+    <div class="logo"><p style="font-size: 20px"><%='404 无效的访问路径，请与管理员联系！'%>:(</p></div>
+    <%}else if(code === 403){ %>
+    <div class="logo"><p style="font-size: 20px"><%='403 没有权限，请与管理员联系！'%>:(</p></div>
+    <% }else{ %>
+    <h1><%= msg %></h1>
+    <% if(process.env.NODE_ENV === 'development') { %>
+    <h2> (error && error.status)</h2>
+    <pre> error && error.stack </pre>
+    <% } %>
+    <% } %>
+</div>

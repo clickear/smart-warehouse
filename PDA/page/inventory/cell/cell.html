@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>验收</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+ 
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="cell.css" />   
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav  " style="height: 15%;">
+			<br/>
+		<br/>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"  >货位明盘</h1>
+		</header>
+		<div class="contain">
+			<br/>
+			<div class="mui-input-row mui-search" style="width: 80%;margin-left: 13%;" > 
+				货位：<input type="search" style="width: 60%;margin-left: 2%;" v-model="cellBarCode"  placeholder="扫描货位条码">
+			</div>
+
+			<div class="order" v-for="item in pallets"  >
+				<div class="rowData"   >
+				 <span class="name">物料</span>
+				 <span class="name" style="margin-left: 35%;">批次</span>
+				 <span style="margin-left: 75%;" class="name">数量</span>
+				  
+			 </div>
+			 <div class="rowData" v-for="item2 in item.palletBatchList" > 
+				 <span class="name">{{item2.itemName}}</span>
+				 <span class="name" style="margin-left: 35%;">{{item2.batch}}</span>
+				 <span style="margin-left: 70%;" class="name">
+				 	<table   style="width: 100%;">
+				 		<tr  >
+				 			<td style="width: 10px;">
+				 				<a>-</a>
+				 			</td>
+				 			<td style="width: 40px" @click='commit()'>
+				 				<div style="text-align: center;"> {{item2.quantity}}</div>
+				 			</td>
+				 			<td style="width: 20px;">
+				 				<a>+</a>
+				 			</td>
+				 		</tr>
+				 	</table>
+				 </span>
+				 
+			 </div>
+			  
+		 	</div>
+		 	
+		 	 
+		 	
+		 	 
+
+
+			 
+			<div class="mui-content-padded" style="position: fixed;bottom: 15%;width: 90%;">
+				<button type="button" @click="commit(2)" class="mui-btn mui-btn-primary   ">确定</button>
+				<br/>
+				<br/>
+
+				<button type="button" @click="commit(1)" class="mui-btn mui-btn-primary   ">取消</button>
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../../config/dev.js"></script>
+		<script type="text/javascript" src="../../../libs/jquery.1.11.min.js"></script>
+		<script type="text/javascript" src="../../../js/mui.js"></script>
+		<script type="text/javascript" src="../../../libs/vue.js"></script> 
+
+		<script type="text/javascript" src="cell.js"></script>
+
+	</body>
+
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ItemBatchMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.ItemBatch">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="batch_id" jdbcType="INTEGER" property="batchId" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_batch_bar_code" jdbcType="VARCHAR" property="itemBatchBarCode" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="suppler_code" jdbcType="VARCHAR" property="supplerCode" />
+    <result column="detail_no" jdbcType="VARCHAR" property="detailNo" />
+    <result column="pre_bill_no" jdbcType="VARCHAR" property="preBillNo" />
+    <result column="item_master_id" jdbcType="INTEGER" property="itemMasterId" />
+    <result column="ware_code" jdbcType="VARCHAR" property="wareCode" />
+    <result column="product_time" jdbcType="TIMESTAMP" property="productTime" />
+    <result column="product_time" jdbcType="DOUBLE" property="productTime" />
+  </resultMap>
+
+  <resultMap extends="BaseResultMap" id="Dto" type="com.deer.wms.base.system.model.ItemBatchDto">
+
+
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="item_type" jdbcType="VARCHAR" property="itemType" />
+
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+    <result column="item_master_name" jdbcType="VARCHAR" property="itemMasterName" />
+
+  </resultMap>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.ItemBatchCriteria" resultMap="Dto">
+    select
+    batch.batch,
+    batch.batch_id,
+    batch.create_time,
+    batch.item_batch_bar_code,
+    batch.create_time,
+    batch.item_code,
+    batch.detail_no,
+    batch.pre_bill_no,
+    batch.item_master_id,
+    batch.ware_code,
+    batch.product_time,
+    batch.price,
+
+
+
+
+
+    item.item_name,
+    item.item_class,
+    type.item_type_name,
+
+    ware.ware_name,
+    im.item_master_name
+
+
+
+
+    from item_batch batch
+    left join item_master im on batch.item_master_id = im.item_master_id
+    left join ware_info ware on ware.ware_code = batch.ware_code
+
+    left join item_info item on batch.item_code = item.item_code
+    left join item_type type on type.item_type_code = item.item_type_code
+    where 1=1
+    <if test="itemCode != null and itemCod != ''">
+      and batch.item_code = #{itemCode}
+    </if>
+
+    <if test="batchId != null and batchId != ''">
+      and batch.batch_id = #{batchId}
+    </if>
+    <if test="itemBatchBarCode != null and itemBatchBarCode != ''">
+      and batch.item_batch_bar_code = #{itemBatchBarCode}
+    </if>
+    <if test="detailNo != null and detailNo != ''">
+      and batch.detail_no = #{detailNo}
+    </if>
+    ORDER BY batch,item_name,item_batch_bar_code,create_time,product_time
+
+  </select>
+
+
+</mapper>

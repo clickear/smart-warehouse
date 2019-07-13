@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.report.dao.AreaItemMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.report.model.AreaItem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.report.model.AreaItemDto" extends="BaseResultMap">
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_class" jdbcType="VARCHAR" property="itemClass" />
+    <result column="ware_name" jdbcType="VARCHAR" property="wareName" />
+  </resultMap>
+
+
+  <select id="findList" parameterType="com.deer.wms.report.model.AreaItemCriteria" resultMap="Dto">
+    select
+    ai.id,
+    ai.area_code,
+    ai.item_code,
+    ai.quantity,
+    item.item_name,
+    item.item_class,
+    area.area_name,
+    ware.ware_name
+
+
+    from area_item   ai
+    left join area_info area  on  area.area_code =ai.area_code
+    left join item_info item on item.item_code = ai.item_code
+    left join ware_info ware on ware.ware_code = area.ware_code
+    left join company com on com.company_id = ware.company_id
+
+    where 1=1
+    <if test="companyId != null and companyId != ''" >
+    AND com.company_id = #{companyId}
+    </if>
+    <if test="wareCode != null and wareCode != ''" >
+      AND ware.ware_code = #{wareCode}
+    </if>
+    <if test="areaCode != null and areaCode != ''" >
+    AND area.area_code = #{areaCode}
+  </if>
+    <if test="itemCode != null and itemCode != ''" >
+      AND item.item_code = #{itemCode}
+    </if>
+    <if test="keyWords != null and keyWords != ''" >
+      AND item.item_name like  concat('%',#{keyWords},'%')
+      OR item.item_class like  concat('%',#{keyWords},'%')
+      OR area.area_name like  concat('%',#{keyWords},'%')
+    </if>
+  </select>
+
+</mapper>

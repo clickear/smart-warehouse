@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.system.manage.dao.PermissionMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.system.manage.model.permission.Permission">
+        <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
+        <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
+        <result column="object_type" jdbcType="VARCHAR" property="objectType" />
+        <result column="object_id" jdbcType="INTEGER" property="objectId" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="group" jdbcType="INTEGER" property="group" />
+    </resultMap>
+
+    <!-- 权限树形结构模型字段映射 -->
+    <resultMap id="PermissionTreeModelMap" type="com.deer.wms.system.manage.model.permission.PermissionTreeModel">
+        <result column="resource_id" jdbcType="INTEGER" property="id" />
+        <result column="resource_code" jdbcType="VARCHAR" property="code" />
+        <result column="resource_name" jdbcType="VARCHAR" property="name" />
+        <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+        <result column="resource_type" jdbcType="VARCHAR" property="type" />
+        <result column="checked" jdbcType="BIT" property="checked" />
+    </resultMap>
+
+    <!-- 权限资源路径信息类字段映射 -->
+    <resultMap id="PermissionUrlMap" type="com.deer.wms.system.manage.model.permission.PermissionUrl">
+        <result column="resource_code" jdbcType="VARCHAR" property="resourceCode" />
+        <result column="resource_type" jdbcType="VARCHAR" property="resourceType" />
+        <result column="method" jdbcType="VARCHAR" property="method" />
+        <result column="url_type" jdbcType="VARCHAR" property="urlType" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+    </resultMap>
+
+    <!-- 权限菜单信息类字段映射 -->
+    <resultMap id="MenuMap" type="com.deer.wms.system.manage.model.permission.Menu">
+        <result column="resource_id" jdbcType="INTEGER" property="id" />
+        <result column="resource_code" jdbcType="VARCHAR" property="code" />
+        <result column="resource_name" jdbcType="VARCHAR" property="name" />
+        <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="style" jdbcType="VARCHAR" property="style" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="level" jdbcType="VARCHAR" property="level" />
+
+        <result column="group" jdbcType="INTEGER" property="group" />
+    </resultMap>
+
+
+    <!-- 询指定用户权限范围内的资源代码数组 GROUP_CONCAT(r.resource_code) AS resource_code -->
+    <select id="selectPermissionCodeByUserId" resultType="java.lang.String">
+        SELECT
+            r.resource_code
+        FROM user_role ur
+        LEFT JOIN permission p ON ur.role_id = p.object_id AND object_type = 'role'
+        LEFT JOIN resource r ON r.resource_id = p.resource_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <!-- 查询指定用户权限范围内的页面路径地址 -->
+    <select id="selectPermissionUrlByUserId" resultType="java.lang.String">
+        SELECT
+           url.url
+        FROM resource_url url
+        LEFT JOIN resource r ON r.resource_id = url.resource_id
+        LEFT JOIN permission p ON p.resource_id = r.resource_id
+        LEFT JOIN user_role ur ON ur.role_id = p.object_id AND object_type = 'role'
+        WHERE url.state = 'normal'
+        AND url.url_type = 'P'
+        AND ur.user_id = #{userId}
+    </select>
+
+    <!-- 查询指定用户权限范围内的菜单信息列表 -->
+    <select id="selectPermissionMenuByUserId" resultMap="MenuMap">
+        SELECT DISTINCT * FROM (
+            SELECT
+            res.resource_id
+		    , res.resource_code
+            , res.resource_name
+            , res.parent_id
+            , res.`level`
+            , res.sort_number
+            ,res.group
+            , IFNULL(res.icon, '') AS icon
+            , IFNULL(res.style, '') AS style
+            , IFNULL(url.url, '') AS url
+            FROM user_info ui
+            LEFT JOIN user_role ur ON ur.user_id = ui.user_id
+            LEFT JOIN role ON role.role_id = ur.role_id AND role.state = 'normal'
+            LEFT JOIN permission per ON per.object_type = 'role' AND per.object_id = role.role_id
+            LEFT JOIN resource res ON res.resource_id = per.resource_id AND res.state = 'normal'
+            LEFT JOIN resource_url url ON url.resource_id = res.resource_id AND url.url_type = 'P' AND url.resource_type = 'F'
+            WHERE ui.user_id = #{userId}
+            AND (res.resource_type = 'M' OR res.resource_type = 'F')
+        ) temp ORDER BY `level`, sort_number ASC
+    </select>
+
+    <!--  查询指定角色的权限树形列表 -->
+    <select id="selectPermissionTreeFormListByRoleId" resultMap="PermissionTreeModelMap">
+        SELECT
+              res.resource_id
+            , res.resource_code
+            , res.resource_name
+            , res.parent_id
+            , res.resource_type
+            ,(
+            CASE
+            WHEN EXISTS(SELECT 1 FROM permission WHERE object_type = 'role' AND object_id = #{roleId} AND resource_id = res.resource_id) THEN 1
+            ELSE 0
+            END
+            ) AS checked
+        FROM resource res
+        WHERE res.state = 'normal'
+        ORDER BY res.`level`, res.sort_number ASC
+    </select>
+
+    <!--  查询指定角色的权限树形列表 -->
+    <select id="selectPermissionRangeTreeFormListByRoleId" resultMap="PermissionTreeModelMap">
+        SELECT
+            res.resource_id,
+            res.resource_code,
+            res.resource_name,
+            res.parent_id,
+            res.resource_type,
+            0 AS checked
+        FROM role
+        LEFT JOIN permission ON permission.object_type = 'role' AND permission.object_id = role.role_id
+        LEFT JOIN resource res ON res.resource_id = permission.resource_id
+        WHERE role.state = 'normal' AND res.state = 'normal'
+        AND role.role_id = #{roleId}
+        ORDER BY res.`level`, res.sort_number ASC
+    </select>
+
+    <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+        delete from permission where object_id = #{roleId}
+
+    </delete>
+</mapper>

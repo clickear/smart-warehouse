@@ -1,0 +1,42 @@
+<div class="customer-main-hook main-hook help-hook">
+    <span @click.stop="emitPage" class="emit-page-hook"></span>
+    <span @click.stop="prePage" class="pre-page-hook"></span>
+    <span @click.stop="refreshPage" class="refresh-page-hook"></span>
+    <div class="box-wrapper box1-hook" v-show="boxs.box1.show">
+    <div style="width: 92%">
+        <ul class="customer-wrapper customer-hook">
+            <div class="title">
+                当前位置：&nbsp;&nbsp;->&nbsp;<span class="active">帮助中心</span>
+            </div>
+                <ul class="detail_contain" id="help_info">
+                    <li v-for="item in items" class="help_center">
+                        <h3 style="color: #233254" v-text="item.categoryName"></h3>
+                        <ul class="detail_help">
+                                <li class="under_line" v-for="xy in item.helpCategoryList" style="height: auto;display: flex;align-items: center; -ms-flex-align:center; -webkit-align-items:center;display:-webkit-flex
+">
+                                    <p style="display: inline-block;width: 30%; vertical-align: top" class="second"><span class="tx1" v-text ="xy.categoryName"></span></p>
+                                    <ul style="display: inline-block;width: 66%" class="borderHeight">
+                                        <li class="left_li" v-for="zw in xy.helpContentList" style="display: inline-block;width: 50%;height: 70px" >
+                                            <p class="tx2" style="display: inline-block;margin-top:25px"><a  v-text ="zw.title" @click.stop="readContent(zw.contentId)"></a></p>
+                                        </li>
+                                    </ul>
+                                </li>
+                        </ul>
+                    </li>
+                </ul>
+        </ul>
+    </div>
+    </div>
+    <div class="box-wrapper box2-hook" v-show="boxs.box2.show"></div>
+    <div class="box-wrapper box3-hook" v-show="boxs.box3.show"></div>
+    <div class="box-wrapper box4-hook" v-show="boxs.box4.show"></div>
+</div>
+<script type="text/javascript" src="js/back/help/help.js" custom></script>
+<style type="text/css">
+    .under_line:last-child{
+        border-bottom: none;
+    }
+    .display{
+        display: none;
+    }
+</style>
